@@ -1,0 +1,30 @@
+{
+  "name": "blooddonorapplication",
+  "version": "1.0.0",
+  "description": "The web application allows users to search for blood donors whenever they need. Registered users can also donate their bloodand learn more about the process to see if they are eligible to donate their blood or not. Website will also contain information about hospitals that offer blood banks.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "blood",
+    "donor",
+    "blood",
+    "donor",
+    "application"
+  ],
+  "author": "Nurlan Isazade",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4.16.1",
+    "jasmine": "^2.8.0",
+    "module-exports": "^1.0.0",
+    "mongodb": "^2.2.31",
+    "mongoose": "^4.12.1",
+    "passport": "^0.4.0",
+    "passport-local": "^1.0.0",
+    "passport-local-mongoose": "^4.2.1",
+    "request": "^2.83.0"
+  }
+}
