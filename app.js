@@ -10,6 +10,7 @@ var express             = require("express"),
     
 // setting the default view engine to ejs
 app.set("view engine", "ejs");
+app.use(express.static("public"));
     
 // ---------------------------------    
 //             ROUTES
