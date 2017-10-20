@@ -26,7 +26,25 @@ app.get("/", function(req, res){
     
 });
 
+// ---------------    
+// Login route
+// ---------------
 
+app.get("/login", function(req, res){
+   
+   res.render("login"); 
+    
+});
+
+// ---------------    
+// Register route
+// ---------------
+
+app.get("/register", function(req, res){
+   
+   res.render("register"); 
+    
+});
 
 
 // setup of necessary ports for the server
