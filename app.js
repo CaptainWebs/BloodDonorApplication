@@ -1,16 +1,44 @@
 var express             = require("express"),
     app                 =  express(),
+     router             = express.Router({mergeParams: true}),
     passport            = require("passport"),
     passportLocal       = require("passport-local"),
     passportMongoose    = require("passport-local-mongoose"),
     mongoose            = require("mongoose"),
     bodyParser          = require("body-parser"),
+    User                = require("./models/user"),
     request             = require("request");
     
     
+
+// setting up DB for mongoose
+mongoose.connect("mongodb://localhost/blood_app",{
+    useMongoClient: true,
+});
+
+
+app.use(require("express-session")({
+    
+    secret: "Blood donor application",
+    resave: false,
+    saveUninitialized: false
+    
+}))
+
 // setting the default view engine to ejs
+app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
 app.use(express.static("public"));
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+
+passport.use(new passportLocal(User.authenticate()));
+// encoding the session and reading the users
+// unencoding it and putting it session
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
     
 // ---------------------------------    
 //             ROUTES
@@ -36,13 +64,48 @@ app.get("/login", function(req, res){
     
 });
 
+app.post("/login", passport.authenticate("local",{
+    
+    successRedirect: "./",
+    failureRedirect: "/login"
+    
+}),function(req, res){
+    
+    
+    
+});
+
 // ---------------    
 // Register route
 // ---------------
 
+// show signup form
 app.get("/register", function(req, res){
    
    res.render("register"); 
+    
+});
+
+// getting the user registration and posting it
+app.post("/register", function(req, res){
+    
+   User.register(new User({username: req.body.username,email: req.body.email, 
+                firstName: req.body.firstName, lastName: req.body.lastName,
+                phoneNumber: req.body.phoneNumber, bloodType: req.body.bloodType}),
+                req.body.password, function(err, user){
+       
+      if(err){
+          console.log("Problem occured during the registration of the user. Error: " + err);
+          return res.render("register");
+      }
+      
+      passport.authenticate("local")(req, res, function(){
+         
+         res.redirect("./");
+          
+      });
+       
+   });
     
 });
 
