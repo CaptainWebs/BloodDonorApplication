@@ -1,6 +1,6 @@
 var express             = require("express"),
     app                 =  express(),
-     router             = express.Router({mergeParams: true}),
+    router              = express.Router({mergeParams: true}),
     passport            = require("passport"),
     passportLocal       = require("passport-local"),
     passportMongoose    = require("passport-local-mongoose"),
@@ -17,24 +17,22 @@ mongoose.connect("mongodb://localhost/blood_app",{
 });
 
 
-app.use(require("express-session")({
-    
-    secret: "Blood donor application",
-    resave: false,
-    saveUninitialized: false
-    
-}))
 
 // setting the default view engine to ejs
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
 app.use(express.static("public"));
 
+passport.use(new passportLocal(User.authenticate()));
+
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(function(req, res, next){
+    res.locals.currentUser = req.user;
+    next();
+});
 
 
-passport.use(new passportLocal(User.authenticate()));
 // encoding the session and reading the users
 // unencoding it and putting it session
 passport.serializeUser(User.serializeUser());
@@ -86,6 +84,13 @@ app.get("/register", function(req, res){
     
 });
 
+
+// Logout route
+app.get("/logout", function(req, res) {
+    req.logout();
+    res.redirect("./");
+})
+
 // getting the user registration and posting it
 app.post("/register", function(req, res){
     
@@ -109,6 +114,13 @@ app.post("/register", function(req, res){
     
 });
 
+function isLoggedIn(req, res, next){
+    if(req.isAuthenticated()){
+        return next;
+    }
+    
+    res.redirect("/login");
+}
 
 // setup of necessary ports for the server
 app.listen(process.env.PORT, process.env.IP, function(){
