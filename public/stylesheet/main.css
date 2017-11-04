@@ -60,6 +60,34 @@ background: linear-gradient(to top, #ef473a, #cb2d3e); /* W3C, IE 10+/ Edge, Fir
     
 }
 
+.btn-email{
+    outline:none !important;    
+    margin-top: 20px;
+    border:none;
+    width:100%;
+    height: 40px;
+    font-size: 18px;
+background: #00c6ff;  /* fallback for old browsers */
+background: -webkit-linear-gradient(to right, #0072ff, #00c6ff);  /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to right, #0072ff, #00c6ff); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  
+}
+
+.btn-phone{
+    outline:none !important;
+    margin-top: 20px;
+    border:none;
+    width:100%;
+    height: 40px;
+    font-size: 18px;
+background: #56ab2f;  /* fallback for old browsers */
+background: -webkit-linear-gradient(to right, #a8e063, #56ab2f);  /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to right, #a8e063, #56ab2f); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+  
+}
+
+
 .hm-search{
     outline-color: #c0392b !important;
 

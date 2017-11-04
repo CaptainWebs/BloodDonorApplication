@@ -96,7 +96,8 @@ app.post("/register", function(req, res){
     
    User.register(new User({username: req.body.username,email: req.body.email, 
                 firstName: req.body.firstName, lastName: req.body.lastName,
-                phoneNumber: req.body.phoneNumber, bloodType: req.body.bloodType}),
+                phoneNumber: req.body.phoneNumber, bloodType: req.body.bloodType,
+                location: req.body.location, dob: req.body.dob }),
                 req.body.password, function(err, user){
        
       if(err){
@@ -106,13 +107,17 @@ app.post("/register", function(req, res){
       
       passport.authenticate("local")(req, res, function(){
          
-         res.redirect("./");
+         res.render("profile", {currentUser:user});
           
       });
        
    });
     
 });
+
+app.get("/profile", function(req, res){
+    res.render("profile");
+})
 
 function isLoggedIn(req, res, next){
     if(req.isAuthenticated()){

@@ -18,10 +18,12 @@
   "dependencies": {
     "body-parser": "^1.18.2",
     "bootstrap-sass": "^3.3.7",
+    "country-select-js": "^1.0.8",
     "efs": "^0.1.1",
     "ejs": "^2.5.7",
     "express": "^4.16.1",
     "express-session": "^1.15.6",
+    "intl-tel-input": "^12.1.3",
     "jasmine": "^2.8.0",
     "module-exports": "^1.0.0",
     "mongodb": "^2.2.31",
