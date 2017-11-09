@@ -134,6 +134,13 @@ function isLoggedIn(req, res, next){
     res.redirect("/login");
 }
 
+// Search route
+app.get("/search", function(req, res) {
+   
+   res.render("search");
+    
+});
+
 // setup of necessary ports for the server
 app.listen(process.env.PORT, process.env.IP, function(){
     
