@@ -15,6 +15,10 @@ var UserSchema = new mongoose.Schema({
   password: String,
   location: String,
   dob: Date,
+  address: String,
+  country: String,
+  city: String,
+  postcode: String
   // gender: String,
   // ethnicity: String,
   // landline_phone_number: Number,
@@ -34,7 +38,7 @@ var UserSchema = new mongoose.Schema({
 });
 
 UserSchema.plugin(passportMongoose, {
-  selectFields: 'email username password phoneNumber firstName lastName bloodType location dob'
+  selectFields: 'email username password phoneNumber firstName lastName bloodType location dob address city country postcode'
 });
 
 module.exports = mongoose.model("User", UserSchema);

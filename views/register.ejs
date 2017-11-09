@@ -6,17 +6,17 @@
         
         <div class="col-md-6 col-centered">
       
-               <h3 class="text-right">Create an account</h3>
+               <h3 class="text-right"><i class="fa fa-plus-square-o" aria-hidden="true"></i> Create an account</h3>
                <hr>
                 <form class="px-4 py-3" action="/register" method="POST">
                 <div class="form-row">
                   <div class="form-group col-md-6">
                     <label for="exampleDropdownFormEmail1">Username</label>
-                    <input type="text" class="form-control" name="username" id="exampleDropdownFormEmail1" placeholder="please enter a unique username">
+                    <input type="text" class="form-control" name="username" id="exampleDropdownFormEmail1" placeholder="Please choose a unique username" required>
                   </div>
                   <div class="form-group col-md-6">
-                                      <label for="exampleDropdownFormEmail1"> Blood Type</label>
-                  <select class="selectpicker" name="bloodType" data-style="btn-info" multiple data-max-options="1" data-live-search="true">
+                                      <label for="exampleDropdownFormEmail1"> Select Your Blood Type</label>
+                  <select class="selectpicker" name="bloodType"  data-style="btn-info" multiple data-max-options="1" data-live-search="true">
  
                       <optgroup label="A group">
                        
@@ -60,14 +60,15 @@
                   
                   <div class="form-group col-md-6">
                     <label for="exampleDropdownFormEmail1">First Name</label>
-                    <input type="text" class="form-control" name="firstName" id="exampleDropdownFormEmail1" placeholder="please enter your first name">
+                    <input type="text" class="form-control" name="firstName" id="exampleDropdownFormEmail1" placeholder="Enter your first name">
                   </div>
                   <div class="form-group col-md-6">
                     <label for="exampleDropdownFormEmail1">Last Name</label>
-                    <input type="text" class="form-control" name="lastName" id="exampleDropdownFormEmail1" placeholder="please enter your last name">
+                    <input type="text" class="form-control" name="lastName" id="exampleDropdownFormEmail1" placeholder="Enter your last name">
                   </div>
                   
                 </div>
+                
                 <!--<div class="form-group">-->
                 <!--  <label for="exampleDropdownFormEmail1">Blood Type</label>-->
                 <!--  <input type="text" class="form-control" name="bloodType" id="exampleDropdownFormEmail1" placeholder="please enter your blood type">-->
@@ -76,24 +77,20 @@
                 <div class="form-row">
                   <div class="form-group col-md-6">
                     <select name="country" class="countries" style="width:100%;height:40px;color:gray;" id="countryId">
-                        <option value="">Select Country</option>
+                        <option value="">Please Select Country</option>
                     </select>
                   </div>  
                   <div class="form-group col-md-6">
-                      <select name="state" style="width:100%; height:40px;color:gray;" class="states" id="stateId">
-                          <option value="">Select State</option>
-                      </select>                    
+                    <input type="text" style="width:100%;height:40px;color:gray;" class="form-control" name="city" id="exampleDropdownFormEmail1" placeholder="City">
                   </div>
                 </div>
                 <div class="form-row">
                   <div class="form-group col-md-6">
-                    <select name="city" style="width:100%; height:40px;color:gray;" class="cities" id="cityId">
-                        <option value="">Select City</option>
-                    </select>
+                        <input  style="width:100%;height:40px;color:gray;" type="text" class="form-control" name="address" id="exampleDropdownFormEmail1" placeholder="Address">
                   </div>
                   
                 <div class="form-group col-md-6">
-                  <input type="text" style="width:100%; height:40px;color:gray;" class="form-control" name="location" id="exampleDropdownFormEmail1" placeholder="Address">
+                  <input type="text" style="width:100%; height:40px;color:gray;" class="form-control" name="postcode" id="exampleDropdownFormEmail1" placeholder="Postcode">
                 </div>
                   
                 </div>
@@ -105,7 +102,7 @@
                   </div> 
                 <div class="form-group col-md-6">
                   <label for="exampleDropdownFormEmail1">Mobile Phone</label>
-                  <input type="tel" id="phone" class="form-control" name="phoneNumber" placeholder="please enter your phone number">
+                  <input type="tel" id="phone" class="form-control" name="phoneNumber" placeholder="for example: +44 775 157 2909">
                 </div>
                </div>
                 <div class="form-row">
@@ -118,16 +115,11 @@
                     <input type="password" class="form-control" name="password" id="exampleDropdownFormPassword1" placeholder="please enter a strong password">
                   </div>
                 </div>
-                
-                <input type="tel" id="demo" placeholder="">
-
                 <!--<div class="form-group">-->
                 <!--  <label for="exampleDropdownFormPassword1">Repeat Password</label>-->
                 <!--  <input type="password" class="form-control" id="exampleDropdownFormPassword1" placeholder="Repeat Password">-->
                 <!--</div>-->
-                <button type="submit" class="btn btn-primary step">Submit</button>
-                <button type="reset" class="btn">Reset</button>
-              
+                <button type="submit" class="btn btn-primary step">Submit <i class="fa fa-arrow-right" aria-hidden="true"></i></button>
               
               </form>            
         </div>

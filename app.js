@@ -97,7 +97,8 @@ app.post("/register", function(req, res){
    User.register(new User({username: req.body.username,email: req.body.email, 
                 firstName: req.body.firstName, lastName: req.body.lastName,
                 phoneNumber: req.body.phoneNumber, bloodType: req.body.bloodType,
-                location: req.body.location, dob: req.body.dob }),
+                location: req.body.location, dob: req.body.dob, country: req.body.country,
+                city: req.body.city, address: req.body.address, postcode: req.body.postcode}),
                 req.body.password, function(err, user){
        
       if(err){
@@ -115,7 +116,13 @@ app.post("/register", function(req, res){
     
 });
 
-app.get("/profile", function(req, res){
+// app.post("/profile", function(req, res) {
+   
+//   res.render("profile",{req.user})
+    
+// });
+
+app.get("/profile/:userID", function(req, res){
     res.render("profile");
 })
 
