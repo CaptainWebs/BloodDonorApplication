@@ -3,9 +3,6 @@ var passportMongoose = require("passport-local-mongoose");
 
 var UserSchema = new mongoose.Schema({
 
-  // title: String,
-  // first_name: String,
-  // last_name: String,
   email: String,
   phoneNumber: Number,
   firstName: String,
@@ -19,21 +16,6 @@ var UserSchema = new mongoose.Schema({
   country: String,
   city: String,
   postcode: String
-  // gender: String,
-  // ethnicity: String,
-  // landline_phone_number: Number,
-  // mobile_phone_number: Number,
-  // date_of_birth: String,
-  // address:{
-  
-  //   city: String,
-  //   country: String,
-  //   postcode: String
-  
-  // },
-  
-  // blood_type: String,
-  // mother_language: String
   
 });
 

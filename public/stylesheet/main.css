@@ -3,14 +3,11 @@ body{
     background: #ECE9E6;  /* fallback for old browsers */
     background: -webkit-linear-gradient(to left, #FFFFFF, #ECE9E6);  /* Chrome 10-25, Safari 5.1-6 */
     background: linear-gradient(to left, #FFFFFF, #ECE9E6); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-
-;
+    min-height: 100%;
 }
 
 .btn-search{
-background: #cb2d3e;  /* fallback for old browsers */
-background: -webkit-linear-gradient(to top, #ef473a, #cb2d3e);  /* Chrome 10-25, Safari 5.1-6 */
-background: linear-gradient(to top, #ef473a, #cb2d3e); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+background: #B22222;
 
 
     color: white;
@@ -114,10 +111,14 @@ background: linear-gradient(to left, #237A57, #093028); /* W3C, IE 10+/ Edge, Fi
 }
 .navbar-inverse{
 
-background: #232526;  /* fallback for old browsers */
-background: -webkit-linear-gradient(to top, #414345, #232526);  /* Chrome 10-25, Safari 5.1-6 */
-background: linear-gradient(to top, #414345, #232526); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+background:#2c3e50;
+border:none;
 
+}
+
+.navbar-inverse .navbar-nav>.active>a{
+    background-color: #B22222;
+    border:none;
 }
 
 .prof_top{
@@ -127,13 +128,18 @@ background:#191919;
     
 }
 
+input{
+    border-top:1px solid #B22222 !important;
+}
+
 .footer-inverse{
-    padding-top:20px;
-    padding-bottom: 20px;
     color:white;
-background: #232526;  /* fallback for old browsers */
-background: -webkit-linear-gradient(to top, #414345, #232526);  /* Chrome 10-25, Safari 5.1-6 */
-background: linear-gradient(to top, #414345, #232526); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+background:#2c3e50;
+padding:10px;
+border-top: 10px solid #B22222;
+   width: 100%;
+    position: absolute;
+    bottom:0;
 
 
 }
@@ -177,14 +183,11 @@ background: linear-gradient(to top, #ef473a, #cb2d3e); /* W3C, IE 10+/ Edge, Fir
 }
 
 .col-centered{
-    
     float: none;
     margin: 0 auto;
     margin-top:100px;
     margin-bottom: 50px;
-background: #cb2d3e;  /* fallback for old browsers */
-background: -webkit-linear-gradient(to top, #ef473a, #cb2d3e);  /* Chrome 10-25, Safari 5.1-6 */
-background: linear-gradient(to top, #ef473a, #cb2d3e); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+background:#2c3e50;
 
 
 
@@ -193,6 +196,15 @@ background: linear-gradient(to top, #ef473a, #cb2d3e); /* W3C, IE 10+/ Edge, Fir
     border-radius:5px;
 }
 
+.col-dark{
+     padding: 0 !important;
+   margin: 0 !important;
+    background:#2c3e50;
+   float: left;
+    height:100%;
+    color:white;
+    
+}
 .col-centered2{
     
     float: none;
@@ -210,27 +222,36 @@ background: linear-gradient(to top, #ef473a, #cb2d3e); /* W3C, IE 10+/ Edge, Fir
     border-radius:5px;
 }
 
-.login{
-    background-color: white !important;
-    width: 100%;
-    height:40px;
-    border:none;
-    color:#c0392b;
-    transition: ease-in 0.2s;
-    font-size:16px;
+.col-centeredNone{
+    
+    float: none;
+    margin: 0 auto;
+    padding:30px;
+    color:white;
+    border-radius:5px;
 }
 
-.register{
-    transition: all 0.2s;  
-background: #232526;  /* fallback for old browsers */
-background: -webkit-linear-gradient(to top, #414345, #232526);  /* Chrome 10-25, Safari 5.1-6 */
-background: linear-gradient(to top, #414345, #232526); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-
-    width: 100%;
+.login{
+    background-color: #B22222 !important;
+    width: 30%;
+    float:right;
     height:40px;
     border:none;
     color:white;
     transition: ease-in 0.2s;
+    font-size:16px;
+}
+
+.test{
+ 
+background-color: #B22222 !important;
+
+   width: 30%;
+    float:right;
+    height:40px;
+    border:none;
+    color:white;
+  
     font-size: 16px;
 }
 
@@ -251,12 +272,11 @@ background: linear-gradient(to bottom, #243B55, #141E30); /* W3C, IE 10+/ Edge, 
 
 
 .login:hover{
-    background-color: #c0392b !important;
-    width: 100%;
-    height:40px;
-    border:1px solid white;
+    
+    outline: none;
+
+    color:#c0392b;
     transition: ease-in 0.2s;
-    color:white;
 }
 
 .navbar-nav > li > .dropdown-menu, .navbar-nav > li > .dropdown-menucd >li>a{
@@ -282,13 +302,11 @@ background: linear-gradient(to top, #ef473a, #cb2d3e); /* W3C, IE 10+/ Edge, Fir
 }
 
 .step{
-        width: 100%;
+        width: 30%;
     height:40px;
     border:none;
     color:white;
-background: #232526;  /* fallback for old browsers */
-background: -webkit-linear-gradient(to top, #414345, #232526);  /* Chrome 10-25, Safari 5.1-6 */
-background: linear-gradient(to top, #414345, #232526); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+background: #B22222;
 
 }
 
@@ -304,4 +322,8 @@ border:2px solid white;
 .title{
     height: 30px;
     color:black;
+}
+
+.dropdown-menu>li>a {
+   color:white;
 }
