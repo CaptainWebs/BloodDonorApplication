@@ -2,12 +2,51 @@
 
 <div class="container">
   
+        <div class="col-md-6 fifty2">
+          <h3><i class="fa fa-exclamation-triangle" style="color: #B22222;" aria-hidden="true"></i> Qualification Check</h3>
+          <p>Please check the below table to see if you have any one of the illnesses or states that disqualify you from being a blood donor. If you have none of the illnesses from the table, simply check    <span style="color: #B22222;">"I don't have any of these"</span> and proceed to filling registration details and hit "Submit".</p>
+          <table class="table qualification">
+  <thead class="thead-inverse">
+    <tr>
+      <th>Illness</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
 
-    <div class="row">
-        
-    </div>
-
-        <div class="col-md-6 col-centered">
+      <td>AIDS</td>
+      <td>Being positive for the AIDS or hepatitis viruses disqualifies you from being a blood donor.</td>
+    </tr>
+    <tr>
+      <td>Pregnancy</td>
+      <td>Pregnancy and recent childbirth rule one out as a blood donor.</td>
+    </tr>
+    <tr>
+      <td>Cancer</td>
+      <td>For almost all cancers (such as breast, brain, prostate, and lung), a person may donate blood five years after diagnosis or date of the last surgery, last chemotherapy or last radiation treatment.</td>
+    </tr>
+    <tr>
+      <td>Blood Cancer</td>
+      <td>For blood cancers (such as leukemia or lymphoma), a person is not allowed to donate blood.</td>
+    </tr>
+      <tr>
+      <td>Malaria</td>
+      <td>People who had malaria can not donate their blood for 12 months.</td>
+    </tr>
+    <tr>
+      <td>Diabates</td>
+      <td>People who take insulin are not allowed to give blood.</td>
+    </tr>
+    
+  </tbody>
+</table>
+<div class="form-check" style="color:#B22222; font-size:16px;">
+    <input type="checkbox" class="form-check-input" id="exampleCheck1">
+    <label class="form-check-label" for="exampleCheck1"><i class="fa fa-smile-o" aria-hidden="true"></i> I don't have any of these.</label>
+  </div>
+        </div>
+        <div class="col-md-6 fifty">
       
                 <form class="px-4 py-3" action="/register" method="POST">
                 <div class="form-row">
@@ -121,7 +160,7 @@
                 <!--  <input type="password" class="form-control" id="exampleDropdownFormPassword1" placeholder="Repeat Password">-->
                 <!--</div>-->
           
-                <button type="submit" class="btn btn-primary step">Submit <i class="fa fa-arrow-right" aria-hidden="true"></i></button>
+                <button type="submit" class="login">Submit</button>
               
               </form>            
         </div>
