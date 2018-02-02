@@ -94,11 +94,11 @@
             
             <!--Buttons-->
             <!--Send request button-->
-            <button type="button" class="btn btn-primary profilebtn1 requestFriend"><i class="fa fa-plus" aria-hidden="true"></i> Send Request</button>
+            <!--<button type="button" class="btn btn-primary profilebtn1 requestFriend"><i class="fa fa-plus" aria-hidden="true"></i> Send Request</button>-->
             
             
             <!--Friends buttton that allow to Unfriend while hovering over-->
-            <button type="button" class="btn btn-primary profilebtn1 friend"><i class="fa fa-check" aria-hidden="true"></i> Friend</button>
+            <!--<button type="button" class="btn btn-primary profilebtn1 friend"><i class="fa fa-check" aria-hidden="true"></i> Friend</button>-->
             
             <!--Report user button-->
             <button type="button" class="btn btn-primary profilebtn1 reportUser"><i class="fa fa-flag-o" aria-hidden="true"></i> Report User</button>
@@ -107,7 +107,7 @@
         <div class="col-md-6">
             <div class="row">
                 <div class="col-md-8 col-md-offset-2">
-                    <h2><%= currentUser.firstName.toUpperCase()%> <%= currentUser.lastName.toUpperCase()%></h2>
+                    <h2 style="background:#b33939;color:white;padding:10px;width:auto; height:auto;border:1px solid #aaa69d; border-radius:20px;text-align:center;"><%= currentUser.firstName.toUpperCase()%> <%= currentUser.lastName.toUpperCase()%></h2>
                     
                     <hr>
                      <h4><i class="fa fa-calendar redicon" aria-hidden="true"></i> Date of Birth: <span style="font-weight:700;"> <%= currentUser.dob.toDateString() %></span></h4>
@@ -152,39 +152,56 @@
         </div>
        </div>
     </div>
-    <hr>
-    <div class="row" style="padding:10px;color:white;">
+    <div class="row" style="color:white;background:#b33939;height:400px;margin-top:60px;">
       <div class="col-md-10 col-md-offset-1">
          <div class="row">
-             <div class="col-md-4">
-             <div class="row" style="height:30px;width:100%;background:#2d3436;line-height:30px;text-align:center;font-size:16px;">
-                 <div class="col-md-10 col-md-offset-1">
-                     <i class="fa fa-users" aria-hidden="true"></i> Friends
-                 </div>
-             </div>  
-             <p style="color:black;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus convallis egestas nibh, vel ullamcorper risus
-             dignissim et. Praesent at tincidunt nibh.</p>
+
+             <div class="col-md-6 col-md-offset-3" style="text-align:center;background: #232526;;padding:15px;border-right:20px solid #232526; border-bottom-left-radius:150px;border-bottom-right-radius:150px;">
+                 <div class="row" style="height:30px;width:100%;color:white;line-height:30px;text-align:center;font-size:24px;">
+        
+                   <i class="fa fa-heart" style="color:#ff5252" aria-hidden="true"></i> Donations
                  
-             </div>
-             <div class="col-md-4">
-                 <div class="row" style="height:30px;width:100%;background:#2d3436;line-height:30px;text-align:center;font-size:16px;">
-                 <div class="col-md-10 col-md-offset-1">
-                   <i class="fa fa-sticky-note-o" aria-hidden="true"></i> Activity
-                 </div>
              </div> 
-              <p style="color:black;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus convallis egestas nibh, vel ullamcorper risus
-             dignissim et. Praesent at tincidunt nibh.</p>
-             </div>
-             <div class="col-md-4">
-                 <div class="row" style="height:30px;width:100%;background:#2d3436;line-height:30px;text-align:center;font-size:16px;">
-                 <div class="col-md-10 col-md-offset-1">
-                   <i class="fa fa-heart" aria-hidden="true"></i> Donations
-                 </div>
-             </div> 
-             <p style="color:black;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus convallis egestas nibh, vel ullamcorper risus
-             dignissim et. Praesent at tincidunt nibh.</p>
+
              </div>
          </div>
+         
+         <div class="row">
+             
+             <!--History-->
+             <div class="col-md-6" style="text-align:center;">
+                 <h4>History</h4>
+                 
+             </div>
+             <!--End of history-->
+             
+             <!--Add new data-->
+             <div class="col-md-6" style="text-align:center;">
+                 <h4>Add new entry</h4>
+                 <div class="row">
+                     <div class="col-md-8 col-md-offset-2" style="text-align:center;">
+                          <form action="" method="">
+                
+                I have  
+                <br><select class="form-control" name="donationType"  id="donationType" style="color:black;margin:2px !important;">
+                        <option value="donated">donated blood to</option>
+                        <option value="received">received blood from</option>
+                        
+                    </select> 
+                    
+                    <input name="donationName" class="form-control" style="border-radius:5px;margin:2px !important;" type="text" placeholder="full name of the person">
+                   <input type="date"  class="form-control" name="dob" style="color:black;text-align:center;margin:2px !important;" id="exampleInputDOB1" placeholder="Date">
+                  <button type="submit" class="login" style="background:#232526 !important;width:100%;margin-top:10px;border-radius:10px;">Add Entry</button>
+                     
+                 </form> <!--End of form for adding new entry-->
+                     </div>
+                 </div>
+            
+                 
+             </div>
+             <!--End of add new data-->
+         </div>
+         
       </div>
     </div>
 </div>

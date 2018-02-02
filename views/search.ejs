@@ -64,7 +64,7 @@
                       <div class="col-md-10 col-md-offset-1 searchRight">
                           <h4 style="color:white;text-align:center;">Which Blood Group<i class="fa fa-question" aria-hidden="true"></i></h4>
                           <hr>
-                          <form class="px-4 py-3" action="" method="">
+                          <form class="px-4 py-3" action="/results" method="GET">
                               <div class="form-row">
                                   <div class="form-group col-md-12">
                                       <label for="exampleDropdownFormEmail1" style="color:white;"> Select Your Blood Type</label>
@@ -105,6 +105,7 @@
                               </div>
                               
                             <div class="form-row">
+                      
                               <div class="form-group col-md-6">
                                 <select name="country" class="countries" style="width:100%;height:40px;color:gray;" id="countryId">
                                     <option value="">Please Select Country</option>
@@ -115,17 +116,18 @@
                               </div>
                             </div>
                             <div class="form-row">
-                              <div class="form-group col-md-6">
-                                    <input  style="width:100%;height:40px;color:gray;" type="text" class="form-control" name="address" id="exampleDropdownFormEmail1" placeholder="Address">
-                              </div>
+                              <!--<div class="form-group col-md-6">-->
+                              <!--      <input  style="width:100%;height:40px;color:gray;" type="text" class="form-control" name="address" id="exampleDropdownFormEmail1" placeholder="Address">-->
+                              <!--</div>-->
                               
                             <div class="form-group col-md-6">
                               <input type="text" style="width:100%; height:40px;color:gray;" class="form-control" name="postcode" id="exampleDropdownFormEmail1" placeholder="Postcode">
                             </div>
                               
                             </div>
+                            <button class="btn-full-search" value="submit" type="submit">Search</button>
                           </form>
-                          <button class="btn-full-search"><i class="fa fa-search" aria-hidden="true"></i> Search</button>
+                          
                       </div>
                       <div class="col-md-10 col-md-offset-1">
                           <button class="btn-full-more"><i class="fa fa-ambulance" aria-hidden="true"></i> Alert Emergency</button>

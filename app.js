@@ -141,6 +141,16 @@ app.get("/search", function(req, res) {
     
 });
 
+app.get("/results", function(req, res) {
+   
+   var resultUser = User.find({
+     address: "req.city"
+   });
+   
+   res.render("/profile")
+});
+
+
 // setup of necessary ports for the server
 app.listen(process.env.PORT, process.env.IP, function(){
     
