@@ -1,0 +1,68 @@
+<% include partials/header%>
+
+<% var count=0;%>
+<% users.forEach(function(user){%>
+
+<%    count++; %>
+
+<% })%>
+
+<div class="row" style="padding-top:100px;background:#B02428;color:white;">
+    <div class="col-md-10 col-md-offset-1">
+        <h2>Search Results</h2>
+        <p>
+            <% if(count==0){%>
+            
+            No result is found.
+            
+           <% }else if(count == 1){ %>
+            
+            1 result is found.
+            
+           <% }else{ %>
+            
+         <%= count%> results are found.
+         
+         <% } %>
+        </p>
+    </div>
+  </div>
+
+<% users.forEach(function(user){%>    
+
+<div class="row" style="margin:20px;">
+    <div class="col-md-10 col-md-offset-1">
+        <div class="row">
+            <!--Profile image-->
+            <div class="col-md-2 col-md-offset-1">
+              <image src="images/<%=user.gender%>.png" style="height:150px; width:150px; border-radius:20px;display:block;margin:0 auto;">
+            </div>
+            
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-md-5">
+                        <p><i class="fa fa-user-circle redicon"></i> <%= user.firstName%> <%= user.lastName%><br>
+                        <i class="fa fa-at redicon"></i> <%= user.username%></p>
+                    </div>
+                    <div class="col-md-4">
+                        <p><i class="fa fa-map-marker redicon"></i> <%= user.country%>, <%= user.city%><br><%= user.postcode%></p>
+                    </div>
+                    <div class="col-md-3">
+                        <p><i class="fa fa-heartbeat redicon"></i> Blood Type: <br><span style="color:#B02428;font-weight:strong;"><%= user.bloodType%></span></p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-2">
+                <button class="btn btn-default" style="border:0;background:#2E3436;color:white;">View Profile </button>
+                <button class="btn btn-primary" style="margin-top:10px;background:#B02428;border:0;">Send Email</button>
+            </div>
+        </div>
+        <hr style="border:0.5px solid #B02428;">
+    </div>
+</div>    
+
+
+<% }); %>
+
+<% include partials/footer%>

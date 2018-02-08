@@ -50,11 +50,20 @@
       
                 <form class="px-4 py-3" action="/register" method="POST">
                 <div class="form-row">
-                  <div class="form-group col-md-6">
-                    <label for="exampleDropdownFormEmail1">Username</label>
-                    <input type="text" class="form-control" name="username" id="exampleDropdownFormEmail1" placeholder="Please choose a unique username" required>
+                  <div class="form-group col-md-4">
+                    <label for="username">Username</label>
+                    <input type="text" class="form-control" name="username" id="exampleDropdownFormEmail1" placeholder="choose a username" required>
                   </div>
-                  <div class="form-group col-md-6">
+                  <div class="form-group col-md-2">
+                    <label for="gender">Gender</label>
+                    <select name="gender" class="form-control" style="width:100%;color:gray;" id="gender">
+                        <option value="manuser">Male</option>
+                        <option value="womanuser">Female</option>
+                    </select>
+                    
+                    
+                  </div>
+                  <div class="form-group col-md-4">
                                       <label for="exampleDropdownFormEmail1"> Select Your Blood Type</label>
                   <select class="selectpicker" name="bloodType"  data-style="btn-info" multiple data-max-options="1" data-live-search="true">
  
@@ -90,6 +99,7 @@
                        
                       </select>
                   </div>
+                
                   
                 </div>  
                 <!--<div class="form-group">-->

@@ -58,11 +58,8 @@
         <li><a href="#">Donation Process <span class="sr-only">(current)</span></a></li>
         <li><a href="#">Help <span class="sr-only">(current)</span> <i class="fa fa-info-circle" aria-hidden="true"></i></a></li>
       </ul>
-      <form class="navbar-form navbar-right">
-        <div class="form-group">
-          <input type="text" class="form-control hm-search" placeholder="Search for donor">
-        </div>
-        <button type="submit" class="btn btn-danger btn-search"><i class="fa fa-search" aria-hidden="true"></i> Search</button>
+      <form class="navbar-form navbar-right" action="/search">
+        <a href="/search"><button class="btn btn-danger btn-search"><i class="fa fa-search" aria-hidden="true"></i> Search</button></a>
       </form>
       <ul class="nav navbar-nav navbar-right">
         <li><a href="../login">Log in</a>
@@ -74,10 +71,9 @@
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span><i class="fa fa-user-circle-o" aria-hidden="true"></i></span> CurrentUser<span class="caret"></span></a>
           <ul class="dropdown-menu">
-            <li><a href="#"><span><i class="fa fa-id-card-o" aria-hidden="true"></i></span> View Profile</a></li>
-            <li><a href="#"><span><i class="fa fa-bell-o" aria-hidden="true"></i></span> Notifications</a></li>
+            <li><a href="#"><span><i class="fa fa-id-card-o redicon" aria-hidden="true"></i></span>  View Profile</a></li>
             <li role="separator" class="divider"></li>
-            <li><a href="/logout"><span><i class="fa fa-sign-out" aria-hidden="true"></i></span> Log out</a></li>
+            <li><a href="/logout"><span><i class="fa fa-sign-out redicon" aria-hidden="true"></i></span>  Log out</a></li>
           </ul>
         </li>
       </ul>

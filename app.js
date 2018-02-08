@@ -98,7 +98,7 @@ app.post("/register", function(req, res){
                 firstName: req.body.firstName, lastName: req.body.lastName,
                 phoneNumber: req.body.phoneNumber, bloodType: req.body.bloodType,
                 location: req.body.location, dob: req.body.dob, country: req.body.country,
-                city: req.body.city, address: req.body.address, postcode: req.body.postcode}),
+                city: req.body.city, address: req.body.address, postcode: req.body.postcode, gender: req.body.gender}),
                 req.body.password, function(err, user){
        
       if(err){
@@ -142,14 +142,45 @@ app.get("/search", function(req, res) {
 });
 
 app.get("/results", function(req, res) {
+  
+  if(req.query.bloodType){
+      
+      const regex1 = new RegExp(escapeRegex(req.query.bloodType), 'gi');
+      const regex2 = new RegExp(escapeRegex(req.query.country), 'gi');
+      const regex3 = new RegExp(escapeRegex(req.query.city), 'gi');
+      const regex4 = new RegExp(escapeRegex(req.query.postcode), 'gi');
+      
+      User.find({bloodType: regex1, country: regex2, city: regex3, postcode: regex4}, function(err, allUsers){
+          if(err){
+              console.log(err);
+          }else{
+              res.render("donors",{users: allUsers});
+          }
+      });
+  }
    
-   var resultUser = User.find({
-     address: "req.city"
-   });
-   
-   res.render("/profile")
+  
 });
 
+app.get("/report/:username", function(req, res){
+    console.log(req.params.username);
+    if(req.params.username){
+        
+        User.find({username: req.params.username}, function(err, foundUser){
+  
+            if(err){
+                console.log(err);
+            }else{
+                res.render("report", {reportUser: foundUser});
+            }
+        });
+    }
+    
+});
+
+function escapeRegex(text) {
+    return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+}
 
 // setup of necessary ports for the server
 app.listen(process.env.PORT, process.env.IP, function(){

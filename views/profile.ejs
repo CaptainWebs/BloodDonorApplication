@@ -82,11 +82,23 @@
             <% typeOfBlood = "abneg"; %>
             
             <% } %>
+            
+            <% var genderType; %>
+            <% if(currentUser.gender == "male"){%>
+            
+            <% genderType = "manuser"; %>
+            
+            <% } else if(currentUser.gender == "female"){%>
+            
+            <% genderType = "womanuser"; %>
+            
+            <% } %>
+
         <div class="col-md-10 col-md-offset-1 profile_tab">
         <div class="col-md-2" style="margin-top:20px;">
-            
+
             <!--User profile image (set to default image that can be replaced by uploading a new image)-->
-            <image src="images/manuser.png" style="height:150px; width:150px; border-radius:20px;display:block;margin:0 auto;">
+            <image src="images/<%=currentUser.gender%>.png" style="height:150px; width:150px; border-radius:20px;display:block;margin:0 auto;">
             <a href="#">Change Profile image</a>    
                 
             <!--Username-->
@@ -101,9 +113,28 @@
             <!--<button type="button" class="btn btn-primary profilebtn1 friend"><i class="fa fa-check" aria-hidden="true"></i> Friend</button>-->
             
             <!--Report user button-->
-            <button type="button" class="btn btn-primary profilebtn1 reportUser"><i class="fa fa-flag-o" aria-hidden="true"></i> Report User</button>
+  
+            <form action="/report/<%=currentUser.username%>" method="GET">
+             <button type="submit" class="btn btn-danger"><i class="fa fa-flag"></i> Report</button>
+            </form>
+            <!--<a href="/report/<%=currentUser.username%>"> -->
+            <!--<button type="button" value="submit" class="btn btn-primary profilebtn1 reportUser"><i class="fa fa-flag-o" aria-hidden="true"></i> Report User</button></a>-->
+    
             
         </div>
+
+    
+        <%    var genderType;%>
+        <% if(currentUser.gender == "womanuser"){%>
+        
+         <%   genderType = "Female"; %>
+        
+        <% }else{ %>
+        
+        <%     genderType = "Male"; %>
+        
+       <% } %>       
+        
         <div class="col-md-6">
             <div class="row">
                 <div class="col-md-8 col-md-offset-2">
@@ -111,7 +142,7 @@
                     
                     <hr>
                      <h4><i class="fa fa-calendar redicon" aria-hidden="true"></i> Date of Birth: <span style="font-weight:700;"> <%= currentUser.dob.toDateString() %></span></h4>
-                     <h4><i class="fa fa-venus-mars redicon" aria-hidden="true"></i> Gender: <span style="font-weight:700;"> Male</span></h4>
+                     <h4><i class="fa fa-venus-mars redicon" aria-hidden="true"></i> Gender: <span style="font-weight:700;"> <%=genderType%></span></h4>
                      <h4><i class="fa fa-heartbeat redicon" aria-hidden="true"></i> Blood Type: <span style="font-weight:700;"> <%= currentUser.bloodType %></span></h4>
                      <h4><i class="fa fa-clock-o redicon" aria-hidden="true"></i> Last Donation Date: <span style="font-weight:700;"> 16 Jan 2017</span></h4>
                      <hr>
@@ -127,10 +158,6 @@
                              <image src="images/quality.png" style="height:50px; width:50px;display:block;margin:0 auto;">
                          </div>
                      </div>
-                     
-                    
-                    
-    
                 </div>
             </div>
         </div>
@@ -152,7 +179,7 @@
         </div>
        </div>
     </div>
-    <div class="row" style="color:white;background:#b33939;height:400px;margin-top:60px;">
+    <div class="row" style="color:white;background:#b33939;margin-top:60px;">
       <div class="col-md-10 col-md-offset-1">
          <div class="row">
 
@@ -162,22 +189,44 @@
                    <i class="fa fa-heart" style="color:#ff5252" aria-hidden="true"></i> Donations
                  
              </div> 
-
-             </div>
+           </div>
          </div>
          
          <div class="row">
-             
-             <!--History-->
-             <div class="col-md-6" style="text-align:center;">
-                 <h4>History</h4>
+            <!--History-->
+             <div class="col-md-6">
+                 <h3>History</h3>
+                    <div class="list-group">
+                      <a href="#" class="list-group-item list-group-item-action flex-column align-items-start active">
+                        <div class="d-flex w-100 justify-content-between">
+                          <small>24 Jan 2018</small>    
+                          <h5 class="mb-1">Donated Blood to</h5>
+                        </div>
+                        <h4 class="mb-1">Mr Name Surname</h4>
+                      </a>
+                      <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+                        <div class="d-flex w-100 justify-content-between">
+                          <small>24 Jan 2018</small>    
+                          <h5 class="mb-1">Donated Blood to</h5>
+                        </div>
+                        <h4 class="mb-1">Mr Name Surname</h4>
+                      </a>
+                      <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+                        <div class="d-flex w-100 justify-content-between">
+                          <small>24 Jan 2018</small>    
+                          <h5 class="mb-1">Donated Blood to</h5>
+                        </div>
+                        <h4 class="mb-1">Mr Name Surname</h4>
+                      </a>
+                    </div>
                  
              </div>
              <!--End of history-->
              
              <!--Add new data-->
              <div class="col-md-6" style="text-align:center;">
-                 <h4>Add new entry</h4>
+                 <h3>Add new entry</h3>
+                 <hr style="width:50%;margin: 0 auto; display:block;margin-bottom:20px;">
                  <div class="row">
                      <div class="col-md-8 col-md-offset-2" style="text-align:center;">
                           <form action="" method="">
@@ -190,14 +239,12 @@
                     </select> 
                     
                     <input name="donationName" class="form-control" style="border-radius:5px;margin:2px !important;" type="text" placeholder="full name of the person">
-                   <input type="date"  class="form-control" name="dob" style="color:black;text-align:center;margin:2px !important;" id="exampleInputDOB1" placeholder="Date">
+                   <input type="date"  class="form-control" name="dob" style="color:black;margin:2px !important;" id="exampleInputDOB1" placeholder="Date">
                   <button type="submit" class="login" style="background:#232526 !important;width:100%;margin-top:10px;border-radius:10px;">Add Entry</button>
                      
                  </form> <!--End of form for adding new entry-->
                      </div>
                  </div>
-            
-                 
              </div>
              <!--End of add new data-->
          </div>

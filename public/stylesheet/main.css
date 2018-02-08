@@ -311,10 +311,7 @@ background: linear-gradient(to bottom, #243B55, #141E30); /* W3C, IE 10+/ Edge, 
 }
 
 .navbar-nav > li > .dropdown-menu, .navbar-nav > li > .dropdown-menucd >li>a{
-background: #cb2d3e;  /* fallback for old browsers */
-background: -webkit-linear-gradient(to top, #ef473a, #cb2d3e);  /* Chrome 10-25, Safari 5.1-6 */
-background: linear-gradient(to top, #ef473a, #cb2d3e); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-
+    background:#2d3436;
     color:white !important; 
     border:none;
 }
@@ -360,7 +357,9 @@ border:2px solid white;
 }
 
 #logincontainer{
-    background-image: url("../images/bloodbg.png");
+    /*background-image: url("../images/bloodbg.png");*/
+ background: #dfe6e9;
+
     height: 100%;
     background-position: center;
     background-repeat: no-repeat;
