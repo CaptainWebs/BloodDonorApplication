@@ -1,4 +1,4 @@
-${
+{
   "name": "blooddonorapplication",
   "version": "1.0.0",
   "description": "The web application allows users to search for blood donors whenever they need. Registered users can also donate their bloodand learn more about the process to see if they are eligible to donate their blood or not. Website will also contain information about hospitals that offer blood banks.",
@@ -23,6 +23,7 @@ ${
     "ejs": "^2.5.7",
     "express": "^4.16.1",
     "express-session": "^1.15.6",
+    "googleplaces": "^0.6.1",
     "intl-tel-input": "^12.1.3",
     "jasmine": "^2.8.0",
     "module-exports": "^1.0.0",

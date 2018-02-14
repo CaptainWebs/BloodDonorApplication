@@ -98,7 +98,7 @@
         <div class="col-md-2" style="margin-top:20px;">
 
             <!--User profile image (set to default image that can be replaced by uploading a new image)-->
-            <image src="images/<%=currentUser.gender%>.png" style="height:150px; width:150px; border-radius:20px;display:block;margin:0 auto;">
+            <image src="/images/<%=currentUser.gender%>.png" style="height:150px; width:150px; border-radius:20px;display:block;margin:0 auto;">
             <a href="#">Change Profile image</a>    
                 
             <!--Username-->
@@ -138,7 +138,7 @@
         <div class="col-md-6">
             <div class="row">
                 <div class="col-md-8 col-md-offset-2">
-                    <h2 style="background:#b33939;color:white;padding:10px;width:auto; height:auto;border:1px solid #aaa69d; border-radius:20px;text-align:center;"><%= currentUser.firstName.toUpperCase()%> <%= currentUser.lastName.toUpperCase()%></h2>
+                    <h2 style="background:#b33939;color:white;padding:10px;width:auto; height:auto;border:1px solid #aaa69d; border-radius:5px;text-align:center;"><%= currentUser.firstName.toUpperCase()%> <%= currentUser.lastName.toUpperCase()%></h2>
                     
                     <hr>
                      <h4><i class="fa fa-calendar redicon" aria-hidden="true"></i> Date of Birth: <span style="font-weight:700;"> <%= currentUser.dob.toDateString() %></span></h4>
@@ -148,14 +148,14 @@
                      <hr>
                      <div class="row">
                          <div class="col-md-4">
-                             <image src="images/trophy.png" style="height:50px; width:50px;display:block;margin:0 auto;">
+                             <image src="/images/trophy.png" style="height:50px; width:50px;display:block;margin:0 auto;">
                          </div>
                          
                          <div class="col-md-4">
-                             <image src="images/blood<%=typeOfBlood%>.png" style="height:50px; width:50px;display:block;margin: 0 auto;" alt="Blood B Positive">
+                             <image src="/images/blood<%=typeOfBlood%>.png" style="height:50px; width:50px;display:block;margin: 0 auto;" alt="Blood B Positive">
                          </div>
                          <div class="col-md-4">
-                             <image src="images/quality.png" style="height:50px; width:50px;display:block;margin:0 auto;">
+                             <image src="/images/quality.png" style="height:50px; width:50px;display:block;margin:0 auto;">
                          </div>
                      </div>
                 </div>
@@ -183,10 +183,10 @@
       <div class="col-md-10 col-md-offset-1">
          <div class="row">
 
-             <div class="col-md-6 col-md-offset-3" style="text-align:center;background: #232526;;padding:15px;border-right:20px solid #232526; border-bottom-left-radius:150px;border-bottom-right-radius:150px;">
+             <div class="col-md-6 col-md-offset-3" style="text-align:center;background: #232526;;padding:15px;border-bottom-left-radius:150px;border-bottom-right-radius:150px;">
                  <div class="row" style="height:30px;width:100%;color:white;line-height:30px;text-align:center;font-size:24px;">
         
-                   <i class="fa fa-heart" style="color:#ff5252" aria-hidden="true"></i> Donations
+                   <i class="fa fa-heart" style="color:#ff5252" aria-hidden="true"></i> Donations | Requests <i class="fa fa-lock-open redicon"></i>
                  
              </div> 
            </div>
@@ -195,54 +195,45 @@
          <div class="row">
             <!--History-->
              <div class="col-md-6">
-                 <h3>History</h3>
-                    <div class="list-group">
-                      <a href="#" class="list-group-item list-group-item-action flex-column align-items-start active">
-                        <div class="d-flex w-100 justify-content-between">
-                          <small>24 Jan 2018</small>    
-                          <h5 class="mb-1">Donated Blood to</h5>
-                        </div>
-                        <h4 class="mb-1">Mr Name Surname</h4>
-                      </a>
-                      <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
-                        <div class="d-flex w-100 justify-content-between">
-                          <small>24 Jan 2018</small>    
-                          <h5 class="mb-1">Donated Blood to</h5>
-                        </div>
-                        <h4 class="mb-1">Mr Name Surname</h4>
-                      </a>
-                      <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
-                        <div class="d-flex w-100 justify-content-between">
-                          <small>24 Jan 2018</small>    
-                          <h5 class="mb-1">Donated Blood to</h5>
-                        </div>
-                        <h4 class="mb-1">Mr Name Surname</h4>
-                      </a>
-                    </div>
+                 
+                 <form action="profile/<%=currentUser.username%>/history" method="GET">
+                 <h4 style="display:inline-block;">History of past donations:  </h4>   <input style="background:#2e3436;color:white;border:0px;" class="btn btn-regular" type="submit" value="Look Up">
+                 </form>
+                 
+                 <div class="row">
+                     <div class="col-md-6">
+                         <h2 style="background:#DFE6E9; padding:10px;text-align:center;border-radius:5px;color:#B13A3C;">Add new entry</h2>
+                         <!--Form for adding new entry-->
+                         <form action="/profile/add/<%=currentUser.username%>" method="POST">
+                
+                I have  
+                <br><select class="form-control" name="entry[type]"  id="donationType" style="color:black;margin:2px !important;">
+                        <option value="donated blood to">donated blood to</option>
+                        <option value="received blood from">received blood from</option>
+                        
+                    </select> 
+                    
+                    <input name="entry[donationName]" class="form-control" style="border-radius:5px;margin:2px !important;" type="text" placeholder="full name of the person">
+                   <input type="date"  class="form-control" name="entry[date]" style="color:black;margin:2px !important;" id="exampleInputDOB1" placeholder="Date">
+                  <button type="submit" class="login" style="background:#232526 !important;width:100%;margin-top:10px;border-radius:10px;">Add Entry</button>
+                     
+                 </form> <!--End of form for adding new entry-->
+                     </div>
+                 </div>
                  
              </div>
              <!--End of history-->
              
              <!--Add new data-->
-             <div class="col-md-6" style="text-align:center;">
-                 <h3>Add new entry</h3>
-                 <hr style="width:50%;margin: 0 auto; display:block;margin-bottom:20px;">
+             <div class="col-md-6" style="text-align:left;">
                  <div class="row">
-                     <div class="col-md-8 col-md-offset-2" style="text-align:center;">
-                          <form action="" method="">
-                
-                I have  
-                <br><select class="form-control" name="donationType"  id="donationType" style="color:black;margin:2px !important;">
-                        <option value="donated">donated blood to</option>
-                        <option value="received">received blood from</option>
-                        
-                    </select> 
-                    
-                    <input name="donationName" class="form-control" style="border-radius:5px;margin:2px !important;" type="text" placeholder="full name of the person">
-                   <input type="date"  class="form-control" name="dob" style="color:black;margin:2px !important;" id="exampleInputDOB1" placeholder="Date">
-                  <button type="submit" class="login" style="background:#232526 !important;width:100%;margin-top:10px;border-radius:10px;">Add Entry</button>
-                     
-                 </form> <!--End of form for adding new entry-->
+                     <div class="col-md-6"></div>
+                     <div class="col-md-6" style="text-align:center;">
+                         <h4><span style="color:#b2bec3;font-size:16px;">Find a nearby</span> <i class="far fa-hospital"></i> Hospital</h4>
+                         
+                         <form action="/nearby" method="GET">
+                         <button type="submit" class="login" style="background:#232526 !important;width:100%;margin-top:10px;border-radius:10px;">Search <i class="fas fa-arrow-right"></i></button>
+                         </form>
                      </div>
                  </div>
              </div>

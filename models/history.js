@@ -5,8 +5,7 @@ var HistorySchema = new mongoose.Schema({
 
   donor:
   {
-      
-     id:{
+      id:{
          type: mongoose.Schema.Types.ObjectId,
          ref: "User"
      },
@@ -16,13 +15,9 @@ var HistorySchema = new mongoose.Schema({
   },
   
   date: Date,
-  nameOfTheReceiver: String,
-  typeOfDonation: String
+  donationName: String,
+  type: String
   
-});
-
-HistorySchema.plugin(passportMongoose, {
-  selectFields: 'donor date nameOfTheReceiver typeOfDonation'
 });
 
 module.exports = mongoose.model("History", HistorySchema);

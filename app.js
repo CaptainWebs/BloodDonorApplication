@@ -7,6 +7,7 @@ var express             = require("express"),
     mongoose            = require("mongoose"),
     bodyParser          = require("body-parser"),
     User                = require("./models/user"),
+    History             = require("./models/history"),
     request             = require("request");
     
     
@@ -21,7 +22,7 @@ mongoose.connect("mongodb://localhost/blood_app",{
 // setting the default view engine to ejs
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
-app.use(express.static("public"));
+app.use(express.static(__dirname + '/public'));
 
 passport.use(new passportLocal(User.authenticate()));
 
@@ -176,6 +177,80 @@ app.get("/report/:username", function(req, res){
         });
     }
     
+});
+
+// adding history data to a user
+app.post("/profile/add/:username", function(req, res) {
+    User.findOne({username: req.params.username}, function(err, user){
+        if(err){console.log(err);}
+        else{
+
+            // History.create({date:req.body.entry.date,donationName:req.body.entry.donationName,type:req.body.entry.type}, function(err, history){
+                
+            //     if(err){console.log(err)}else{
+            //         history.donor.id = user._id;
+            //         history.donor.username = user.username;
+            //         history.save();
+            //         // user.histories.push(history);
+            //         // console.log(user.histories);
+            //         // user.save();
+            //         // console.log(foundUser);
+            //         res.redirect("/");
+            //     }
+            // })
+            
+            History.create(req.body.entry, function(err, history){
+                if(err){console.log(err);}
+                else{
+                    
+                    history.donor.id = user._id;
+                    history.donor.username = user.username;
+                    history.save();
+                    user.histories.push(history);
+                    user.save();
+                    res.redirect("/");
+                }
+            })
+        }
+    })
+})
+app.get("/profile/user/:username", function(req, res){
+    
+    User.findOne({username:req.params.username}, function(err, user) {
+        if(err){
+            console.log(err);
+        }else{
+            console.log(user);
+            res.render("profile", {currentUser:user});
+        }
+    });
+    
+});
+app.get("/profile/:username/history",function(req, res) {
+
+    
+    User.findOne({username:req.params.username}, function(err, user){
+        
+        if(err){console.log(err);}
+        else{
+
+              History.find({donor : {id: user._id, username: user.username}}, function(err, history){
+                  if(err){console.log(err);}
+                  else{
+                      res.render("history", {history : history});
+                  }
+              })          
+
+
+        }
+        
+        
+    })
+})
+
+// Sending postcode data to find the nearby hospitals
+app.get("/nearby", function(req, res) {
+    res.render("nearby",{nearbyhospital: req.body.nearbyhospital});
 });
 
 function escapeRegex(text) {

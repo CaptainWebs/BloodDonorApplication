@@ -1,7 +1,7 @@
 <% include partials/header%>
 
 
-    <div class="container" style="margin-top:80px">
+    <div class="container" style="margin-top:120px;">
         <div class="row">
             <div class="col-md-3 hm-info">
              
@@ -9,16 +9,19 @@
             <div class="col-md-3 hm-info2">
             
             </div>
-            <div class="col-md-6">
+            <div class="col-md-3 hm-info2">
+            
+            </div>
+            <div class="col-md-3">
                    <div class="row">
-                      <div class="col-md-10 col-md-offset-1 searchRight">
-                          <h4 style="color:white;text-align:center;">Which Blood Group<i class="fa fa-question" aria-hidden="true"></i></h4>
+                      <div class="col-md-10 col-md-offset-1 searchRight" style="background:#b02428;color:white;border-radius:0px;">
+                          <h2 style="color:white;text-align:center;">Search</h2>
                           <hr>
-                          <form class="px-4 py-3" action="" method="">
+                                   <form class="px-4 py-3" action="/results" method="GET">
                               <div class="form-row">
                                   <div class="form-group col-md-12">
                                       <label for="exampleDropdownFormEmail1" style="color:white;"> Select Your Blood Type</label>
-                                      <select class="selectpicker" name="bloodType"  data-style="btn-info" multiple data-max-options="1" data-live-search="true">
+                                      <select class="selectpicker" name="bloodType" data-style="btn-info" multiple data-max-options="1" data-live-search="true">
                      
                                           <optgroup label="A group">
                                            
@@ -55,9 +58,10 @@
                               </div>
                               
                             <div class="form-row">
+                      
                               <div class="form-group col-md-6">
                                 <select name="country" class="countries" style="width:100%;height:40px;color:gray;" id="countryId">
-                                    <option value="">Please Select Country</option>
+                                    <option value="">Country</option>
                                 </select>
                               </div>  
                               <div class="form-group col-md-6">
@@ -66,16 +70,16 @@
                             </div>
                             <div class="form-row">
                               <div class="form-group col-md-6">
-                                    <input  style="width:100%;height:40px;color:gray;" type="text" class="form-control" name="address" id="exampleDropdownFormEmail1" placeholder="Address">
+                                 <input type="text" style="width:100%; height:40px;color:gray;" class="form-control" name="postcode" id="exampleDropdownFormEmail1" placeholder="Postcode">   
                               </div>
                               
                             <div class="form-group col-md-6">
-                              <input type="text" style="width:100%; height:40px;color:gray;" class="form-control" name="postcode" id="exampleDropdownFormEmail1" placeholder="Postcode">
+                              <button class="btn-full-search" style="background:#2e3436;color:white;" value="Search" type="submit"><i class="fa fa-search" aria-hidden="true"></i> Search</button>
                             </div>
                               
                             </div>
+                            
                           </form>
-                          <button class="btn-full-search"><i class="fa fa-search" aria-hidden="true"></i> Search</button>
                       </div>
                    </div> 
                 </div>
@@ -83,36 +87,26 @@
         </div>
     </div>
 
-    <div class="container" style="margin-top:80px;">
+    <div class="container" style="margin-top:40px;">
       <!-- Example row of columns -->
-      <div class="row">
-        <div class="col-md-3">
-          <h3>Can I give blood?</h3>
-          <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-          <hr>
-          <p><a class="btn btn-primary btn-full" href="#" role="button">Learn more <i class="fa fa-question-circle-o" aria-hidden="true"></i></a></p>
+      <div class="row" style="background:#2e3436;padding-left:30px;">
+        <div class="col-md-4" style="color:white;">
+          <h3 class="redicon">Can I give blood?</h3>
+          <p>Please check the page to see if you are eligible for blood donation.</p>
+          <p><a class="btn btn-primary btn-full" href="#" role="button">Check Now</a></p>
         </div>
-        <div class="col-md-3">
-          <h3>Donation Process</h3>
-          <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-          <hr>
-          <p><a class="btn btn-primary btn-full" href="#" role="button">Learn more <i class="fa fa-question-circle-o" aria-hidden="true"></i></a></p>
+        <div class="col-md-4" style="background:white;;">
+          <h3 class="redicon">Donation Process</h3>
+          <p>Have not donated before? Check the process in detail to have more information.</p>
+          <p><a class="btn btn-primary btn-full" href="#" role="button">Learn more</a></p>
        </div>
-        <div class="col-md-3">
-          <h3>Become a Blood Donor</h3>
-          <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-          <hr>
-          <p><a class="btn btn-primary btn-full" href="#" role="button">Sign up <i class="fa fa-user-plus" aria-hidden="true"></i></a></p>
-        </div>
-         <div class="col-md-3">
-          <h3>Add Hospital</h3>
-          <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-          <hr>
-          <p><a class="btn btn-primary btn-full" href="#" role="button">Add now <i class="fa fa-hospital-o" aria-hidden="true"></i></a></p>
+        <div class="col-md-4" style="color:white;">
+          <h3 class="redicon">Become a Blood Donor</h3>
+          <p>Please check the page to learn more information about how to become one.</p>
+          <p><a class="btn btn-primary btn-full" href="#" role="button">Learn more</a></p>
         </div>
       </div>
 
-      <hr>
       <div class="container" style="margin-top:80px;">
           <div class="row">
               <div class="col-md-6 main-info img-cnt"></div>

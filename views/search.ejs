@@ -6,8 +6,8 @@
             <div class="row">
                 <div class="col-md-6 searchLeft">
                     <h4 style="text-align:left;"><i class="fa fa-info-circle redicon" aria-hidden="true"></i> Information</h4>
-                <table class="table table-striped" style="border:1px solid #d43842;">
-                  <thead class="tableHead">
+                <table class="table table-striped">
+                  <thead class="tableHead" style="background: #b02428 !important;">
                     <tr>
                       <th>Type</th>
                       <th>Can Donate Blood To</th>
@@ -61,14 +61,14 @@
                 </div>
                 <div class="col-md-6">
                    <div class="row">
-                      <div class="col-md-10 col-md-offset-1 searchRight">
-                          <h4 style="color:white;text-align:center;">Which Blood Group<i class="fa fa-question" aria-hidden="true"></i></h4>
+                      <div class="col-md-10 col-md-offset-1 searchRight" style="margin-top:50px;margin-bottom:60px;background: #2E3436 !important;color:white;border-radius:0px;">
+                          <h2 style="color:white;text-align:center;">Search</h2>
                           <hr>
                           <form class="px-4 py-3" action="/results" method="GET">
                               <div class="form-row">
                                   <div class="form-group col-md-12">
                                       <label for="exampleDropdownFormEmail1" style="color:white;"> Select Your Blood Type</label>
-                                      <select class="selectpicker" name="bloodType"  data-style="btn-info" multiple data-max-options="1" data-live-search="true">
+                                      <select class="selectpicker" name="bloodType" data-style="btn-info" multiple data-max-options="1" data-live-search="true">
                      
                                           <optgroup label="A group">
                                            
@@ -116,25 +116,19 @@
                               </div>
                             </div>
                             <div class="form-row">
-                              <!--<div class="form-group col-md-6">-->
-                              <!--      <input  style="width:100%;height:40px;color:gray;" type="text" class="form-control" name="address" id="exampleDropdownFormEmail1" placeholder="Address">-->
-                              <!--</div>-->
+                              <div class="form-group col-md-6">
+                                 <input type="text" style="width:100%; height:40px;color:gray;" class="form-control" name="postcode" id="exampleDropdownFormEmail1" placeholder="Postcode">   
+                              </div>
                               
                             <div class="form-group col-md-6">
-                              <input type="text" style="width:100%; height:40px;color:gray;" class="form-control" name="postcode" id="exampleDropdownFormEmail1" placeholder="Postcode">
+                              <button class="btn-full-search" style="background:#b02428;color:white;" value="Search" type="submit"><i class="fa fa-search" aria-hidden="true"></i> Search</button>
                             </div>
                               
                             </div>
-                            <button class="btn-full-search" value="Search" type="submit">Search</button>
+                            
                           </form>
                           
                       </div>
-                      <div class="col-md-10 col-md-offset-1">
-                          <button class="btn-full-more"><i class="fa fa-ambulance" aria-hidden="true"></i> Alert Emergency</button>
-                          <p style="padding:5px;"><i class="fa fa-exclamation-triangle redicon" aria-hidden="true"></i> This feature should only be used when there is a need for a massive blood in
-                          an area because of a natural disaster or a terror attack.</p>
-                      </div>
-                      
                    </div> 
                 </div>
             </div>

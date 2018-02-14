@@ -30,7 +30,7 @@
 
 <% users.forEach(function(user){%>    
 
-<div class="row" style="margin:20px;">
+<div class="row donorsearch" style="padding:20px;">
     <div class="col-md-10 col-md-offset-1">
         <div class="row">
             <!--Profile image-->
@@ -54,11 +54,11 @@
             </div>
             
             <div class="col-md-2">
-                <button class="btn btn-default" style="border:0;background:#2E3436;color:white;">View Profile </button>
+                <form action="/profile/user/<%=user.username%>" method="GET"><button type="submit" class="btn btn-default" style="border:0;background:#2E3436;color:white;">View Profile</button></form>
                 <button class="btn btn-primary" style="margin-top:10px;background:#B02428;border:0;">Send Email</button>
             </div>
         </div>
-        <hr style="border:0.5px solid #B02428;">
+    
     </div>
 </div>    
 

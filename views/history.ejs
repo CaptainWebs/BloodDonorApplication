@@ -1,0 +1,22 @@
+<% include partials/header%>
+<div class="container" style="width:100%;">
+<div class="row" style="padding-top:100px;background:#B02428;color:white;">
+
+    <div class="col-md-10 col-md-offset-1">
+        <h2>History</h2>
+</div>
+</div>
+<% var number = 1; %>
+<%history.forEach(function(history){%>
+
+<div class="row historyrecords donorsearch">
+    <div class="col-md-10 col-md-offset-1" style="padding:15px;">
+        <h4><span class="redicon" style="font-weight:bold;"><%=number%>.</span> I have <%=history.type%> <span style="text-decoration:underline;"><%=history.donationName%></span> on <%=history.date.toDateString()%>.</h4>
+    </div>
+</div>
+
+<% number++; %>
+
+<% }) %>
+</div>
+<% include partials/footer%>
