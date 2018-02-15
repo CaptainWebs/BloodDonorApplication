@@ -214,6 +214,96 @@ app.post("/profile/add/:username", function(req, res) {
         }
     })
 })
+
+app.get("/usersearch/:username", function(req, res) {
+   
+   User.findOne({username: req.params.username}, function(err, user) {
+       if(err){
+           console.log(err);
+       }else{
+        // finding the blood type of the user
+           var bloodType = user.bloodType.slice(0,2);
+           
+        // determining the users that can donate their blood to this user
+        
+        if(bloodType == "A+"){
+            User.find({$or:[{bloodType: 'A+ (A Rhd positive)'},{bloodType: 'A- (A Rhd negative)'},{bloodType: 'O+ (O Rhd positive)'},{bloodType: 'O- (O Rhd negative)'}]}, function(err, users) {
+                if(err){
+                    console.log(err);
+                }else{
+                    res.render("donors", {users: users});
+                }
+            });
+        }else if(bloodType == "O+"){
+            User.find({$or:[{bloodType: 'O+ (O Rhd positive)'},{bloodType: 'O- (O Rhd negative)'}]}, function(err, users) {
+                if(err){
+                    console.log(err);
+                }else{
+                    res.render("donors", {users: users});
+                }
+            });
+            
+        }else if(bloodType == "B+"){
+            
+            User.find({$or:[{bloodType: 'O+ (O Rhd positive)'},{bloodType: 'O- (O Rhd negative)'}, {bloodType: 'B+ (B Rhd positive)'},{bloodType: 'B- (B Rhd negative)'}]}, function(err, users) {
+                if(err){
+                    console.log(err);
+                }else{
+                    res.render("donors", {users: users});
+                }
+            }); 
+            
+        }else if(bloodType == "AB+ (AB Rhd positive)"){
+            
+            User.find({}, function(err, users) {
+                if(err){
+                    console.log(err);
+                }else{
+                    res.render("donors", {users: users});
+                }
+            }); 
+            
+        }else if(bloodType == "A- (A Rhd negative)"){
+            User.find({$or:[{bloodType: 'A- (A Rhd negative)'},{bloodType: 'O- (O Rhd negative)'}]}, function(err, users) {
+                if(err){
+                    console.log(err);
+                }else{
+                    res.render("donors", {users: users});
+                }
+            });
+            
+        }else if(bloodType == "O- (O Rhd negative)"){
+            User.find({$or:[{bloodType: 'O- (O Rhd negative)'}]}, function(err, users) {
+                if(err){
+                    console.log(err);
+                }else{
+                    res.render("donors", {users: users});
+                }
+            });
+        }else if(bloodType == "B- (B Rhd negative)"){
+            User.find({$or:[{bloodType: 'B- (B Rhd negative)'},{bloodType: 'O- (O Rhd negative)'}]}, function(err, users) {
+                if(err){
+                    console.log(err);
+                }else{
+                    res.render("donors", {users: users});
+                }
+            });  
+        }else if(bloodType == "AB- (AB Rhd negative)"){
+             User.find({$or:[{bloodType: 'AB- (AB Rhd negative)'},{bloodType: 'O- (O Rhd negative)'},{bloodType: 'B- (B Rhd negative)'}]}, function(err, users) {
+                if(err){
+                    console.log(err);
+                }else{
+                    res.render("donors", {users: users});
+                }
+            });
+        }
+          
+       }
+   });
+  
+    
+});
+
 app.get("/profile/user/:username", function(req, res){
     
     User.findOne({username:req.params.username}, function(err, user) {

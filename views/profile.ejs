@@ -229,11 +229,25 @@
                  <div class="row">
                      <div class="col-md-6"></div>
                      <div class="col-md-6" style="text-align:center;">
-                         <h4><span style="color:#b2bec3;font-size:16px;">Find a nearby</span> <i class="far fa-hospital"></i> Hospital</h4>
+                         <h4><span style="color:white;font-size:16px;">Quick Access</h4>
                          
-                         <form action="/nearby" method="GET">
-                         <button type="submit" class="login" style="background:#232526 !important;width:100%;margin-top:10px;border-radius:10px;">Search <i class="fas fa-arrow-right"></i></button>
-                         </form>
+                         <div class="row">
+                             <div class="col-md-12" style="background:#DFE6E9;padding:10px;color:#2e3436;border-top-left-radius:5px;border-top-right-radius:5px;">
+                                     <p style="text-align:left;">Find a nearby hospital that will help you to donate your blood safely.</p>
+                                     <form action="/nearby" method="GET">
+                                     <button type="submit" class="login" style="background:#232526 !important;width:100%;margin-top:10px;border-radius:10px;"><i class="far fa-hospital"></i> Find a nearby Hospital <i class="fas fa-arrow-right"></i></button>
+                                     </form>
+                             </div>
+                         </div>
+                         <div class="row">
+                             <div class="col-md-12" style="background:white;padding:10px;color:#B13A3C;border-bottom-left-radius:5px;border-bottom-right-radius:5px;">
+                                     <p style="text-align:left;">Search for people that can donate their blood to You.</p>
+                                     <form action="/usersearch/<%=currentUser.username%>" method="GET">
+                                     <button type="submit" class="login" style="background:#b13a3c !important;width:100%;margin-top:10px;border-radius:10px;">Quick Search <i class="fas fa-arrow-right"></i></button>
+                                     </form>
+                             </div>
+                         </div>
+
                      </div>
                  </div>
              </div>
