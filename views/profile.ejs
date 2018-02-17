@@ -115,8 +115,12 @@
             <!--Report user button-->
   
             <form action="/report/<%=currentUser.username%>" method="GET">
-             <button type="submit" class="btn btn-danger"><i class="fa fa-flag"></i> Report</button>
+             <button type="submit" class="btn btn-danger" style="background:#b02528;"><i class="fa fa-flag"></i> Report</button>
             </form>
+            <hr>
+            <h5><i class="fas fa-plus redicon"></i> Donated amount of blood: <%=currentUser.donatedAmount%> pt.</h5>
+            <h5><i class="fas fa-minus redicon"></i> Received amount of blood: <%=currentUser.receivedAmount%> pt.</h5>
+            
             <!--<a href="/report/<%=currentUser.username%>"> -->
             <!--<button type="button" value="submit" class="btn btn-primary profilebtn1 reportUser"><i class="fa fa-flag-o" aria-hidden="true"></i> Report User</button></a>-->
     
@@ -140,11 +144,25 @@
                 <div class="col-md-8 col-md-offset-2">
                     <h2 style="background:#b33939;color:white;padding:10px;width:auto; height:auto;border:1px solid #aaa69d; border-radius:5px;text-align:center;"><%= currentUser.firstName.toUpperCase()%> <%= currentUser.lastName.toUpperCase()%></h2>
                     
-                    <hr>
+        
                      <h4><i class="fa fa-calendar redicon" aria-hidden="true"></i> Date of Birth: <span style="font-weight:700;"> <%= currentUser.dob.toDateString() %></span></h4>
                      <h4><i class="fa fa-venus-mars redicon" aria-hidden="true"></i> Gender: <span style="font-weight:700;"> <%=genderType%></span></h4>
-                     <h4><i class="fa fa-heartbeat redicon" aria-hidden="true"></i> Blood Type: <span style="font-weight:700;"> <%= currentUser.bloodType %></span></h4>
-                     <h4><i class="fa fa-clock-o redicon" aria-hidden="true"></i> Last Donation Date: <span style="font-weight:700;"> 16 Jan 2017</span></h4>
+                     <h4><i class="fas fa-tint redicon"></i> Blood Type: <span style="font-weight:700;"> <%= currentUser.bloodType %></span></h4>
+                     <h4><i class="fas fa-medkit redicon"></i> Donation Types:</h4>
+                     
+                     <% currentUser.openFor.forEach(function(donationType){ %>
+                     
+                     <span style="background:#b02528;padding:5px; color:white;font-size:14px;margin:10px;"><%= donationType %></span>
+                     
+                     <%  }) %>
+                     
+                     
+                     <h4><i class="far fa-clock redicon"></i> Last Donation Date: <span style="font-weight:700;"> 16 Jan 2017</span></h4>
+                     
+                     <!--Getting the last donation date from histories array-->
+                     
+                     
+                     
                      <hr>
                      <div class="row">
                          <div class="col-md-4">
@@ -196,26 +214,40 @@
             <!--History-->
              <div class="col-md-6">
                  
-                 <form action="profile/<%=currentUser.username%>/history" method="GET">
-                 <h4 style="display:inline-block;">History of past donations:  </h4>   <input style="background:#2e3436;color:white;border:0px;" class="btn btn-regular" type="submit" value="Look Up">
-                 </form>
-                 
                  <div class="row">
-                     <div class="col-md-6">
-                         <h2 style="background:#DFE6E9; padding:10px;text-align:center;border-radius:5px;color:#B13A3C;">Add new entry</h2>
+                     <div class="col-md-8" style="background:#232526;margin-top:20px;border-radius:5px;">
                          <!--Form for adding new entry-->
                          <form action="/profile/add/<%=currentUser.username%>" method="POST">
                 
-                I have  
-                <br><select class="form-control" name="entry[type]"  id="donationType" style="color:black;margin:2px !important;">
+                <h4 style="text-align:center;"><i class="fas fa-plus redicon"></i> I have</h4>  
+                <br>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                     <select class="form-control" name="entry[type]"  id="donationType" style="color:black;margin:2px !important;">
                         <option value="donated blood to">donated blood to</option>
                         <option value="received blood from">received blood from</option>
                         
                     </select> 
+                    </div>
+                    <div class="form-group col-md-6">
+                        <input name="entry[donationName]" class="form-control" style="border-radius:5px;margin:2px !important;text-align:center;background:white;" type="text" placeholder="Full Name">
+                    </div>
                     
-                    <input name="entry[donationName]" class="form-control" style="border-radius:5px;margin:2px !important;" type="text" placeholder="full name of the person">
-                   <input type="date"  class="form-control" name="entry[date]" style="color:black;margin:2px !important;" id="exampleInputDOB1" placeholder="Date">
-                  <button type="submit" class="login" style="background:#232526 !important;width:100%;margin-top:10px;border-radius:10px;">Add Entry</button>
+                </div>
+    
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                             <input type="date"  class="form-control" name="entry[date]" style="color:black;width:100%;background:white;" id="exampleInputDOB1" placeholder="MM/DD/YYYY">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <input type="number"  class="form-control" name="entry[amount]" style="color:black;width:100%;text-align:center;background:white;" placeholder="Amount">
+                        </div>
+                    </div>
+                   <input type="text"  class="form-control" name="entry[hospitalName]" style="color:black;width:100%;text-align:center;background:white;" id="exampleInputDOB1" placeholder="Address and Name of Hospital">
+                     <div class="form-group" style="margin-top:10px;">
+                        <textarea class="form-control" id="exampleFormControlTextarea1" name="entry[comments]" rows="3" style="background:white;" placeholder="More details about this donation"></textarea>
+                      </div>
+                  <button type="submit" class="login" style="background:#b13a3c !important;width:100%;margin-top:10px;border-radius:10px;">Add Entry</button>
                      
                  </form> <!--End of form for adding new entry-->
                      </div>
@@ -230,9 +262,19 @@
                      <div class="col-md-6"></div>
                      <div class="col-md-6" style="text-align:center;">
                          <h4><span style="color:white;font-size:16px;">Quick Access</h4>
-                         
+                                      
+                 </form>
+                 
                          <div class="row">
-                             <div class="col-md-12" style="background:#DFE6E9;padding:10px;color:#2e3436;border-top-left-radius:5px;border-top-right-radius:5px;">
+                             <div class="col-md-12" style="background:white;padding:10px;color:#2e3436;border-top-left-radius:5px;border-top-right-radius:5px;">
+                                     <p style="text-align:left;">History of past donations:</p>
+                                     <form action="/profile/<%=currentUser.username%>/history" method="GET">
+                                     <button type="submit" class="login" style="background:#232526 !important;width:100%;margin-top:10px;border-radius:10px;"><i class="fab fa-searchengin"></i> Look Up <i class="fas fa-arrow-right"></i></button>
+
+                             </div>
+                         </div>
+                         <div class="row">
+                             <div class="col-md-12" style="background:#DFE6E9;padding:10px;color:#2e3436;">
                                      <p style="text-align:left;">Find a nearby hospital that will help you to donate your blood safely.</p>
                                      <form action="/nearby" method="GET">
                                      <button type="submit" class="login" style="background:#232526 !important;width:100%;margin-top:10px;border-radius:10px;"><i class="far fa-hospital"></i> Find a nearby Hospital <i class="fas fa-arrow-right"></i></button>

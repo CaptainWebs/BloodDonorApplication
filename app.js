@@ -8,7 +8,8 @@ var express             = require("express"),
     bodyParser          = require("body-parser"),
     User                = require("./models/user"),
     History             = require("./models/history"),
-    request             = require("request");
+    request             = require("request"),
+    encrypt = require('mongoose-encryption');
     
     
 
@@ -99,7 +100,7 @@ app.post("/register", function(req, res){
                 firstName: req.body.firstName, lastName: req.body.lastName,
                 phoneNumber: req.body.phoneNumber, bloodType: req.body.bloodType,
                 location: req.body.location, dob: req.body.dob, country: req.body.country,
-                city: req.body.city, address: req.body.address, postcode: req.body.postcode, gender: req.body.gender}),
+                city: req.body.city, address: req.body.address, postcode: req.body.postcode, gender: req.body.gender, openFor: req.body.donationType, donatedAmount: 0, receivedAmount: 0}),
                 req.body.password, function(err, user){
        
       if(err){
@@ -202,11 +203,21 @@ app.post("/profile/add/:username", function(req, res) {
             History.create(req.body.entry, function(err, history){
                 if(err){console.log(err);}
                 else{
-                    
+
                     history.donor.id = user._id;
                     history.donor.username = user.username;
+                    console.log(history.amount);5
                     history.save();
                     user.histories.push(history);
+                    
+                    // if history is type 'donated to'
+                    // add the amount to 'donatedAmount', else
+                    // add the amount to 'receivedAmount'
+                    if(history.type == "donated blood to"){
+                        user.donatedAmount += history.amount;
+                    }else if(history.type == "received blood from"){
+                        user.receivedAmount += history.amount;
+                    }
                     user.save();
                     res.redirect("/");
                 }
@@ -316,6 +327,9 @@ app.get("/profile/user/:username", function(req, res){
     });
     
 });
+
+
+
 app.get("/profile/:username/history",function(req, res) {
 
     

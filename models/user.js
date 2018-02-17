@@ -17,12 +17,17 @@ var UserSchema = new mongoose.Schema({
   city: String,
   postcode: String,
   gender: String,
-  histories: [{ type: mongoose.Schema.Types.ObjectId, ref: "History", default: []}]
+  histories: [{ type: mongoose.Schema.Types.ObjectId, ref: "History", default: []}],
+  openFor: [String],
+  donatedAmount: Number,
+  receivedAmount: Number
   
 });
 
+
 UserSchema.plugin(passportMongoose, {
-  selectFields: 'email username password phoneNumber firstName lastName bloodType location dob address city country postcode gender []'
+  selectFields: 'email username password phoneNumber firstName lastName bloodType location dob address city country postcode gender [] openFor[] donatedAmount receivedAmount'
 });
+
 
 module.exports = mongoose.model("User", UserSchema);

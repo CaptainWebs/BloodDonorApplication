@@ -16,7 +16,10 @@ var HistorySchema = new mongoose.Schema({
   
   date: Date,
   donationName: String,
-  type: String
+  type: String,
+  comment: String,
+  hospitalName: String,
+  amount: Number
   
 });
 
