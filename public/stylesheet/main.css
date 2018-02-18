@@ -171,6 +171,10 @@ background: linear-gradient(to top, #ef473a, #cb2d3e); /* W3C, IE 10+/ Edge, Fir
     color:#d43842;
 }
 
+.greenicon{
+    color:#27ae60;
+}
+
 .tableHead{
     background-color:#d43842;
     color:white;

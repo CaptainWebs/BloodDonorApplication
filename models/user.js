@@ -17,10 +17,11 @@ var UserSchema = new mongoose.Schema({
   city: String,
   postcode: String,
   gender: String,
-  histories: [{ type: mongoose.Schema.Types.ObjectId, ref: "History", default: []}],
+  histories: [{ type: mongoose.Schema.Types.ObjectId, ref: "History", date: Date }],
   openFor: [String],
   donatedAmount: Number,
-  receivedAmount: Number
+  receivedAmount: Number,
+  lastDonationDate: Number
   
 });
 

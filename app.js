@@ -9,7 +9,10 @@ var express             = require("express"),
     User                = require("./models/user"),
     History             = require("./models/history"),
     request             = require("request"),
-    encrypt = require('mongoose-encryption');
+    encrypt = require('mongoose-encryption'),
+    sorted = require('sorted-array-functions'),
+    sortedArr = require('sorted'),
+     _ = require('underscore');
     
     
 
@@ -206,10 +209,12 @@ app.post("/profile/add/:username", function(req, res) {
 
                     history.donor.id = user._id;
                     history.donor.username = user.username;
-                    console.log(history.amount);5
                     history.save();
-                    user.histories.push(history);
-                    
+                    // console.log(history.date)
+                    sorted.add(user.histories, history);
+                    // user.histories.push(history);
+    
+                
                     // if history is type 'donated to'
                     // add the amount to 'donatedAmount', else
                     // add the amount to 'receivedAmount'
@@ -218,10 +223,27 @@ app.post("/profile/add/:username", function(req, res) {
                     }else if(history.type == "received blood from"){
                         user.receivedAmount += history.amount;
                     }
+                    console.log(history.date.getTime());
+                    
+                    console.log(user.lastDonationDate);
+                    
+                    if (typeof myVar == 'undefined' || user.lastDonationDate < history.date.getTime()){
+                        user.lastDonationDate = history.date.getTime();
+                    }
+
+                    
+                    // if(user.lastDonationDate === null){
+                    //     user.lastDonationDate = history.date.getDate();
+                    // }else if(user.lastDonationDate < history.date.getDate()){
+                    //     user.lastDonationDate = history.date.getDate();
+                    // }
+                    
                     user.save();
                     res.redirect("/");
                 }
             })
+            
+
         }
     })
 })
@@ -360,6 +382,41 @@ app.get("/nearby", function(req, res) {
 function escapeRegex(text) {
     return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
 }
+
+// Binary find function to insert elements in-order to the
+// histories array of each user
+function binaryFind(array, searchElement){
+    'use strict';
+    var minIndex = 0;
+    var maxIndex = array.length - 1;
+    var currentIndex;
+    var currentElement;
+    
+    while (minIndex <= maxIndex) {
+    currentIndex = (minIndex + maxIndex) / 2 | 0;
+    currentElement = array[currentIndex];
+
+    if (currentElement < searchElement) {
+      minIndex = currentIndex + 1;
+    }
+    else if (currentElement > searchElement) {
+      maxIndex = currentIndex - 1;
+    }
+    else {
+      return { // Modification
+        found: true,
+        index: currentIndex
+      };
+    }
+  }      
+
+  return { // Modification
+    found: false,
+    index: currentElement < searchElement ? currentIndex + 1 : currentIndex
+  };
+}
+// end of the 'binaryFind' function
+
 
 // setup of necessary ports for the server
 app.listen(process.env.PORT, process.env.IP, function(){

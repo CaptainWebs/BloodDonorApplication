@@ -12,7 +12,10 @@
 
 <div class="row historyrecords donorsearch">
     <div class="col-md-10 col-md-offset-1" style="padding:15px;">
-        <h4><span class="redicon" style="font-weight:bold;"><%=number%>.</span> I have <%=history.type%> <span style="text-decoration:underline;"><%=history.donationName%></span> on <%=history.date.toDateString()%>.</h4>
+        <h4><span class="redicon" style="font-weight:bold;"><%=number%>.</span> I have <%=history.type%> <span style="text-decoration:underline;"><%=history.donationName%></span> on <i class="far fa-calendar-alt redicon"></i> <%=history.date.toDateString()%><br><br>
+        <i class="fas fa-tint redicon "></i> Amount: <%=history.amount%>pt<br><br>
+        <i class="far fa-hospital redicon"></i> Hospital Name: <%=history.hospitalName%><br><br>
+        <i class="far fa-comment-alt redicon"></i> Comment: <%=history.comment%></h4>
     </div>
 </div>
 

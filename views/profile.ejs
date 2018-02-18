@@ -156,12 +156,54 @@
                      
                      <%  }) %>
                      
-                     
-                     <h4><i class="far fa-clock redicon"></i> Last Donation Date: <span style="font-weight:700;"> 16 Jan 2017</span></h4>
+                     <% var time = currentUser.lastDonationDate;%>
+                     <% var date = new Date(time);%>
+
+                     <h4><i class="far fa-clock redicon"></i> Last Donation Date:
+                     <span>
+                         <% if(date.toDateString() == "Invalid Date"){ %>
+                         
+                         You have not added any history data.
+                         
+                         <% }else{ %>
+                         
+                         
+                         <%=date.toDateString()%></span></h4>
+                         <% } %>
                      
                      <!--Getting the last donation date from histories array-->
                      
-                     
+                     <h4><i class="fas fa-exclamation-circle redicon"></i> Eligibility Check:
+                     <span style="font-weight:700;">
+        
+                          <% var today = new Date(); %>
+                          <%if(genderType == "Female"){  %>
+                          
+                           <% if((time + 7257600000) <  today.getTime()){  %>
+                            
+                                <i class="fas fa-check greenicon"></i>
+                            
+                          <%  }else{  %>
+                            
+                                <i class="fas fa-times redicon"></i>
+                            
+                          <%  }  %>
+                          
+                        <%  }else{  %>
+                          
+                         <%   if((time + 9676800000) < today.getTime()){  %>
+                            
+                              <i class="fas fa-check greenicon"></i>
+                            
+                         <%   }else{  %>
+                            
+                              <i class="fas fa-times redicon"></i>
+                            
+                         <%   }  %>
+                          
+                         <% }  %>
+                         
+                     </span></h4>
                      
                      <hr>
                      <div class="row">
@@ -234,18 +276,18 @@
                     </div>
                     
                 </div>
-    
+        
                     <div class="form-row">
                         <div class="form-group col-md-6">
                              <input type="date"  class="form-control" name="entry[date]" style="color:black;width:100%;background:white;" id="exampleInputDOB1" placeholder="MM/DD/YYYY">
                         </div>
                         <div class="form-group col-md-6">
-                            <input type="number"  class="form-control" name="entry[amount]" style="color:black;width:100%;text-align:center;background:white;" placeholder="Amount">
+                            <input type="number" step="any" class="form-control" name="entry[amount]" style="color:black;width:100%;text-align:center;background:white;" placeholder="Amount">
                         </div>
                     </div>
                    <input type="text"  class="form-control" name="entry[hospitalName]" style="color:black;width:100%;text-align:center;background:white;" id="exampleInputDOB1" placeholder="Address and Name of Hospital">
                      <div class="form-group" style="margin-top:10px;">
-                        <textarea class="form-control" id="exampleFormControlTextarea1" name="entry[comments]" rows="3" style="background:white;" placeholder="More details about this donation"></textarea>
+                        <textarea class="form-control" id="exampleFormControlTextarea1" name="entry[comment]" rows="3" style="background:white;" placeholder="More details about this donation"></textarea>
                       </div>
                   <button type="submit" class="login" style="background:#b13a3c !important;width:100%;margin-top:10px;border-radius:10px;">Add Entry</button>
                      
