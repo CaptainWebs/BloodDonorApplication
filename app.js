@@ -337,6 +337,55 @@ app.get("/usersearch/:username", function(req, res) {
     
 });
 
+app.post("/addFriend/:id", function(req, res) {
+    console.log(req.params.id);
+    console.log(req.body.friendUsername);
+    User.findOne({username: req.body.friendUsername}, function(err, user){
+        
+        if(err){console.log(err);}
+        else{
+            
+            console.log(user);
+            User.requestFriend(req.params.id, user._id, function(err, result){
+                if(err){console.log(err);}
+                else{
+                    console.log("Friend Request is succesful");
+                    res.redirect("/");
+                }
+            })
+        }
+    })
+})
+
+app.get("/friendrequests/:username", function(req, res) {
+    var Status = require("mongoose-friends").Status;
+    User.findOne({username: req.params.username}, function(err, user) {
+        if(err){console.log(err);}
+        else{
+            var sent;
+            var received;
+             User.getFriends(user, {"myCustomPath.status": Status.Pending}, function(err, friendList){
+                 if(err){console.log(err);}
+                 else{
+                     console.log(friendList);
+                     console.log("I am here");
+                    //  res.render("friendrequests", {friends: friendList});
+                    User.getFriends(user, {"myCustomPath.status": Status.Requested}, function(err, friendList2){
+                        if(err){console.log(err);}
+                        else{
+                            console.log(friendList2);
+                           if(typeof friendList == "undefined" || friendList == null){friendList = [];}
+                           if(typeof friendList2 == "undefined" || friendList2 == null){friendList2 = [];}
+                           res.render("friendrequests", {friends: friendList,friends2:friendList2});
+                           
+                        }
+                    })
+                 }
+             });
+        }
+    })
+})
+
 app.get("/profile/user/:username", function(req, res){
     
     User.findOne({username:req.params.username}, function(err, user) {

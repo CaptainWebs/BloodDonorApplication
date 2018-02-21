@@ -1,5 +1,6 @@
 var mongoose = require("mongoose");
 var passportMongoose = require("passport-local-mongoose");
+var friends = require("mongoose-friends");
 
 var UserSchema = new mongoose.Schema({
 
@@ -29,6 +30,8 @@ var UserSchema = new mongoose.Schema({
 UserSchema.plugin(passportMongoose, {
   selectFields: 'email username password phoneNumber firstName lastName bloodType location dob address city country postcode gender [] openFor[] donatedAmount receivedAmount'
 });
+
+UserSchema.plugin(friends({pathName: "myCustomPath"}));
 
 
 module.exports = mongoose.model("User", UserSchema);

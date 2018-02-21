@@ -1,13 +1,14 @@
 <% include partials/header%>
 <div class="container" style="width:100%;">
-<div class="row" style="padding-top:100px;background:#B02428;color:white;">
+<div class="row" style="padding-top:100px;background: #200122;  /* fallback for old browsers */
+                                    background: -webkit-linear-gradient(to right, #6f0000, #200122);  /* Chrome 10-25, Safari 5.1-6 */
+                                    background: linear-gradient(to right, #6f0000, #200122);color:white;">
 
     <div class="col-md-10 col-md-offset-1">
         <h2>History</h2>
 </div>
 </div>
 <% var number = 1; %>
-<% console.log(history)%>
 <%history.forEach(function(history){%>
 
 <div class="row historyrecords donorsearch">
