@@ -22,7 +22,7 @@ var UserSchema = new mongoose.Schema({
   openFor: [String],
   donatedAmount: Number,
   receivedAmount: Number,
-  lastDonationDate: Number
+  lastDonationDate: Number,
   
 });
 

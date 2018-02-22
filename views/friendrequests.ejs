@@ -1,11 +1,11 @@
 <% include partials/header%>
 <div class="container" style="width:100%;">
-<div class="row" style="padding-top:100px;background: #200122;  /* fallback for old browsers */
+<div class="row redbutton" style="padding-top:80px;background: #200122;  /* fallback for old browsers */
                                     background: -webkit-linear-gradient(to right, #6f0000, #200122);  /* Chrome 10-25, Safari 5.1-6 */
                                     background: linear-gradient(to right, #6f0000, #200122);color:white;">
 
       <div class="col-md-8 col-md-offset-2">
-        <h3 style="text-align:center;"><i class="fas fa-users"></i> Friend Requests</h3>
+        <h2 style="text-align:center;"><i class="fas fa-users"></i> Friend Requests</h2>
       </div>    
     </div>
 </div>
@@ -16,11 +16,11 @@
             <div class="col-md-10 col-md-offset-1">
                 <h4 style="text-decoration:underline;">Sent Requests <i class="fas fa-arrow-right redicon"></i></h4>
                 
-                <hr>
-                <div class="row" style="margin-bottom:20px;">
-                    <div class="col-md-6 col-md-offset-1">
+
                          <%friends2.forEach(function(friend){ %>
-                
+                         <hr>
+                         <div class="row" style="margin-bottom:0px;">
+                        <div class="col-md-6 col-md-offset-1">
                         <span style="font-size:12px;">Date Sent: <%=friend.added.toDateString()%></span><br>
                         <h4>
                         <% if(friend.friend.gender == "manuser"){ %>
@@ -30,11 +30,8 @@
                         <% } %>
                             Name:     <%=friend.friend.firstName%> <%=friend.friend.lastName%><br>
                         <span style="font-size:14px;padding-top:5px;">Username: <%=friend.friend.username%></span></h4>
-                    
-                       <% }) %>
-                       
-                    </div>
-                    <div class="col-md-4">
+                        </div>
+                                            <div class="col-md-4">
                                     <button type="submit" class="btn btn-primary" style="    outline:none !important;    
                                             margin-top: 5px;
                                             border:none;
@@ -51,10 +48,10 @@
                                                                     font-size: 14px;
                                                                 background: #b13a3c;"><i class="fas fa-times"></i> Cancel Request</button>
                     </div>
-                </div>
-
-               
-               
+                    </div>
+                        
+                       <% }) %>
+                      
             </div>
         </div>
     </div>
@@ -64,12 +61,13 @@
             <div class="col-md-10 col-md-offset-1">
                 <h4 style="text-decoration:underline;">Received Requests <i class="fas fa-arrow-right redicon"></i></h4>
                 
-                <hr>
-                <div class="row">
-                    <div class="col-md-6 col-md-offset-1">
-                         <%friends.forEach(function(friend){ %>
                 
-                        <span style="font-size:12px;">Date Sent: <%=friend.added.toDateString()%></span><br>
+
+                         <%friends.forEach(function(friend){ %>
+                         <hr>
+                         <div class="row" style="margin-bottom:0px;">
+                        <div class="col-md-6 col-md-offset-1">
+                        <span style="font-size:12px;">Date Received: <%=friend.added.toDateString()%></span><br>
                         <h4>
                         <% if(friend.friend.gender == "manuser"){ %>
                         <i class="fas fa-male redicon"></i>
@@ -78,11 +76,8 @@
                         <% } %>
                             Name:     <%=friend.friend.firstName%> <%=friend.friend.lastName%><br>
                         <span style="font-size:14px;padding-top:5px;">Username: <%=friend.friend.username%></span></h4>
-                    
-                       <% }) %>
-                       
-                    </div>
-                    <div class="col-md-4">
+                        </div>
+                                            <div class="col-md-4">
                                     <button type="submit" class="btn btn-primary" style="    outline:none !important;    
                                             margin-top: 5px;
                                             border:none;
@@ -91,18 +86,30 @@
                                             font-size: 14px;
                                         background:#232526;"><i class="fas fa-eye"></i> View Profile</button>
             
+                                    <form action="/removeFriend/<%=currentUser.username%>" method="POST" style="display:inline;">
+                                    <input type="text" name="friendID" value="<%=friend.friend._id%>" style="display:none;">      
                                     <button type="submit" class="btn btn-primary" style="outline:none !important;    
                                                                     margin-top: 5px;
                                                                     border:none;
-                                                                    width:100%;
+                                                                    width:48%;
                                                                     height: 40px;
                                                                     font-size: 14px;
-                                                                background: #b13a3c;"><i class="fas fa-times"></i> Cancel Request</button>
+                                                                background: #b13a3c;display:inline-block;"><i class="fas fa-times"></i> Cancel</button></form>
+                                    
+                                    <form action="/addFriend/<%=currentUser._id%>" method="POST" style="display:inline;">
+                                    <input type="text" name="friendUsername" value="<%=friend.friend.username%>" style="display:none;">    
+                                    <button type="submit" class="btn btn-primary" style="outline:none !important;    
+                                                                    margin-top: 5px;
+                                                                    border:none;
+                                                                    width:48%;
+                                                                    height: 40px;
+                                                                    font-size: 14px;
+                                                                background: #6ab04c;display:inline-block;"><i class="fas fa-check"></i> Accept</button></form>
                     </div>
-                </div>
-
-               
-               
+                    </div>
+                        
+                       <% }) %>
+                      
             </div>
         </div>
     </div>

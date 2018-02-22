@@ -127,7 +127,7 @@
                                             font-size: 14px;
                                         background: #B22222;"><i class="fas fa-times"></i> Remove Friend</button>
             
-            <button type="submit" class="btn btn-primary" style="outline:none !important;    
+            <button type="submit" class="btn btn-primary greenbutton" style="outline:none !important;    
                                             margin-top: 5px;
                                             border:none;
                                             width:100%;
@@ -136,82 +136,24 @@
                                         background: #3742fa;"><i class="fas fa-plus"></i> Add Friend</button>
             <hr>
             
-            <h4><i class="fas fa-users redicon"></i> Friends</h4>
+            <% var count=0; %>
+            <% friends.forEach(function(friend){ %>
+            <%console.log(count)%>
+            <% count++; })%>
+            
+            <h4><i class="fas fa-users redicon"></i> Friends(<%=count%>)</h4>
             <div class="row">
+                
                 <div class="container">
                     <table class="table table-fixed">
-    <tbody>
-      <tr>
-        <td class="col-xs-3">John</td>
-        <td class="col-xs-3">Doe</td>
-
-      </tr>
-
-      <tr>
-        <td class="col-xs-3">John</td>
-        <td class="col-xs-3">Doe</td>
-
-      </tr>
-      <tr>
-        <td class="col-xs-3">John</td>
-        <td class="col-xs-3">Doe</td>
-
-      </tr>
-      <tr>
-        <td class="col-xs-3">John</td>
-        <td class="col-xs-3">Doe</td>
-
-      </tr>
-      <tr>
-        <td class="col-xs-3">John</td>
-        <td class="col-xs-3">Doe</td>
-
-      </tr>
-      <tr>
-        <td class="col-xs-3">John</td>
-        <td class="col-xs-3">Doe</td>
-
-      </tr>
-      <tr>
-        <td class="col-xs-3">John</td>
-        <td class="col-xs-3">Doe</td>
-
-      </tr>
-      <tr>
-        <td class="col-xs-3">John</td>
-        <td class="col-xs-3">Doe</td>
-
-      </tr>
-      <tr>
-        <td class="col-xs-3">John</td>
-        <td class="col-xs-3">Doe</td>
-
-      </tr>
-      <tr>
-        <td class="col-xs-3">John</td>
-        <td class="col-xs-3">Doe</td>
-
-      </tr>
-      <tr>
-        <td class="col-xs-3">John</td>
-        <td class="col-xs-3">Doe</td>
-
-      </tr>
-      <tr>
-        <td class="col-xs-3">John</td>
-        <td class="col-xs-3">Doe</td>
-
-      </tr>
-      <tr>
-        <td class="col-xs-3">John</td>
-        <td class="col-xs-3">Doe</td>
-
-      </tr>
-      <tr>
-        <td class="col-xs-3">John</td>
-        <td class="col-xs-3">Doe</td>
-
-      </tr>
+    <tbody style="text-align:left !important;">
+         <%  friends.forEach(function(friend){ %>
+               <tr>  
+              <td class="col-xs-6"><i class="fas fa-user"></i> <%=friend.friend.firstName%> <%=friend.friend.lastName%> (@<%=friend.friend.username%>)</td>
+                         </tr>
+               <%  }) %>
+ 
+     
     </tbody>
   </table>
                 </div>
@@ -333,7 +275,7 @@
                    <a href="mailto:<%=currentUser.email%>" style="color:white;text-decoration:none;"> Send Email</a></button>   
                 </div>
                 <div class="col-md-6">
-                   <button class="btn btn-primary btn-phone">
+                   <button class="btn btn-primary btn-phone greenbutton">
                        <i class="fa fa-phone" aria-hidden="true"></i>
                    <a href="callTo:<%=currentUser.phoneNumber%>" style="color:white;text-decoration:none;">Call Phone</button></a>
                 </div>
@@ -357,7 +299,7 @@
         </div>
        </div>
        
-       <!--Adddding Friend-->
+      
        <form action="/addFriend/<%=currentUser._id%>" method="POST">
            <input type="text" name="friendUsername" placeholder="username">
            <button type="submit">Submit</button>

@@ -357,6 +357,44 @@ app.post("/addFriend/:id", function(req, res) {
     })
 })
 
+app.post("/removeFriend/:username", function(req, res) {
+
+    User.findOne({username: req.params.username}, function(err, user){
+        
+        if(err){console.log(err);}
+        else{
+            
+            console.log("----------------------------");
+            var Status = require("mongoose-friends").Status;
+            User.getFriends(user, {"myCustomPath.status": Status.Pending}, function(err, requestList) {
+                if(err){console.log(err);}
+                else{
+                    
+                    var index=5;
+                    console.log(user);
+                    console.log(requestList);
+                    console.log(req.body.friendID);
+                    requestList.forEach(function(request){
+                        if(request._id == req.body.friendID){
+                            index = requestList.indexOf(request);
+                        }
+                    })
+                    
+                    // requestList.splice(index, 1);
+                    delete requestList[index];
+                    
+                    console.log("----------------------")
+                    console.log(requestList)
+                    console.log(index);
+                    
+                    res.redirect("/");
+                    
+                }
+            });
+        }
+    })
+})
+
 app.get("/friendrequests/:username", function(req, res) {
     var Status = require("mongoose-friends").Status;
     User.findOne({username: req.params.username}, function(err, user) {
@@ -376,7 +414,7 @@ app.get("/friendrequests/:username", function(req, res) {
                             console.log(friendList2);
                            if(typeof friendList == "undefined" || friendList == null){friendList = [];}
                            if(typeof friendList2 == "undefined" || friendList2 == null){friendList2 = [];}
-                           res.render("friendrequests", {friends: friendList,friends2:friendList2});
+                           res.render("friendrequests", {friends: friendList,friends2:friendList2, currentUser:user});
                            
                         }
                     })
@@ -393,7 +431,16 @@ app.get("/profile/user/:username", function(req, res){
             console.log(err);
         }else{
             console.log(user);
-            res.render("profile", {currentUser:user});
+            var Status = require("mongoose-friends").Status;
+            User.getFriends(user, {"myCustomPath.status": Status.Accepted}, function(err, friends){
+                if(err){
+                    console.log(err);
+                }else{
+                    console.log(friends);
+                     res.render("profile", {currentUser:user, friends: friends});
+                }
+            });
+           
         }
     });
     
