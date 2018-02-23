@@ -14,6 +14,7 @@ var express             = require("express"),
     sortedArr = require('sorted'),
      _ = require('underscore');
     
+let mongooseFieldEncryption = require('mongoose-field-encryption').fieldEncryption;
     
 
 // setting up DB for mongoose
@@ -147,6 +148,10 @@ app.get("/search", function(req, res) {
 });
 
 app.get("/results", function(req, res) {
+  
+  let fieldEncryption = require('mongoose-field-encryption')
+  let encrypted = fieldEncryption.encrypt('some text', 'vusala');
+  let decrypted = fieldEncryption.decrypt(encrypted, 'vusala');
   
   if(req.query.bloodType){
       
