@@ -145,11 +145,11 @@
             <div class="row">
                 
                 <div class="container">
-                    <table class="table table-fixed">
+                    <table class="table friend">
     <tbody style="text-align:left !important;">
          <%  friends.forEach(function(friend){ %>
                <tr>  
-              <td class="col-xs-6"><i class="fas fa-user"></i> <%=friend.friend.firstName%> <%=friend.friend.lastName%> (@<%=friend.friend.username%>)</td>
+              <td class="col-xs-6"><a href="/profile/<%=friend.friend.username%>" style="color:white;"><i class="fas fa-user"></i> <%=friend.friend.firstName%> <%=friend.friend.lastName%> (@<%=friend.friend.username%>)</a></td>
                          </tr>
                <%  }) %>
  
@@ -158,7 +158,7 @@
   </table>
                 </div>
             </div>
-            <form action="/friendrequests/<%=currentUser.username%>" method="GET">
+            <form action="/requests/<%=currentUser.username%>" method="GET">
              <button type="submit" class="" style="background:#DFE6E9;border:0;">Friend Requests <i class="fas fa-arrow-right redicon"></i></button>
             </form>
             
@@ -315,7 +315,7 @@
              <div class="col-md-6 col-md-offset-3" style="text-align:center;background:white;color:#232526;padding:15px;border-bottom-left-radius:150px;border-bottom-right-radius:150px;">
                  <div class="row" style="height:30px;width:100%;line-height:30px;text-align:center;font-size:24px;">
         
-                   <i class="fa fa-heart" style="color:#ff5252" aria-hidden="true"></i> Donations | Requests <i class="fa fa-lock-open redicon"></i>
+                   <i class="fas fa-history" style="color: #b13a3c"></i> History
                  
              </div> 
            </div>
@@ -328,7 +328,7 @@
                  <div class="row">
                      <div class="col-md-8" style="background:white;margin-top:20px;margin-bottom:20px;border-radius:5px;">
                          <!--Form for adding new entry-->
-                         <form action="/profile/add/<%=currentUser.username%>" method="POST">
+                         <form action="/profile/<%=currentUser.username%>/history/add" method="POST">
                 
                 <h4 style="text-align:center;color:#232526;"><i class="fas fa-plus redicon"></i> I have</h4>  
                 <br>
@@ -385,7 +385,7 @@
                                      <p style="text-align:left;">History of past donations:</p>
                                      <form action="/profile/<%=currentUser.username%>/history" method="GET">
                                      <button type="submit" class="login" style="background:#232526 !important;width:100%;margin-top:10px;border-radius:10px;"><i class="fab fa-searchengin"></i> Look Up <i class="fas fa-arrow-right"></i></button>
-
+                                     </form>
                              </div>
                          </div>
                          <div class="row">

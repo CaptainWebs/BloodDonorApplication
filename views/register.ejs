@@ -1,10 +1,11 @@
 <% include partials/header%>
 
 <div class="container">
+
   
         <div class="col-md-6 fifty2">
           <h3><i class="fa fa-exclamation-triangle" style="color: #B22222;" aria-hidden="true"></i> Qualification Check</h3>
-          <p>Please check the below table to see if you have any one of the illnesses or states that disqualify you from being a blood donor. If you have none of the illnesses from the table, simply check    <span style="color: #B22222;">"I don't have any of these"</span> and proceed to filling registration details and hit "Submit".</p>
+          <p>Please check the below table to see if you have any one of the illnesses or states that disqualify you from being a blood donor. If you have none of the illnesses from the table, simply check<br> <span style="color: #B22222;">"I Verify"</span> and proceed to filling registration details and hit "Submit".</p>
           <table class="table qualification">
   <thead class="thead-inverse">
     <tr>
@@ -14,49 +15,50 @@
   </thead>
   <tbody>
     <tr>
-
-      <td>AIDS</td>
+      <td class="illness">AIDS</td>
       <td>Being positive for the AIDS or hepatitis viruses disqualifies you from being a blood donor.</td>
     </tr>
     <tr>
-      <td>Pregnancy</td>
+      <td class="illness">Pregnancy</td>
       <td>Pregnancy and recent childbirth rule one out as a blood donor.</td>
     </tr>
     <tr>
-      <td>Cancer</td>
+      <td class="illness">Cancer</td>
       <td>For almost all cancers (such as breast, brain, prostate, and lung), a person may donate blood five years after diagnosis or date of the last surgery, last chemotherapy or last radiation treatment.</td>
     </tr>
     <tr>
-      <td>Blood Cancer</td>
+      <td class="illness">Blood Cancer</td>
       <td>For blood cancers (such as leukemia or lymphoma), a person is not allowed to donate blood.</td>
     </tr>
       <tr>
-      <td>Malaria</td>
+      <td class="illness">Malaria</td>
       <td>People who had malaria can not donate their blood for 12 months.</td>
     </tr>
     <tr>
-      <td>Diabates</td>
+      <td class="illness">Diabates</td>
       <td>People who take insulin are not allowed to give blood.</td>
     </tr>
     
   </tbody>
 </table>
+
 <div class="form-check" style="color:#B22222; font-size:16px;">
-    <input type="checkbox" class="form-check-input" id="exampleCheck1">
-    <label class="form-check-label" for="exampleCheck1"> I don't have any of these.</label>
+    <form action="/register" method="POST" id="eligibility">
+    <input type="checkbox"  style="size:50px;"name="qualification" id="qualification" class="form-check-input" required onclick="javascript:eligibility();">
+    <label class="form-check-label" for="exampleCheck1"> I Verify - not having any of the illnesses above.</label></form>
   </div>
         </div>
         <div class="col-md-6 fifty">
       
-                <form class="px-4 py-3" action="/register" method="POST">
+                <form class="px-4 py-3" action="/register" method="POST" id="userdata">
                 <div class="form-row">
                   <div class="form-group col-md-4">
                     <label for="username">Username</label>
-                    <input type="text" class="form-control" name="username" id="exampleDropdownFormEmail1" placeholder="choose a username" required>
+                    <input type="text" class="form-control" name="username" id="exampleDropdownFormEmail1" placeholder="enter a username" required>
                   </div>
                   <div class="form-group col-md-2">
                     <label for="gender">Gender</label>
-                    <select name="gender" class="form-control" style="width:100%;color:gray;" id="gender">
+                    <select name="gender" class="form-control" style="width:100%;color:gray;" id="gender" required>
                         <option value="manuser">Male</option>
                         <option value="womanuser">Female</option>
                     </select>
@@ -65,7 +67,7 @@
                   </div>
                   <div class="form-group col-md-4">
                                       <label for="exampleDropdownFormEmail1"> Select Your Blood Type</label>
-                  <select class="selectpicker" name="bloodType"  data-style="btn-info" multiple data-max-options="1" data-live-search="true">
+                  <select class="selectpicker" name="bloodType"  data-style="btn-info" multiple data-max-options="1" data-live-search="true" required>
  
                       <optgroup label="A group">
                        
@@ -110,11 +112,11 @@
                   
                   <div class="form-group col-md-6">
                     <label for="exampleDropdownFormEmail1">First Name</label>
-                    <input type="text" class="form-control" name="firstName" id="exampleDropdownFormEmail1" placeholder="Enter your first name">
+                    <input type="text" class="form-control" name="firstName" placeholder="Enter your first name" required>
                   </div>
                   <div class="form-group col-md-6">
                     <label for="exampleDropdownFormEmail1">Last Name</label>
-                    <input type="text" class="form-control" name="lastName" id="exampleDropdownFormEmail1" placeholder="Enter your last name">
+                    <input type="text" class="form-control" name="lastName" id="exampleDropdownFormEmail1" placeholder="Enter your last name" required>
                   </div>
                   
                 </div>
@@ -126,17 +128,17 @@
                 
                 <div class="form-row">
                   <div class="form-group col-md-6">
-                    <select name="country" class="countries" style="width:100%;height:40px;color:gray;" id="countryId">
+                    <select name="country" class="countries" style="width:100%;height:40px;color:gray;" id="countryId" required>
                         <option value="">Please Select Country</option>
                     </select>
                   </div>  
                   <div class="form-group col-md-6">
-                    <input type="text" style="width:100%;height:40px;color:gray;" class="form-control" name="city" id="exampleDropdownFormEmail1" placeholder="City">
+                    <input type="text" style="width:100%;height:40px;color:gray;" class="form-control" name="city" id="exampleDropdownFormEmail1" placeholder="City" required>
                   </div>
                 </div>
                 <div class="form-row">
                   <div class="form-group col-md-6">
-                        <input  style="width:100%;height:40px;color:gray;" type="text" class="form-control" name="address" id="exampleDropdownFormEmail1" placeholder="Address">
+                        <input  style="width:100%;height:40px;color:gray;" type="text" class="form-control" name="address" id="exampleDropdownFormEmail1" placeholder="Address" required>
                   </div>
                   
                 <div class="form-group col-md-6">
@@ -148,21 +150,21 @@
                <div class="form-row">
                   <div class="form-group col-md-6">
                     <label>Date of Birth</label>
-                    <input type="date" name="dob" class="form-control" id="exampleInputDOB1" placeholder="Date of Birth">
+                    <input type="date" name="dob" class="form-control" id="exampleInputDOB1" placeholder="Date of Birth" required>
                   </div> 
                 <div class="form-group col-md-6">
                   <label for="exampleDropdownFormEmail1">Mobile Phone</label>
-                  <input type="tel" id="phone" class="form-control" name="phoneNumber" placeholder="for example: +44 775 157 2909">
+                  <input type="tel" id="phone" class="form-control" name="phoneNumber" placeholder="for example: +44 775 157 2909" required>
                 </div>
                </div>
                 <div class="form-row">
                   <div class="form-group col-md-6">
                   <label for="exampleDropdownFormEmail1">Email</label>
-                  <input type="text" class="form-control" name="email" id="exampleDropdownFormEmail1" placeholder="please enter your email address">
+                  <input type="email" class="form-control" name="email" id="exampleDropdownFormEmail1" placeholder="please enter your email address" required>
                   </div>
                   <div class="form-group col-md-6">
                     <label for="exampleDropdownFormPassword1">Password</label>
-                    <input type="password" class="form-control" name="password" id="exampleDropdownFormPassword1" placeholder="please enter a strong password">
+                    <input type="password" class="form-control" name="password" id="exampleDropdownFormPassword1" placeholder="please enter a strong password" required>
                   </div>
                 </div>
                 
@@ -171,7 +173,7 @@
                     Please select the type of donations that you would like to make.
                   </div>
                   <div class="form-group col-md-6">
-                    <select class="selectpicker form-control" name="donationType" multiple style="color:black;" data-style="btn-danger" title="Type of donation">
+                    <select class="selectpicker form-control" name="donationType" multiple style="color:black;" data-style="btn-danger" title="Type of donation" required>
 
                       <option value="Whole Blood Donation">Whole Blood Donation</option>
                       <option value="Platelet Apheresis">Platelet Apheresis</option>
@@ -189,7 +191,7 @@
                 <!--  <input type="password" class="form-control" id="exampleDropdownFormPassword1" placeholder="Repeat Password">-->
                 <!--</div>-->
           
-                <button type="submit" style="width:100%;border-radius:5px;margin-top:20px;" class="login">Submit</button>
+                <button type="submit" style="width:100%;border-radius:5px;margin-top:20px;" id="regsubmit" class="login" disabled>Submit</button>
               
               </form>            
         </div>
@@ -197,5 +199,21 @@
     </div>
     
 </div>
+
+<script type="text/javascript">
+
+function eligibility()
+{
+if (document.getElementById('qualification').checked == true)
+  {
+  document.getElementById('regsubmit').removeAttribute('disabled');
+  }
+else
+  {
+  document.getElementById('regsubmit').setAttribute('disabled','disabled');
+  }
+}
+</script>
+
 
 <% include partials/footer%>

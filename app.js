@@ -12,7 +12,8 @@ var express             = require("express"),
     encrypt = require('mongoose-encryption'),
     sorted = require('sorted-array-functions'),
     sortedArr = require('sorted'),
-     _ = require('underscore');
+     _ = require('underscore'),
+    flash = require('connect-flash');
     
 let mongooseFieldEncryption = require('mongoose-field-encryption').fieldEncryption;
     
@@ -29,6 +30,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + '/public'));
 
+app.use(flash());
 passport.use(new passportLocal(User.authenticate()));
 
 app.use(passport.initialize());
@@ -53,7 +55,7 @@ passport.deserializeUser(User.deserializeUser());
 // ---------------
 
 app.get("/", function(req, res){
-    
+    console.log(req.user);
     res.render("index");
     
 });
@@ -68,14 +70,16 @@ app.get("/login", function(req, res){
     
 });
 
+
+// Refresh login page on unsuccesful login
 app.post("/login", passport.authenticate("local",{
     
-    successRedirect: "./",
     failureRedirect: "/login"
     
 }),function(req, res){
     
-    
+    // Redirec to user profile on succesful login
+    res.redirect("/profile/" + req.body.username);
     
 });
 
@@ -97,7 +101,9 @@ app.get("/logout", function(req, res) {
     res.redirect("./");
 })
 
-// getting the user registration and posting it
+// getting entered data from registration form
+// Creating a new user with data and
+// redirecting to user profile
 app.post("/register", function(req, res){
     
    User.register(new User({username: req.body.username,email: req.body.email, 
@@ -114,7 +120,7 @@ app.post("/register", function(req, res){
       
       passport.authenticate("local")(req, res, function(){
          
-         res.render("profile", {currentUser:user});
+         res.redirect("/profile/" + user.username);
           
       });
        
@@ -122,23 +128,6 @@ app.post("/register", function(req, res){
     
 });
 
-// app.post("/profile", function(req, res) {
-   
-//   res.render("profile",{req.user})
-    
-// });
-
-app.get("/profile/:userID", function(req, res){
-    res.render("profile");
-})
-
-function isLoggedIn(req, res, next){
-    if(req.isAuthenticated()){
-        return next;
-    }
-    
-    res.redirect("/login");
-}
 
 // Search route
 app.get("/search", function(req, res) {
@@ -146,6 +135,12 @@ app.get("/search", function(req, res) {
    res.render("search");
     
 });
+
+
+// search the database according to the data
+// retrieved from search field
+// collect the data in collection called 'allUsers'
+// pass the collection and render 'donor'
 
 app.get("/results", function(req, res) {
   
@@ -172,6 +167,7 @@ app.get("/results", function(req, res) {
   
 });
 
+// Reporting user that is associated with this username
 app.get("/report/:username", function(req, res){
     console.log(req.params.username);
     if(req.params.username){
@@ -189,24 +185,10 @@ app.get("/report/:username", function(req, res){
 });
 
 // adding history data to a user
-app.post("/profile/add/:username", function(req, res) {
+app.post("/profile/:username/history/add", function(req, res) {
     User.findOne({username: req.params.username}, function(err, user){
         if(err){console.log(err);}
         else{
-
-            // History.create({date:req.body.entry.date,donationName:req.body.entry.donationName,type:req.body.entry.type}, function(err, history){
-                
-            //     if(err){console.log(err)}else{
-            //         history.donor.id = user._id;
-            //         history.donor.username = user.username;
-            //         history.save();
-            //         // user.histories.push(history);
-            //         // console.log(user.histories);
-            //         // user.save();
-            //         // console.log(foundUser);
-            //         res.redirect("/");
-            //     }
-            // })
             
             History.create(req.body.entry, function(err, history){
                 if(err){console.log(err);}
@@ -235,23 +217,16 @@ app.post("/profile/add/:username", function(req, res) {
                     if (typeof myVar == 'undefined' || user.lastDonationDate < history.date.getTime()){
                         user.lastDonationDate = history.date.getTime();
                     }
-
-                    
-                    // if(user.lastDonationDate === null){
-                    //     user.lastDonationDate = history.date.getDate();
-                    // }else if(user.lastDonationDate < history.date.getDate()){
-                    //     user.lastDonationDate = history.date.getDate();
-                    // }
                     
                     user.save();
-                    res.redirect("/");
+                    res.redirect("/profile/" + req.params.username);
                 }
-            })
+            });
             
 
         }
-    })
-})
+    });
+});
 
 app.get("/usersearch/:username", function(req, res) {
    
@@ -400,7 +375,7 @@ app.post("/removeFriend/:username", function(req, res) {
     })
 })
 
-app.get("/friendrequests/:username", function(req, res) {
+app.get("/requests/:username", function(req, res) {
     var Status = require("mongoose-friends").Status;
     User.findOne({username: req.params.username}, function(err, user) {
         if(err){console.log(err);}
@@ -429,7 +404,7 @@ app.get("/friendrequests/:username", function(req, res) {
     })
 })
 
-app.get("/profile/user/:username", function(req, res){
+app.get("/profile/:username", isLoggedIn, function(req, res){
     
     User.findOne({username:req.params.username}, function(err, user) {
         if(err){
@@ -516,7 +491,19 @@ function binaryFind(array, searchElement){
     index: currentElement < searchElement ? currentIndex + 1 : currentIndex
   };
 }
-// end of the 'binaryFind' function
+
+// middleware function to check if
+// the user is logged in or,
+// ask to login if they want to access
+// user specific pages
+
+function isLoggedIn(req, res, next){
+    if(req.isAuthenticated()){
+        return next();
+    }
+    res.redirect("/login");
+}
+
 
 
 // setup of necessary ports for the server
