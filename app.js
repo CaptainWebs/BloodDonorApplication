@@ -13,10 +13,14 @@ var express             = require("express"),
     sorted = require('sorted-array-functions'),
     sortedArr = require('sorted'),
      _ = require('underscore'),
-    flash = require('connect-flash');
+    flash = require('connect-flash'),
+    nodemailer = require("nodemailer"),
+    xoauth2 = require('xoauth2');
     
+    
+   
 let mongooseFieldEncryption = require('mongoose-field-encryption').fieldEncryption;
-    
+
 
 // setting up DB for mongoose
 mongoose.connect("mongodb://localhost/blood_app",{
@@ -176,7 +180,7 @@ app.get("/results", function(req, res) {
 });
 
 // Reporting user that is associated with this username
-app.get("/report/:username", function(req, res){
+app.get("/report/:username", isLoggedIn, function(req, res){
     console.log(req.params.username);
     if(req.params.username){
         
@@ -417,7 +421,21 @@ app.get("/profile/:username", isLoggedIn, function(req, res){
                 if(err){
                     console.log(err);
                 }else{
-                     res.render("user", {currentUser:user, friends: friends});
+                    var isFriend = false;
+
+                    User.getFriends(user, {}, {username: req.user.username}, function(err, result){
+                        if(err){
+                            console.log(err);
+                        }else{
+                            if(result.length != 0){
+                                isFriend = true;
+                            }
+                            console.log(isFriend);
+                            res.render("user", {currentUser:user, friends: friends, isFriend: isFriend});
+                        }
+                    });
+                    
+                     
                 }
             });
             
@@ -454,14 +472,118 @@ app.get("/profile/:username/history",function(req, res) {
                   else{
                       res.render("history", {history : history});
                   }
-              })          
+              });          
 
 
         }
         
         
-    })
-})
+    });
+});
+
+// -----------------------------EMAIL(start)------------------------------------
+// sending questions of user
+// to email with the question body and user email
+
+//                               QUESTION
+app.post('/send/:type', function (req, res) {
+   
+    const output = `
+    <h3>${req.params.type} from BlooDonor Application</h3>
+    <h4>Username: ${req.user.username}</h4>
+    <p>${req.body.message}</p>
+  `;
+  
+  let recipient = req.user.email;
+  let type = req.params.type;
+
+
+  // create reusable transporter object using the default SMTP transport
+  let transporter = nodemailer.createTransport({
+    host: 'smtp.gmail.com',
+    port: 587,
+    secure: false, // true for 465, false for other ports
+    auth: {
+        user: 'nurlanisazadah', // generated ethereal user
+        pass: 'NurlanVusale18'  // generated ethereal password
+    },
+    tls:{
+      rejectUnauthorized:false
+    }
+  });
+
+  // setup email data with unicode symbols
+  let mailOptions = {
+      from: '"BlooDonor Application" <recipient>', // sender address
+      to: 'nurlanisazadah@gmail.com', // list of receivers
+      subject: type, // Subject line
+      text: 'BlooDonor Application', // plain text body
+      html: output // html body
+  };
+
+  // send mail with defined transport object
+  transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+          return console.log(error);
+      }
+      console.log('Message sent: %s', info.messageId);   
+      console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
+
+        console.log(req.user);
+      res.redirect('/profile/' + req.user.username);
+  }); 
+});
+
+//                REPORT
+
+app.post('/report/:username', function (req, res) {
+   
+    const output = `
+    <h3>Report from BlooDonor Application</h3>
+    <h4>Sender: @${req.user.username}</h4>
+    <h4>I want to report: @${req.params.username}</h4>
+    <p>${req.body.message}</p>
+  `;
+  
+  let recipient = req.user.email;
+
+  // create reusable transporter object using the default SMTP transport
+  let transporter = nodemailer.createTransport({
+    host: 'smtp.gmail.com',
+    port: 587,
+    secure: false, // true for 465, false for other ports
+    auth: {
+        user: 'nurlanisazadah', // generated ethereal user
+        pass: 'NurlanVusale18'  // generated ethereal password
+    },
+    tls:{
+      rejectUnauthorized:false
+    }
+  });
+
+  // setup email data with unicode symbols
+  let mailOptions = {
+      from: '"BlooDonor Application" <recipient>', // sender address
+      to: 'nurlanisazadah@gmail.com', // list of receivers
+      subject: 'Report', // Subject line
+      text: 'BlooDonor Application', // plain text body
+      html: output // html body
+  };
+
+  // send mail with defined transport object
+  transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+          return console.log(error);
+      }
+      console.log('Message sent: %s', info.messageId);   
+      console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
+
+        console.log(req.user);
+      res.redirect('/profile/' + req.user.username);
+  }); 
+});
+
+// -----------------------------EMAIL(end)--------------------------------------
 
 // Sending postcode data to find the nearby hospitals
 app.get("/nearby", function(req, res) {

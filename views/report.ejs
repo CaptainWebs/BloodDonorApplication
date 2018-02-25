@@ -21,10 +21,10 @@
             </div>
         </div>
         <hr>
-        <form action="" method="POST">
+        <form action="/report/<%=user.username%>" method="POST">
           <div class="form-group">
           <label for="exampleTextarea">Please tell us why you want to report <span style="font-weight:bold;font-size:18px;color:#AE262D;">@<%= user.username%></span>:</label>
-          <textarea class="form-control" id="exampleTextarea" rows="6" name="reportDetails"></textarea>
+          <textarea class="form-control" id="exampleTextarea" rows="6" name="message"></textarea>
           </div>
           <input type="submit" value="Report">
         </form>

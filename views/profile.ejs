@@ -101,12 +101,9 @@
             <image src="/images/<%=currentUser.gender%>.png" style="height:150px; width:150px; border-radius:20px;display:block;margin:0 auto;">
              
                 
-            <!--Username-->
-            <form action="/report/<%=currentUser.username%>" method="GET">
-             <button type="submit" class="" style="background:#DFE6E9;border:0;"><i class="fa fa-flag redicon"></i> Report</button>
-             <span class="redicon">@<%= currentUser.username%></span>
-            </form>
-            
+
+             <h4 class="redicon" style="text-align:center;"><i class="fas fa-at redicon"></i> <%= currentUser.username%></h4>
+
             <!--Buttons-->
             <!--Send request button-->
             <!--<button type="button" class="btn btn-primary profilebtn1 requestFriend"><i class="fa fa-plus" aria-hidden="true"></i> Send Request</button>-->
@@ -117,28 +114,28 @@
             
             <!--Report user button-->
   
-            <h4 style="text-align:center;">You are Friends <i class="fas fa-check greenicon"></i><br>
-            <span style="font-size:12px;color:gray;">since Date</span></h4>
+            <!--<h4 style="text-align:center;">You are Friends <i class="fas fa-check greenicon"></i><br>-->
+            <!--<span style="font-size:12px;color:gray;">since Date</span></h4>-->
             
-            <% if(currentUser != logUser){ %>
+            <!--<% if(currentUser != logUser){ %>-->
             
-                        <button type="submit" class="btn btn-primary" style="    outline:none !important;    
-                                            margin-top: 5px;
-                                            border:none;
-                                            width:100%;
-                                            height: 40px;
-                                            font-size: 14px;
-                                        background: #B22222;"><i class="fas fa-times"></i> Remove Friend</button>
+            <!--            <button type="submit" class="btn btn-primary" style="    outline:none !important;    -->
+            <!--                                margin-top: 5px;-->
+            <!--                                border:none;-->
+            <!--                                width:100%;-->
+            <!--                                height: 40px;-->
+            <!--                                font-size: 14px;-->
+            <!--                            background: #B22222;"><i class="fas fa-times"></i> Remove Friend</button>-->
             
-                        <button type="submit" class="btn btn-primary greenbutton" style="outline:none !important;    
-                                            margin-top: 5px;
-                                            border:none;
-                                            width:100%;
-                                            height: 40px;
-                                            font-size: 14px;
-                                        background: #3742fa;"><i class="fas fa-plus"></i> Add Friend</button>
+            <!--            <button type="submit" class="btn btn-primary greenbutton" style="outline:none !important;    -->
+            <!--                                margin-top: 5px;-->
+            <!--                                border:none;-->
+            <!--                                width:100%;-->
+            <!--                                height: 40px;-->
+            <!--                                font-size: 14px;-->
+            <!--                            background: #3742fa;"><i class="fas fa-plus"></i> Add Friend</button>-->
             
-            <% } %>
+            <!--<% } %>-->
 
             <hr>
             
@@ -162,11 +159,29 @@
      
     </tbody>
   </table>
-                </div>
-            </div>
-            <form action="/requests/<%=currentUser.username%>" method="GET">
+     <form action="/requests/<%=currentUser.username%>" method="GET">
              <button type="submit" class="" style="background:#DFE6E9;border:0;">Friend Requests <i class="fas fa-arrow-right redicon"></i></button>
             </form>
+               <hr>
+                    
+                    <div class="form-group" style="width:100%;margin:0;">
+                      <form action="/send/question/" method="POST">    
+                      <label for="comment">Any Questions?</label>
+                      <textarea class="form-control" style="font-size:12px;" rows="4" id="question" name="message" placeholder="please tell us more about your question"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="outline:none !important;    
+                                            margin-top: 5px;
+                                            border:none;
+                                            width:100%;
+                                            height: 40px;
+                                            font-size: 14px;
+                                        background: #b02528;"><i class="fas fa-share-square"></i> Send</button></form>
+          
+                </div>
+            </div>
+         
+            
+
             
             <!--<a href="/report/<%=currentUser.username%>"> -->
             <!--<button type="button" value="submit" class="btn btn-primary profilebtn1 reportUser"><i class="fa fa-flag-o" aria-hidden="true"></i> Report User</button></a>-->
@@ -256,7 +271,7 @@
                      
                      <hr>
                      <h4 style="padding:10px;"><i class="far fa-star redicon"></i> Trophies</h4>
-                     <div class="row" style="padding:10px;">
+                     <div class="row" style="padding:20px;">
                          <div class="col-md-4">
                              <image src="/images/trophy.png" style="height:50px; width:50px;display:block;margin:0 auto;">
                          </div>
