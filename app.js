@@ -31,12 +31,20 @@ app.set("view engine", "ejs");
 app.use(express.static(__dirname + '/public'));
 
 app.use(flash());
-passport.use(new passportLocal(User.authenticate()));
+
+
+app.use(require("express-session")({
+    secret: "I Love Vusala",
+    resave: false,
+    saveUninitialized: false
+}));
 
 app.use(passport.initialize());
 app.use(passport.session());
+passport.use(new passportLocal(User.authenticate()));
+
 app.use(function(req, res, next){
-    res.locals.currentUser = req.user;
+    res.locals.logUser = req.user;
     next();
 });
 
@@ -318,14 +326,13 @@ app.get("/usersearch/:username", function(req, res) {
 });
 
 app.post("/addFriend/:id", function(req, res) {
-    console.log(req.params.id);
-    console.log(req.body.friendUsername);
+
     User.findOne({username: req.body.friendUsername}, function(err, user){
         
         if(err){console.log(err);}
         else{
             
-            console.log(user);
+           
             User.requestFriend(req.params.id, user._id, function(err, result){
                 if(err){console.log(err);}
                 else{
@@ -351,9 +358,7 @@ app.post("/removeFriend/:username", function(req, res) {
                 else{
                     
                     var index=5;
-                    console.log(user);
-                    console.log(requestList);
-                    console.log(req.body.friendID);
+
                     requestList.forEach(function(request){
                         if(request._id == req.body.friendID){
                             index = requestList.indexOf(request);
@@ -362,11 +367,6 @@ app.post("/removeFriend/:username", function(req, res) {
                     
                     // requestList.splice(index, 1);
                     delete requestList[index];
-                    
-                    console.log("----------------------")
-                    console.log(requestList)
-                    console.log(index);
-                    
                     res.redirect("/");
                     
                 }
@@ -385,13 +385,12 @@ app.get("/requests/:username", function(req, res) {
              User.getFriends(user, {"myCustomPath.status": Status.Pending}, function(err, friendList){
                  if(err){console.log(err);}
                  else{
-                     console.log(friendList);
-                     console.log("I am here");
+
                     //  res.render("friendrequests", {friends: friendList});
                     User.getFriends(user, {"myCustomPath.status": Status.Requested}, function(err, friendList2){
                         if(err){console.log(err);}
                         else{
-                            console.log(friendList2);
+
                            if(typeof friendList == "undefined" || friendList == null){friendList = [];}
                            if(typeof friendList2 == "undefined" || friendList2 == null){friendList2 = [];}
                            res.render("friendrequests", {friends: friendList,friends2:friendList2, currentUser:user});
@@ -410,16 +409,30 @@ app.get("/profile/:username", isLoggedIn, function(req, res){
         if(err){
             console.log(err);
         }else{
-            console.log(user);
-            var Status = require("mongoose-friends").Status;
-            User.getFriends(user, {"myCustomPath.status": Status.Accepted}, function(err, friends){
+            
+            if(user.username != req.user.username){
+                
+               var Status = require("mongoose-friends").Status;
+                User.getFriends(user, {"myCustomPath.status": Status.Accepted}, function(err, friends){
                 if(err){
                     console.log(err);
                 }else{
-                    console.log(friends);
+                     res.render("user", {currentUser:user, friends: friends});
+                }
+            });
+            
+            }else{
+                var Status = require("mongoose-friends").Status;
+                User.getFriends(user, {"myCustomPath.status": Status.Accepted}, function(err, friends){
+                if(err){
+                    console.log(err);
+                }else{
                      res.render("profile", {currentUser:user, friends: friends});
                 }
             });
+                
+            }
+    
            
         }
     });

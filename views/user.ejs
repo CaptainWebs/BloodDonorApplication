@@ -288,19 +288,6 @@
             </div>
             
               <hr>
-            <div class="row" style="background: #200122;  /* fallback for old browsers */
-                                    background: -webkit-linear-gradient(to right, #6f0000, #200122);  /* Chrome 10-25, Safari 5.1-6 */
-                                    background: linear-gradient(to right, #6f0000, #200122); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-                                    padding:15px;border-radius:5px;color:white;margin-bottom:20px;
-                                    ">
-                    <h5><i class="fas fa-plus "></i> Donated amount of blood: <span style="font-size:24px;font-weight:bold;display:inline-block;float:right;"><%=currentUser.donatedAmount%> pt.</span> </h5>
-                    <hr>
-                    <h5><i class="fas fa-minus s"></i> Received amount of blood: <span style="font-size:24px;font-weight:bold;display:inline-block;float:right;"><%=currentUser.receivedAmount%> pt.</span></h5> 
-            </div>  
-            
-                <form action="/nearby" method="GET">
-                   <button type="submit" class="login" style="background:#232526 !important;width:100%;margin-top:10px;border-radius:10px;"><i class="far fa-hospital"></i> Find a nearby Hospital <i class="fas fa-arrow-right"></i></button>
-                </form>
 
         </div>
        </div>
@@ -312,106 +299,6 @@
        </form>
        
     </div>
-    <div class="row" style="color:white;background: #200122;  /* fallback for old browsers */
-                                    background: -webkit-linear-gradient(to right, #6f0000, #200122);  /* Chrome 10-25, Safari 5.1-6 */
-                                    background: linear-gradient(to right, #6f0000, #200122);;margin-top:60px;">
-      <div class="col-md-10 col-md-offset-1">
-         <div class="row">
-
-             <div class="col-md-6 col-md-offset-3" style="text-align:center;background:white;color:#232526;padding:15px;border-bottom-left-radius:150px;border-bottom-right-radius:150px;">
-                 <div class="row" style="height:30px;width:100%;line-height:30px;text-align:center;font-size:24px;">
-        
-                   <i class="fas fa-history" style="color: #b13a3c"></i> History
-                 
-             </div> 
-           </div>
-         </div>
-         
-         <div class="row">
-            <!--History-->
-             <div class="col-md-6">
-                 
-                 <div class="row">
-                     <div class="col-md-8" style="background:white;margin-top:20px;margin-bottom:20px;border-radius:5px;">
-                         <!--Form for adding new entry-->
-                         <form action="/profile/<%=currentUser.username%>/history/add" method="POST">
-                
-                <h4 style="text-align:center;color:#232526;"><i class="fas fa-plus redicon"></i> I have</h4>  
-                <br>
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                     <select class="form-control" name="entry[type]"  id="donationType" style="color:black;margin:2px !important;border:0px;border-bottom:1px solid #232526;border-radius:0px !important;">
-                        <option value="donated blood to">donated blood to</option>
-                        <option value="received blood from">received blood from</option>
-                        
-                    </select> 
-                    </div>
-                    <div class="form-group col-md-6">
-                        <input name="entry[donationName]" class="form-control" style="margin:2px !important;text-align:center;background:white;border:0 !important;border-bottom:1px solid #232526 !important;border-radius:0 !important;" type="text" placeholder="Full Name">
-                    </div>
-                    
-                </div>
-        
-                    <div class="form-row">
-                        <div class="form-group col-md-6">
-                             <input type="date"  class="form-control" name="entry[date]" style="color:black;width:100%;background:white;border:0 !important;border-bottom:1px solid #232526 !important;border-radius:0 !important;" id="exampleInputDOB1" placeholder="MM/DD/YYYY">
-                        </div>
-                        <div class="form-group col-md-6">
-                            <input type="number" step="any" class="form-control" name="entry[amount]" style="color:black;width:100%;text-align:center;background:white;border:0 !important;border-bottom:1px solid #232526 !important;border-radius:0 !important;" placeholder="Amount">
-                        </div>
-                    </div>
-                   <input type="text"  class="form-control" name="entry[hospitalName]" style="color:black;width:100%;text-align:center;background:white;border:0 !important;border-bottom:1px solid #232526 !important;border-radius:0 !important;" id="exampleInputDOB1" placeholder="Address and Name of Hospital">
-                     <div class="form-group" style="margin-top:10px;">
-                        <textarea class="form-control" id="exampleFormControlTextarea1" name="entry[comment]" rows="3" style="background:white;border:0 !important;border-bottom:1px solid #232526 !important;border-radius:0 !important;" placeholder="More details about this donation"></textarea>
-                      </div>
-                  <button type="submit" class="login" style="background: #200122;  /* fallback for old browsers */
-                                    background: -webkit-linear-gradient(to right, #6f0000, #200122);  /* Chrome 10-25, Safari 5.1-6 */
-                                    background: linear-gradient(to right, #6f0000, #200122);width:100%;margin-top:10px;border-radius:10px;">Add Entry</button>
-                     
-                 </form> <!--End of form for adding new entry-->
-                     </div>
-                 </div>
-                 
-             </div>
-             <!--End of history-->
-             
-             <!--Add new data-->
-             <div class="col-md-6" style="text-align:left;">
-                 <div class="row">
-                     <div class="col-md-6">
-                         
-                     </div>
-                     <div class="col-md-4" style="text-align:center;">
-                         <h4><span style="color:white;font-size:16px;">Quick Access</h4>
-                                      
-                 </form>
-                 
-                         <div class="row">
-                             <div class="col-md-12" style="background:white;padding:10px;color:#2e3436;border-top-left-radius:5px;border-top-right-radius:5px;">
-                                     <p style="text-align:left;">History of past donations:</p>
-                                     <form action="/profile/<%=currentUser.username%>/history" method="GET">
-                                     <button type="submit" class="login" style="background:#232526 !important;width:100%;margin-top:10px;border-radius:10px;"><i class="fab fa-searchengin"></i> Look Up <i class="fas fa-arrow-right"></i></button>
-                                     </form>
-                             </div>
-                         </div>
-                         <div class="row">
-                             <div class="col-md-12" style="background:white;padding:10px;color:#B13A3C;border-bottom-left-radius:5px;border-bottom-right-radius:5px;">
-                                     <p style="text-align:left;">Search for people that can donate their blood to You.</p>
-                                     <form action="/usersearch/<%=currentUser.username%>" method="GET">
-                                     <button type="submit" class="login" style="background: #200122;  /* fallback for old browsers */
-                                    background: -webkit-linear-gradient(to right, #6f0000, #200122);  /* Chrome 10-25, Safari 5.1-6 */
-                                    background: linear-gradient(to right, #6f0000, #200122);width:100%;margin-top:10px;border-radius:10px;">Quick Search <i class="fas fa-arrow-right"></i></button>
-                                     </form>
-                             </div>
-                         </div>
-
-                     </div>
-                 </div>
-             </div>
-             <!--End of add new data-->
-         </div>
-         
-      </div>
     </div>
 </div>
 
