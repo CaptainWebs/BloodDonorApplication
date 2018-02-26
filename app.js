@@ -15,7 +15,9 @@ var express             = require("express"),
      _ = require('underscore'),
     flash = require('connect-flash'),
     nodemailer = require("nodemailer"),
-    xoauth2 = require('xoauth2');
+    xoauth2 = require('xoauth2'),
+    methodOverride = require('method-override'),
+    helmet = require('helmet');
     
     
    
@@ -33,6 +35,7 @@ mongoose.connect("mongodb://localhost/blood_app",{
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + '/public'));
+app.use(methodOverride("_method"));
 
 app.use(flash());
 
@@ -593,6 +596,35 @@ app.get("/nearby", function(req, res) {
 function escapeRegex(text) {
     return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
 }
+
+
+
+// ------------------- FIND and UPDATE ----------------------------------------
+app.get("/profile/:username/edit", function(req, res){
+    
+    User.findOne({username: req.params.username}, function(err, user){
+        if(err){
+            console.log(err);
+        }else{
+            res.render("edit", {edituser: user});
+        }
+    })
+    
+});
+
+// Finding the user associated with the given id
+// Updating the fields that are changed
+app.put("/update/:id/edit", function(req, res){
+    User.findByIdAndUpdate(req.params.id, req.body.update, function(err, result){
+        if(err){
+            console.log(err);
+        }else{
+            res.redirect("/profile/"+result.username);
+        }
+    })
+})
+
+// ----------------------------------------------------------------------------
 
 // Binary find function to insert elements in-order to the
 // histories array of each user

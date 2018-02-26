@@ -256,7 +256,7 @@ body{
 }
  .navbar-nav > li > .dropdown-menu, .navbar-nav > li > .dropdown-menucd >li>a{
      background:#2d3436;
-     color:white !important;
+     color:black !important;
      border:none;
 }
  .login_register{
@@ -290,8 +290,12 @@ body{
      height: 30px;
      color:black;
 }
- .dropdown-menu>li>a {
-     color:white;
+ .profiledrop {
+     color:white !important;
+}
+
+ .profiledrop:hover {
+     color:black !important;
 }
  #logincontainer{
     /*background-image: url("../images/bloodbg.png");
@@ -382,4 +386,9 @@ body{
   -webkit-animation-name: redPulse;
   -webkit-animation-duration: 2s;
   -webkit-animation-iteration-count: infinite;
+}
+
+.dropdown-toggle.btn-info{
+ background: #b02528;
+ border:0;
 }

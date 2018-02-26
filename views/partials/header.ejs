@@ -72,9 +72,9 @@
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span><i class="fas fa-user redicon"></i></span> <%=logUser.username%><span class="caret"></span></a>
           <ul class="dropdown-menu">
-            <li><a href="/profile/<%=logUser.username%>"><span><i class="fas fa-user redicon"></i> </span>  View Profile</a></li>
-            <li role="separator" class="divider"></li>
-            <li><a href="/logout"><span><i class="fas fa-sign-out-alt redicon"></i></span>  Log out</a></li>
+            <li><a href="/profile/<%=logUser.username%>" class="profiledrop"><span><i class="fas fa-user redicon"></i> </span>  View Profile</a></li>
+            <li role="separator" class="divider" class="profiledrop"></li>
+            <li><a href="/logout" class="profiledrop"><span><i class="fas fa-sign-out-alt redicon"></i></span>  Log out</a></li>
         <% } %>    
           </ul>
         </li>
