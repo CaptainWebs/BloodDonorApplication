@@ -1,0 +1,102 @@
+<% include partials/header%>
+<link href="/stylesheet/style.css" rel="stylesheet" type="text/css" media="all" />
+<div class="container">
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+            
+            <div class="content">
+	<div class="main">
+	    <h4 style="text-align:center;color:#2e3436;">Please feedback the main features of BlooDDonor through evaluation of your own experience.<br> We appreciate your time and value your feedback!<h4>
+		<form action="/feedback/add" method="POST">
+		
+		<div class="form-row" style="padding:40px;">
+		    		<h5>Creating a Profile</h5>
+			<div class="radio-btns">
+					<div class="swit">								
+						<div class="check_box_one"> <div class="radio"> <label><input type="radio" name="feedback[profile]" value="Very Good" checked=""><i></i>Very Good</label> </div></div>
+                        <div class="check_box"> <div class="radio"> <label><input type="radio" value="Good" name="feedback[profile]"><i></i>Good</label> </div></div>
+						<div class="check_box"> <div class="radio"> <label><input type="radio" value="Fair" name="feedback[profile]"><i></i>Fair</label> </div></div>
+						<div class="check_box"> <div class="radio"> <label><input type="radio" value="Poor" name="feedback[profile]"><i></i>Poor</label> </div></div>
+						<div class="clear"></div>
+					</div>
+			</div>
+		</div>
+		<hr>
+		<div class="form-row" style="padding:40px;">
+		<h5>Searching for Blood Donors</h5>
+			<div class="radio-btns">
+					<div class="swit">								
+						<div class="check_box_one"> <div class="radio1"> <label><input type="radio" value="Very Good" name="feedback[search]" checked=""><i></i>Very Good</label> </div></div>
+                        <div class="check_box"> <div class="radio1"> <label><input type="radio" value="Good" name="feedback[search]"><i></i>Good</label> </div></div>
+						<div class="check_box"> <div class="radio1"> <label><input type="radio" value="Fair" name="feedback[search]"><i></i>Fair</label> </div></div>
+						<div class="check_box"> <div class="radio1"> <label><input type="radio" value="Poor" name="feedback[search]"><i></i>Poor</label> </div></div>
+						<div class="clear"></div>
+					</div>
+			</div>
+		</div>
+		<hr>
+
+		<div class="form-row" style="padding:40px;">
+		<h5>Layout and Design</h5>
+			<div class="radio-btns">
+					<div class="swit">								
+						<div class="check_box_one"> <div class="radio2"> <label><input type="radio"  value="Very Good" name="feedback[layout]" checked=""><i></i>Very Good</label> </div></div>
+                        <div class="check_box"> <div class="radio2"> <label><input type="radio"  value="Good" name="feedback[layout]"><i></i>Good</label> </div></div>
+						<div class="check_box"> <div class="radio2"> <label><input type="radio" value="Fair" name="feedback[layout]"><i></i>Fair</label> </div></div>
+						<div class="check_box"> <div class="radio2"> <label><input type="radio" value="Poor" name="feedback[layout]"><i></i>Poor</label> </div></div>
+						<div class="clear"></div>
+					</div>
+			</div>
+		</div>
+		<hr>
+
+        <div class="form-row" style="padding:40px;">
+		<h5>Overall Experience</h5>
+			<div class="radio-btns">
+					<div class="swit">								
+						<div class="check_box_one"> <div class="radio3"> <label><input type="radio" value="Very Good" name="feedback[overall]" checked=""><i></i>Very Good</label> </div></div>
+                        <div class="check_box"> <div class="radio3"> <label><input type="radio" value="Good" name="feedback[overall]"><i></i>Good</label> </div></div>
+						<div class="check_box"> <div class="radio3"> <label><input type="radio" value="Fair" name="feedback[overall]"><i></i>Fair</label> </div></div>
+						<div class="check_box"> <div class="radio3"> <label><input type="radio" value="Poor" name="feedback[overall]"><i></i>Poor</label> </div></div>
+						<div class="clear"></div>
+					</div>
+			</div>
+		</div>
+		<hr>
+
+
+		
+	        		    <div class="form-row row">
+		        <div class="form-group col-md-4 col-md-offset-1">
+		            <h5>Want to rate us?</h5>
+			<span class="starRating">
+				<input id="rating5" type="radio" name="feedback[rating]" value="5">
+				<label for="rating5">5</label>
+				<input id="rating4" type="radio" name="feedback[rating]" value="4">
+				<label for="rating4">4</label>
+				<input id="rating3" type="radio" name="feedback[rating]" value="3" >
+				<label for="rating3">3</label>
+				<input id="rating2" type="radio" name="feedback[rating]" value="2" checked>
+				<label for="rating2">2</label>
+				<input id="rating1" type="radio" name="feedback[rating]" value="1">
+				<label for="rating1">1</label>
+			</span>
+		        </div>
+			<div class="form-group col-md-6">	
+			<h5>Your Review <span>( Tips and Guidelines ) </span> </h5>	
+				<textarea onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Type here';}" required="" name="feedback[review]">Type here</textarea>
+			</div>
+			</div>
+	
+				<input type="submit" value="Send Feedback">
+		</form>
+	</div>
+</div>
+            
+            
+        </div>
+    </div>
+</div>
+
+
+<% include partials/footer%>

@@ -1,7 +1,7 @@
 var mongoose = require("mongoose");
 var passportMongoose = require("passport-local-mongoose");
 
-var HistorySchema = new mongoose.Schema({
+var FeedbackSchema = new mongoose.Schema({
 
   user:
   {
@@ -14,13 +14,13 @@ var HistorySchema = new mongoose.Schema({
       
   },
   
-  date: Date,
-  donationName: String,
-  type: String,
-  comment: String,
-  hospitalName: String,
-  amount: Number
+  profile: String,
+  search: String,
+  layout: String,
+  overall: String,
+  rating: Number,
+  review: String
   
 });
 
-module.exports = mongoose.model("History", HistorySchema);
+module.exports = mongoose.model("Feedback", FeedbackSchema);

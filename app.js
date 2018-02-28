@@ -8,6 +8,7 @@ var express             = require("express"),
     bodyParser          = require("body-parser"),
     User                = require("./models/user"),
     History             = require("./models/history"),
+    Feedback             = require("./models/feedback"),
     request             = require("request"),
     encrypt = require('mongoose-encryption'),
     sorted = require('sorted-array-functions'),
@@ -17,7 +18,8 @@ var express             = require("express"),
     nodemailer = require("nodemailer"),
     xoauth2 = require('xoauth2'),
     methodOverride = require('method-override'),
-    helmet = require('helmet');
+    helmet = require('helmet'),
+    anychart = require('anychart');
     
     
    
@@ -492,7 +494,22 @@ app.get("/profile/:username", isLoggedIn, function(req, res){
     
 });
 
+app.get("/feedback", isLoggedIn, function(req, res) {
+    res.render("feedback");
+})
 
+app.post("/feedback/add", function(req, res) {
+    Feedback.create(req.body.feedback, function(err, feedback){
+        if(err){
+            console.log(err);
+        }else{
+            feedback.user.id = req.user._id;
+            feedback.user.username = req.user.username;
+            feedback.save();
+            res.redirect("/profile/" + req.user.username);
+        }
+    })
+})
 
 app.get("/profile/:username/history",function(req, res) {
 
