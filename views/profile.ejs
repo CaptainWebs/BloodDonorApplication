@@ -152,7 +152,7 @@
     <tbody style="text-align:left !important;">
          <%  friends.forEach(function(friend){ %>
                <tr>  
-              <td class="col-xs-6"><a href="/profile/<%=friend.friend.username%>" style="color:white;"><i class="fas fa-user"></i> <%=friend.friend.firstName%> <%=friend.friend.lastName%> (@<%=friend.friend.username%>)</a></td>
+              <td class="col-xs-6"><a href="/profile/<%=friend.friend.username%>" style="color:white;"><i class="fas fa-user"></i>  <%=friend.friend.firstName%> <%=friend.friend.lastName%> (@<%=friend.friend.username%>)</a></td>
                          </tr>
                <%  }) %>
  
@@ -301,19 +301,21 @@
              </div>
         </div>
         <div class="col-md-4" style="height:160px;padding:20px;">
-            <h4><i class="fa fa-map-marker redicon" aria-hidden="true"></i> Location: <span style="font-weight:700;"><%=currentUser.city%>, <%=currentUser.postcode%>, <%=currentUser.country%></span></h4>
+            <h4><i class="fa fa-map-marker redicon" aria-hidden="true"></i> Your Address: <span style="font-weight:700;"><%=currentUser.city%>, <%=currentUser.postcode%>, <%=currentUser.country%></span></h4>
             <div id="map_canvas" style="width:100%; height:200px"></div>
             <div class="row">
                 <div class="col-md-6">
-                   <button class="btn btn-primary btn-email" style="display:block;">
-                       <i class="fa fa-envelope" aria-hidden="true"></i>
-                   <a href="mailto:<%=currentUser.email%>" style="color:white;text-decoration:none;"> Send Email</a></button>   
+                   <button class="btn btn-primary btn-email" style="display:block;background:#4c6582;">
+                       <i class="far fa-comment-alt"></i>
+                   <a href="mailto:<%=currentUser.email%>" style="color:white;text-decoration:none;"> Give Feedback</a></button>   
                 </div>
+                
                 <div class="col-md-6">
-                   <button class="btn btn-primary btn-phone greenbutton">
+                   <button class="btn btn-primary btn-phone" style="background:#27ae60;">
                        <i class="fa fa-phone" aria-hidden="true"></i>
-                   <a href="callTo:<%=currentUser.phoneNumber%>" style="color:white;text-decoration:none;">Call Phone</button></a>
+                   <a href="callTo:+447751572909" style="color:white;text-decoration:none;">Call Us</button></a>
                 </div>
+          
             </div>
             
               <hr>
@@ -335,10 +337,10 @@
        </div>
        
       
-       <form action="/addFriend/<%=currentUser._id%>" method="POST">
-           <input type="text" name="friendUsername" placeholder="username">
-           <button type="submit">Submit</button>
-       </form>
+       <!--<form action="/addFriend/<%=currentUser._id%>" method="POST">-->
+       <!--    <input type="text" name="friendUsername" placeholder="username">-->
+       <!--    <button type="submit">Submit</button>-->
+       <!--</form>-->
        
     </div>
     <div class="row" style="color:white;background: #200122;  /* fallback for old browsers */
@@ -358,10 +360,10 @@
          
          <div class="row">
             <!--History-->
-             <div class="col-md-6">
+             <div class="col-md-8">
                  
                  <div class="row">
-                     <div class="col-md-8" style="background:white;margin-top:20px;margin-bottom:20px;border-radius:5px;">
+                     <div class="col-md-6" style="background:white;margin-top:20px;margin-bottom:20px;border-radius:5px;">
                          <!--Form for adding new entry-->
                          <form action="/profile/<%=currentUser.username%>/history/add" method="POST">
                 
@@ -399,18 +401,8 @@
                      
                  </form> <!--End of form for adding new entry-->
                      </div>
-                 </div>
-                 
-             </div>
-             <!--End of history-->
-             
-             <!--Add new data-->
-             <div class="col-md-6" style="text-align:left;">
-                 <div class="row">
-                     <div class="col-md-6">
-                         
-                     </div>
-                     <div class="col-md-4" style="text-align:center;">
+                     
+                                          <div class="col-md-4 col-md-offset-1" style="text-align:center;padding-top:30px">
                          <h4><span style="color:white;font-size:16px;">Quick Access</h4>
                                       
                  </form>
@@ -434,6 +426,20 @@
                              </div>
                          </div>
 
+                     </div>
+                     
+                 </div>
+                 
+             </div>
+             <!--End of history-->
+             
+             <!--Add new data-->
+             <div class="col-md-6" style="text-align:left;">
+                 <div class="row">
+               
+
+                           <div class="col-md-6">
+                         
                      </div>
                  </div>
              </div>

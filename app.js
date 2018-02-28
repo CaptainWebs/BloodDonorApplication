@@ -38,7 +38,7 @@ app.use(express.static(__dirname + '/public'));
 app.use(methodOverride("_method"));
 
 app.use(flash());
-
+app.use(helmet.xssFilter());
 
 app.use(require("express-session")({
     secret: "I Love Vusala",
@@ -55,11 +55,13 @@ app.use(function(req, res, next){
     next();
 });
 
+// Use bluebird
+mongoose.Promise = require('bluebird');
 
 // encoding the session and reading the users
-// unencoding it and putting it session
+// unencoding it and putting it session././
 passport.serializeUser(User.serializeUser());
-passport.deserializeUser(User.deserializeUser());
+passport.deserializeUser(User.deserializeUser());   
     
 // ---------------------------------    
 //             ROUTES
@@ -332,54 +334,68 @@ app.get("/usersearch/:username", function(req, res) {
     
 });
 
-app.post("/addFriend/:id", function(req, res) {
+// app.post("/addFriend/:id", function(req, res) {
 
-    User.findOne({username: req.body.friendUsername}, function(err, user){
+//     User.findOne({username: req.body.friendUsername}, function(err, user){
         
-        if(err){console.log(err);}
-        else{
+//         if(err){console.log(err);}
+//         else{
             
            
-            User.requestFriend(req.params.id, user._id, function(err, result){
+//             User.requestFriend(req.params.id, user._id, function(err, result){
+//                 if(err){console.log(err);}
+//                 else{
+//                     console.log("Friend Request is succesful");
+//                     res.redirect("/");
+//                 }
+//             })
+//         }
+//     })
+// })
+
+app.post("/cancelRequest/:username", function(req, res) {
+      User.findOne({username: req.params.username}, function(err, user) {
+        if(err){
+            console.log(err);
+        }else{
+            
+            User.requestFriend(req.user._id, user._id, function(err, result, next){
                 if(err){console.log(err);}
-                else{
-                    console.log("Friend Request is succesful");
-                    res.redirect("/");
+                
+                User.removeFriend(req.user, user, function(err, result){
+                if(err){
+                    console.log(err);
+                }else{
+                    console.log("Remove is succesful");
+                    res.redirect("/profile/" + req.user.username);
                 }
             })
+            })
+            
+
+
         }
     })
 })
 
 app.post("/removeFriend/:username", function(req, res) {
 
-    User.findOne({username: req.params.username}, function(err, user){
-        
-        if(err){console.log(err);}
-        else{
-            
-            console.log("----------------------------");
-            var Status = require("mongoose-friends").Status;
-            User.getFriends(user, {"myCustomPath.status": Status.Pending}, function(err, requestList) {
-                if(err){console.log(err);}
-                else{
-                    
-                    var index=5;
-
-                    requestList.forEach(function(request){
-                        if(request._id == req.body.friendID){
-                            index = requestList.indexOf(request);
-                        }
-                    })
-                    
-                    // requestList.splice(index, 1);
-                    delete requestList[index];
-                    res.redirect("/");
-                    
+    User.findOne({username: req.params.username}, function(err, user) {
+        if(err){
+            console.log(err);
+        }else{
+            console.log("Remove Started");
+            User.removeFriend(req.user, user, function(err, result){
+                if(err){
+                    console.log(err);
+                }else{
+                    console.log("Remove is succesful");
+                    res.redirect("/profile/" + req.user.username);
                 }
-            });
+            })
         }
     })
+    
 })
 
 app.get("/requests/:username", function(req, res) {
@@ -425,16 +441,32 @@ app.get("/profile/:username", isLoggedIn, function(req, res){
                     console.log(err);
                 }else{
                     var isFriend = false;
+                    var requestSent = false;
+                    var requestReceived = false;
 
                     User.getFriends(user, {}, {username: req.user.username}, function(err, result){
                         if(err){
                             console.log(err);
                         }else{
+                        
                             if(result.length != 0){
-                                isFriend = true;
-                            }
-                            console.log(isFriend);
-                            res.render("user", {currentUser:user, friends: friends, isFriend: isFriend});
+                                for(var friend in result){
+                                   
+                                    if(result[friend].status == 'accepted' && result[friend].friend.username== req.user.username){
+                                             isFriend = true;
+                                        }
+                                        
+                                        if(result[friend].status == 'requested'){
+                                            requestReceived = true;
+                                        }
+                                        
+                                        if(result[friend].status == 'pending'){
+                                            requestSent = true;
+                                        }
+                                    }
+                                }
+                                
+                            res.render("user", {currentUser:user, friends: friends, isFriend: isFriend, requestReceived: requestReceived, requestSent: requestSent});
                         }
                     });
                     
@@ -483,6 +515,19 @@ app.get("/profile/:username/history",function(req, res) {
         
     });
 });
+
+
+app.post("/addFriend/:id", function(req, res) {
+    
+    User.requestFriend(req.user.id, req.params.id, function(err, result){
+                if(err){console.log(err);}
+                else{
+                    console.log("Friend Request is succesful");
+                    res.redirect("/profile/"+ req.user.username);
+                }
+            })
+    
+})
 
 // -----------------------------EMAIL(start)------------------------------------
 // sending questions of user
