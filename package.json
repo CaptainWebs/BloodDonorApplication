@@ -45,8 +45,11 @@
     "passport-local": "^1.0.0",
     "passport-local-mongoose": "^4.4.0",
     "passport-remember-me": "0.0.1",
+    "random-hash": "^4.0.1",
     "request": "^2.83.0",
     "sorted-array-functions": "^1.1.0",
+    "thehelp-messaging": "^1.1.0",
+    "twilio": "^3.12.0",
     "underscore": "^1.8.3"
   }
 }

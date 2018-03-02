@@ -9,6 +9,7 @@ var express             = require("express"),
     User                = require("./models/user"),
     History             = require("./models/history"),
     Feedback             = require("./models/feedback"),
+    Hash             = require("./models/userhash"),
     request             = require("request"),
     encrypt = require('mongoose-encryption'),
     sorted = require('sorted-array-functions'),
@@ -20,7 +21,8 @@ var express             = require("express"),
     methodOverride = require('method-override'),
     helmet = require('helmet'),
     anychart = require('anychart'),
-    nev = require('email-verification')(mongoose);
+    nev = require('email-verification')(mongoose),
+    randomHash = require('random-hash');
     
    
 let mongooseFieldEncryption = require('mongoose-field-encryption').fieldEncryption;
@@ -31,7 +33,11 @@ mongoose.connect("mongodb://localhost/blood_app",{
     useMongoClient: true,
 });
 
+var accountSid = 'ACc20534d22e383d916f841f2494ef4728'; // Your Account SID from www.twilio.com/console
+var authToken = 'ab14229d3719a9f21a46d70acdd05583';   // Your Auth Token from www.twilio.com/console
 
+var twilio = require('twilio');
+var client = new twilio(accountSid, authToken);
 
 // setting the default view engine to ejs
 app.use(bodyParser.urlencoded({extended: true}));
@@ -125,6 +131,7 @@ app.get("/logout", function(req, res) {
 // redirecting to user profile
 app.post("/register", function(req, res){
     
+   var hash = randomHash.generateHash({ length: 16 });    
    User.register(new User({username: req.body.username,email: req.body.email, 
                 firstName: req.body.firstName, lastName: req.body.lastName,
                 phoneNumber: req.body.phoneNumber, bloodType: req.body.bloodType,
@@ -137,8 +144,22 @@ app.post("/register", function(req, res){
           return res.render("register");
       }
       
+      Hash.create({hash: hash, user:{id : user._id}}, function(err, hash){
+             if(err){
+                 console.log(err);
+             }else{
+                 console.log(hash);
+             }
+         });
+      
+      client.messages.create({
+      body: 'Your account is registered',
+      to: '+447751572909',  // Text this number
+      from: '+447481362889 ' // From a valid Twilio number
+      });
+    //  .then((message) => console.log(message.sid));
+
       passport.authenticate("local")(req, res, function(){
-         
          res.redirect("/profile/" + user.username);
           
       });
@@ -155,6 +176,25 @@ app.get("/search", function(req, res) {
     
 });
 
+app.get("/verify/:id", function(req, res) {
+    console.log(req.params.id);
+    User.findOne({_id: req.params.id}, function(err, user){
+        if(err){
+            console.log(err);
+        }else{
+            
+              Hash.findOne({user : {id: user._id}}, function(err, result) {
+              if(err){
+                  console.log(err);
+              }else{
+                  res.redirect("/verify/" + result.hash + "/" + user.email);
+                  
+              }  
+            })
+        }
+    })
+
+})
 
 // search the database according to the data
 // retrieved from search field
@@ -174,7 +214,7 @@ app.get("/results", function(req, res) {
       const regex3 = new RegExp(escapeRegex(req.query.city), 'gi');
       const regex4 = new RegExp(escapeRegex(req.query.postcode), 'gi');
       
-      User.find({bloodType: regex1, country: regex2, city: regex3, postcode: regex4}, function(err, allUsers){
+      User.find({bloodType: regex1, country: regex2, city: regex3, postcode: regex4, active: true}, function(err, allUsers){
           if(err){
               console.log(err);
           }else{
@@ -648,6 +688,49 @@ app.post('/report/:username', function (req, res) {
   }); 
 });
 
+// -----------------------------VERIFY-----------------------------------------
+app.get('/verify/:hash/:email', function (req, res) {
+   
+    const output = ` https://webdevelopment-captainwebs.c9users.io/emailverification/${req.params.hash}`;
+  
+   let recipient = req.params.email;
+
+  // create reusable transporter object using the default SMTP transport
+  let transporter = nodemailer.createTransport({
+    host: 'smtp.gmail.com',
+    port: 587,
+    secure: false, // true for 465, false for other ports
+    auth: {
+        user: 'nurlanisazadah', // generated ethereal user
+        pass: 'NurlanVusale18'  // generated ethereal password
+    },
+    tls:{
+      rejectUnauthorized:false
+    }
+  });
+
+  // setup email data with unicode symbols
+  let mailOptions = {
+      from: '"BlooDonor Application" <recipient>', // sender address
+      to: recipient, // list of receivers
+      subject: 'Report', // Subject line
+      text: 'BlooDonor Application', // plain text body
+      html: output // html body
+  };
+
+  // send mail with defined transport object
+  transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+          return console.log(error);
+      }
+      console.log('Message sent: %s', info.messageId);   
+      console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
+
+        console.log(req.user);
+      res.redirect('/profile/' + req.user.username);
+  }); 
+});
+
 // -----------------------------EMAIL(end)--------------------------------------
 
 // Sending postcode data to find the nearby hospitals
@@ -720,6 +803,31 @@ function binaryFind(array, searchElement){
     index: currentElement < searchElement ? currentIndex + 1 : currentIndex
   };
 }
+
+app.get("/emailverification/:hash", function(req, res){
+    Hash.findOne({hash: req.params.hash}, function(err, hash){
+        if(err){
+            console.log(err);
+        }else{
+            console.log("----------------------------------------------")
+            User.findOneAndUpdate({_id: hash.user.id}, {$set:{active:true}}, function(err, user){
+                if(err){
+                    console.log(err);
+                }else{
+                    user.save();
+                    Hash.remove({hash: hash}, function(err, result){
+                        if(err){
+                            console.log(err);
+                        }else{
+                            res.redirect("/profile/" + user.username);
+                        }
+                    })
+                    
+                }
+            })
+        }
+    })
+})
 
 // middleware function to check if
 // the user is logged in or,

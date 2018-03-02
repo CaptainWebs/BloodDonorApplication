@@ -24,6 +24,7 @@ var UserSchema = new mongoose.Schema({
   donatedAmount: Number,
   receivedAmount: Number,
   lastDonationDate: Number,
+  active: false
   
 });
 
