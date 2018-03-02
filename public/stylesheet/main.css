@@ -392,3 +392,7 @@ body{
  background: #b02528;
  border:0;
 }
+
+.hidden{
+ display:none;
+}

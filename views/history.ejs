@@ -1,11 +1,11 @@
 <% include partials/header%>
 <div class="container" style="width:100%;">
-<div class="row" style="padding-top:100px;background: #200122;  /* fallback for old browsers */
+<div class="row" style="padding-top:80px;background: #200122;  /* fallback for old browsers */
                                     background: -webkit-linear-gradient(to right, #6f0000, #200122);  /* Chrome 10-25, Safari 5.1-6 */
                                     background: linear-gradient(to right, #6f0000, #200122);color:white;">
 
     <div class="col-md-10 col-md-offset-1">
-        <h2>History</h2>
+        <h2><i class="fas fa-list-ol"></i> History</h2>
 </div>
 </div>
 <% var number = 1; %>
@@ -13,7 +13,7 @@
 
 <div class="row historyrecords donorsearch">
     <div class="col-md-10 col-md-offset-1" style="padding:15px;">
-        <h4><span class="redicon" style="font-weight:bold;"><%=number%>.</span> I have <%=history.type%> <span style="text-decoration:underline;"><%=history.donationName%></span> on <i class="far fa-calendar-alt redicon"></i> <%=history.date.toDateString()%><br><br>
+        <h4><span style="background:#b02528;padding:10px;color:white;"><%=number%></span> I have <%=history.type%> <span style="text-decoration:underline;"><%=history.donationName%></span> on <i class="far fa-calendar-alt redicon"></i> <%=history.date.toDateString()%><br><br>
         <i class="fas fa-tint redicon "></i> Amount: <%=history.amount%>pt<br><br>
         <i class="far fa-hospital redicon"></i> Hospital Name: <%=history.hospitalName%><br><br>
         <i class="far fa-comment-alt redicon"></i> Comment: <%=history.comment%></h4>

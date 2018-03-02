@@ -3,7 +3,7 @@ var passportMongoose = require("passport-local-mongoose");
 
 var HistorySchema = new mongoose.Schema({
 
-  user:
+  donor:
   {
       id:{
          type: mongoose.Schema.Types.ObjectId,

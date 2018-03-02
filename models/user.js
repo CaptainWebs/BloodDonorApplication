@@ -5,8 +5,8 @@ var friends = require("mongoose-friends");
 
 var UserSchema = new mongoose.Schema({
 
-  email: String,
-  phoneNumber: Number,
+  email: { type: String, unique: true, lowercase: true },
+  phoneNumber: { type: Number, unique: true, lowercase: true },
   firstName: String,
   lastName: String,
   bloodType: String,

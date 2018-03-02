@@ -19,8 +19,8 @@ var express             = require("express"),
     xoauth2 = require('xoauth2'),
     methodOverride = require('method-override'),
     helmet = require('helmet'),
-    anychart = require('anychart');
-    
+    anychart = require('anychart'),
+    nev = require('email-verification')(mongoose);
     
    
 let mongooseFieldEncryption = require('mongoose-field-encryption').fieldEncryption;

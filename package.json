@@ -25,6 +25,7 @@
     "crypto": "^1.0.1",
     "efs": "^0.1.1",
     "ejs": "^2.5.7",
+    "email-verification": "^0.4.6",
     "express": "^4.16.1",
     "express-session": "^1.15.6",
     "flash": "^1.1.0",
