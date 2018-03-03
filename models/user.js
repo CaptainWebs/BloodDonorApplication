@@ -24,6 +24,8 @@ var UserSchema = new mongoose.Schema({
   donatedAmount: Number,
   receivedAmount: Number,
   lastDonationDate: Number,
+  resetPasswordToken: String,
+  resetPasswordExpires: Date,
   active: false
   
 });

@@ -17,6 +17,8 @@ var express             = require("express"),
      _ = require('underscore'),
     flash = require('connect-flash'),
     nodemailer = require("nodemailer"),
+    async      = require("async"),
+    crypto = require("crypto"),
     xoauth2 = require('xoauth2'),
     methodOverride = require('method-override'),
     helmet = require('helmet'),
@@ -60,6 +62,8 @@ passport.use(new passportLocal(User.authenticate()));
 
 app.use(function(req, res, next){
     res.locals.logUser = req.user;
+    res.locals.success = req.flash('success');
+    res.locals.error = req.flash('error');
     next();
 });
 
@@ -140,7 +144,7 @@ app.post("/register", function(req, res){
                 req.body.password, function(err, user){
        
       if(err){
-          console.log("Problem occured during the registration of the user. Error: " + err);
+          req.flash('error', err);
           return res.render("register");
       }
       
@@ -187,6 +191,7 @@ app.get("/verify/:id", function(req, res) {
               if(err){
                   console.log(err);
               }else{
+                  req.flash('success', "A verification link has been sent to your email");
                   res.redirect("/verify/" + result.hash + "/" + user.email);
                   
               }  
@@ -278,6 +283,7 @@ app.post("/profile/:username/history/add", function(req, res) {
                     }
                     
                     user.save();
+                    req.flash("success", "You have successfully added an entry to your history. You can look up your history of donations via 'Quick Access' links.");
                     res.redirect("/profile/" + req.params.username);
                 }
             });
@@ -546,6 +552,7 @@ app.post("/feedback/add", function(req, res) {
             feedback.user.id = req.user._id;
             feedback.user.username = req.user.username;
             feedback.save();
+            req.flash("success", "We appreciate your feedback and use it to improve our services.");
             res.redirect("/profile/" + req.user.username);
         }
     })
@@ -579,7 +586,7 @@ app.post("/addFriend/:id", function(req, res) {
     User.requestFriend(req.user.id, req.params.id, function(err, result){
                 if(err){console.log(err);}
                 else{
-                    console.log("Friend Request is succesful");
+                    req.flash("success", "You have successfully made a friend request.");
                     res.redirect("/profile/"+ req.user.username);
                 }
             })
@@ -634,7 +641,7 @@ app.post('/send/:type', function (req, res) {
       console.log('Message sent: %s', info.messageId);   
       console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
 
-        console.log(req.user);
+      req.flash("success", "Thanks for your message. Our team will get back to you soon.");    
       res.redirect('/profile/' + req.user.username);
   }); 
 });
@@ -683,7 +690,7 @@ app.post('/report/:username', function (req, res) {
       console.log('Message sent: %s', info.messageId);   
       console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
 
-        console.log(req.user);
+      req.flash("success", "Thanks for letting us know. We will investigate the user and take necessary actions.");
       res.redirect('/profile/' + req.user.username);
   }); 
 });
@@ -726,7 +733,7 @@ app.get('/verify/:hash/:email', function (req, res) {
       console.log('Message sent: %s', info.messageId);   
       console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
 
-        console.log(req.user);
+      req.flash("success", "Verification link has been sent your email. Please check your mail and activate your account."); 
       res.redirect('/profile/' + req.user.username);
   }); 
 });
@@ -764,6 +771,7 @@ app.put("/update/:id/edit", function(req, res){
         if(err){
             console.log(err);
         }else{
+            req.flash("success", "You have successfully updated your profile information.");
             res.redirect("/profile/"+result.username);
         }
     })
@@ -815,10 +823,12 @@ app.get("/emailverification/:hash", function(req, res){
                     console.log(err);
                 }else{
                     user.save();
-                    Hash.remove({hash: hash}, function(err, result){
+                    console.log("User activated");
+                    Hash.remove({hash: req.params.hash}, function(err, result){
                         if(err){
                             console.log(err);
                         }else{
+                            req.flash('success', "Success! You have successfully activated your profile.");
                             res.redirect("/profile/" + user.username);
                         }
                     })
@@ -828,6 +838,133 @@ app.get("/emailverification/:hash", function(req, res){
         }
     })
 })
+
+// ******************************PASSWORD RESET*******************************
+// forgot password
+app.get('/forgot', function(req, res) {
+  res.render('forgot');
+});
+
+app.post('/forgot', function(req, res, next) {
+  async.waterfall([
+    function(done) {
+      crypto.randomBytes(20, function(err, buf) {
+        var token = buf.toString('hex');
+        done(err, token);
+      });
+    },
+    function(token, done) {
+      User.findOne({ email: req.body.email }, function(err, user) {
+        if(err){}  
+        if (!user) {
+          req.flash('error', 'No account with that email address exists.');
+          return res.redirect('/forgot');
+        }
+
+        user.resetPasswordToken = token;
+        user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
+
+        user.save(function(err) {
+          done(err, token, user);
+        });
+      });
+    },
+    function(token, user, done) {
+      var smtpTransport = nodemailer.createTransport({
+        service: 'Gmail', 
+        auth: {
+          user: 'nurlanisazadah@gmail.com',
+          pass: 'NurlanVusale18'
+        }
+      });
+      var mailOptions = {
+        to: user.email,
+        from: 'nurlanisazadah@gmail.com',
+        subject: 'BloodDonor Password Reset',
+        text: 'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n' +
+          'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
+          'http://' + req.headers.host + '/reset/' + token + '\n\n' +
+          'If you did not request this, please ignore this email and your password will remain unchanged.\n'
+      };
+      smtpTransport.sendMail(mailOptions, function(err) {
+        console.log('mail sent');
+        req.flash('success', 'An e-mail has been sent to ' + user.email + ' with further instructions.');
+        done(err, 'done');
+      });
+    }
+  ], function(err) {
+    if (err) return next(err);
+    res.redirect('/forgot');
+  });
+});
+
+app.get('/reset/:token', function(req, res) {
+  User.findOne({ resetPasswordToken: req.params.token, resetPasswordExpires: { $gt: Date.now() } }, function(err, user) {
+    if(err){}  
+    if (!user) {
+      req.flash('error', 'Password reset token is invalid or has expired.');
+      return res.redirect('/forgot');
+    }
+    res.render('reset', {token: req.params.token});
+  });
+});
+
+app.post('/reset/:token', function(req, res) {
+  async.waterfall([
+    function(done) {
+      User.findOne({ resetPasswordToken: req.params.token, resetPasswordExpires: { $gt: Date.now() } }, function(err, user) {
+        if(err){}  
+        if (!user) {
+          req.flash('error', 'Password reset token is invalid or has expired.');
+          return res.redirect('back');
+        }
+        if(req.body.password === req.body.confirmpassword) {
+          user.setPassword(req.body.password, function(err) {
+            if(err){}  
+            user.resetPasswordToken = undefined;
+            user.resetPasswordExpires = undefined;
+
+            user.save(function(err) {
+              req.logIn(user, function(err) {
+                done(err, user);
+              });
+            });
+          })
+        } else {
+            req.flash("error", "Passwords do not match.");
+            return res.redirect('back');
+        }
+      });
+    },
+    function(user, done) {
+      var smtpTransport = nodemailer.createTransport({
+        service: 'Gmail', 
+        auth: {
+          user: 'nurlanisazadah@gmail.com',
+          pass: 'NurlanVusale18'
+        }
+      });
+      var mailOptions = {
+        to: user.email,
+        from: 'nurlanisazadah@gmail.com',
+        subject: 'Your password has been changed',
+        text: 'Hello,\n\n' +
+          'This is a confirmation that the password for your account ' + user.email + ' has just been changed.\n\n' +
+          'Sincerely, \n\n' +
+          'BloodDonor Team.\n'
+      };
+      smtpTransport.sendMail(mailOptions, function(err) {
+        done(err);
+      });
+    }
+  ], function(err) {
+    if(err){}  
+    req.flash('success', 'Success! Your password has been changed.');
+    res.redirect('/profile/' + req.user.username);
+  });
+});
+
+// ****************************************************************************
 
 // middleware function to check if
 // the user is logged in or,

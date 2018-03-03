@@ -1,9 +1,7 @@
 <% include partials/header%>
 
 <div class="container">
-
-  
-        <div class="col-md-6 fifty2">
+<div class="col-md-6 fifty2">
           <h3><i class="fa fa-exclamation-triangle" style="color: #B22222;" aria-hidden="true"></i> Qualification Check</h3>
           <p>Please check the below table to see if you have any one of the illnesses or states that disqualify you from being a blood donor. If you have none of the illnesses from the table, simply check<br> <span style="color: #B22222;">"I Verify"</span> and proceed to filling registration details and hit "Submit".</p>
           <table class="table qualification">
@@ -50,6 +48,13 @@
         </div>
         <div class="col-md-6 fifty">
       
+                                       <% if(error && error.length > 0) { %>
+       <div class="alert alert-danger"><p><%=error %></p></div>
+     <% } %>
+     
+     <% if(success && success.length > 0) { %>
+       <div class="alert alert-success"><p><%= success %></p></div>
+     <% } %> 
                 <form class="px-4 py-3" action="/register" method="POST" id="userdata">
                 <div class="form-row row">
                   <div class="form-group col-md-4">

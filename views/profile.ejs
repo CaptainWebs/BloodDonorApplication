@@ -49,6 +49,7 @@
 
     <div class="container" style="margin-top:80px;width:100%;height:400px;">
     <div class="row" style="padding:10px;margin-top:20px;">
+    
         
         <% var typeOfBlood; %>
             <% if((currentUser.bloodType).slice(0,3) == "A+ "){%>
@@ -210,6 +211,14 @@
        <% } %>       
         
         <div class="col-md-6">
+                                 <% if(error && error.length > 0) { %>
+       <div class="alert alert-danger"><p><i class="far fa-envelope"></i> <%=error %></p></div>
+     <% } %>
+     
+     <% if(success && success.length > 0) { %>
+       <div class="alert alert-success"><p><i class="far fa-envelope"></i> <%= success %></p></div>
+     <% } %> 
+     
             <div class="row">
                 <div class="col-md-8 col-md-offset-2" style="background:white;border-radius:5px;">
                     <h2 style="background: #200122;  /* fallback for old browsers */
@@ -465,6 +474,13 @@
     <div class="container" style="margin-top:80px;width:100%;height:400px;">
     <div class="row" style="padding:10px;margin-top:20px;">
         <div class="col-md-8 col-md-offset-2" style="margin-top:20px;padding:20px;border-radius:5px;background:#62a3bb;text-align:center;">
+                         <% if(error && error.length > 0) { %>
+       <div class="alert alert-danger"><p><%=error %></p></div>
+     <% } %>
+     
+     <% if(success && success.length > 0) { %>
+       <div class="alert alert-success"><p><%= success %></p></div>
+     <% } %> 
             <h4 style="color:white;">Please verify your email by clicking on the activation link that will be sent from BloodDonor.</h4>
             <form action="/verify/<%=currentUser._id%>" method="GET" style="margin-top:20px;">
             <button class="btn" type="submit"><i class="far fa-envelope-open"></i> Verify Email</button>

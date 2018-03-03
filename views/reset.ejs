@@ -1,0 +1,40 @@
+<% include partials/header%>
+
+<div class="container" id="logincontainer">
+    <div class="row">
+         
+        <div class="col-md-5 col-centered-login">
+            
+                                             <% if(error && error.length > 0) { %>
+       <div class="alert alert-danger"><p><i class="far fa-envelope"></i> <%=error %></p></div>
+     <% } %>
+     
+     <% if(success && success.length > 0) { %>
+       <div class="alert alert-success"><p><i class="far fa-envelope"></i> <%= success %></p></div>
+     <% } %> 
+            
+         <div class="row" style="background:#2d3436;width:100%;margin:0;margin-bottom:20px;text-align:center;padding:5px;">
+             <div class="col-md-10 col-md-offset-1">
+                  <h2 style="color:white;"><i class="fas fa-wrench"></i> Reset Password</h2>
+             </div>
+         </div>
+                <form class="px-4 py-3" action="/reset/<%=token%>" method="POST">
+                 <div class="form-group">
+                  <label for="exampleDropdownFormEmail1">New Password</label>
+                  <input type="password" class="form-control" name="password" id="exampleDropdownFormEmail1" placeholder="enter a new password">
+                </div>  
+                <div class="form-group">
+                  <label for="exampleDropdownFormEmail1">Confirm Password</label>
+                  <input type="password" class="form-control" name="confirmpassword" id="exampleDropdownFormEmail1" placeholder="password, again">
+                </div>  
+                <!--<div class="form-group">-->
+                <!--  <label for="exampleDropdownFormEmail1">Email address</label>-->
+                <!--  <input type="email" class="form-control" id="exampleDropdownFormEmail1" placeholder="email@example.com">-->
+                <!--</div>-->
+                <button type="submit" class="login">Update Password</button>
+              </form>
+        </div>
+
+  </div>
+</div>
+<% include partials/footer%>
