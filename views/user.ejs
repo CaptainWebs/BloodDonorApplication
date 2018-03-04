@@ -129,7 +129,8 @@
             
             <!--Report user button-->
             <% if(isFriend){ %>
-                
+                Social media links: <a href="<%=currentUser.fbLink%>"><i class="fab fa-facebook"></i></a> <a href="<%=currentUser.twitterLink%>"><i class="fab fa-twitter-square"></i></a>
+                <hr>
                 <h4 style="text-align:center;">You are Friends <i class="fas fa-check greenicon"></i></h4>
                 <form action="/removeFriend/<%=currentUser.username%>" method="POST">
                 <button type="submit" class="btn btn-primary" style="    outline:none !important;    

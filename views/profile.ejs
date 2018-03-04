@@ -106,6 +106,46 @@
                 
 
              <h4 class="redicon" style="text-align:center;"><i class="fas fa-at redicon"></i> <%= currentUser.username%></h4>
+             Social media links: <a href="<%=currentUser.fbLink%>"><i class="fab fa-facebook"></i></a> <a href="<%=currentUser.twitterLink%>"><i class="fab fa-twitter-square"></i></a>
+
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" style="background:#4c6582;border:none;outline:none;margin: 0 auto;display:block;">Update <i class="fas fa-pencil-alt"></i></button>
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="exampleModalLabel">Update your social media links <i class="fab fa-facebook-square"></i> <i class="fab fa-twitter-square"></i></h4>
+      </div>
+      <div class="modal-body">
+        <form action="/update/<%=currentUser._id%>/edit?_method=PUT" method="POST">
+          <div class="form-group">
+            <label for="basic-url"><i class="fab fa-facebook-square"></i> Your Facebook URL</label>
+
+  <div class="input-group-prepend">
+    <span class="input-group-text" id="basic-addon3">example: https://www.facebook.com/n.isazadeh</span>
+  </div>
+  <input type="text" class="form-control" id="basic-url" name="update[fbLink]" value="<%=currentUser.fbLink%>" aria-describedby="basic-addon3">
+
+          </div>
+          <div class="form-group">
+            <label for="basic-url"><i class="fab fa-twitter-square"></i> Your Twitter URL</label>
+
+  <div class="input-group-prepend">
+    <span class="input-group-text" id="basic-addon3">example: https://twitter.com/nurlan_isazade</span>
+  </div>
+  <input type="text" class="form-control" id="basic-url" name="update[twitterLink]" value="<%=currentUser.twitterLink%>" aria-describedby="basic-addon3">
+
+          </div>
+                <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Update <i class="fas fa-pencil-alt"></i></button>
+      </div>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>
 
             <!--Buttons-->
             <!--Send request button-->

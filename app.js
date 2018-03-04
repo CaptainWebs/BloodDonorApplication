@@ -523,6 +523,7 @@ app.get("/profile/:username", isLoggedIn, function(req, res){
             });
             
             }else{
+                
                 var Status = require("mongoose-friends").Status;
                 User.getFriends(user, {"myCustomPath.status": Status.Accepted}, function(err, friends){
                 if(err){

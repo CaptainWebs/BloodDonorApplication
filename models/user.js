@@ -26,6 +26,8 @@ var UserSchema = new mongoose.Schema({
   lastDonationDate: Number,
   resetPasswordToken: String,
   resetPasswordExpires: Date,
+  fbLink: {type: String,default: 'https://www.facebook.com'},
+  twitterLink: {type: String,default: 'https://www.twitter.com'},
   active: false
   
 });
