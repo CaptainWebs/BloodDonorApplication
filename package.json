@@ -31,6 +31,7 @@
     "express-session": "^1.15.6",
     "flash": "^1.1.0",
     "googleplaces": "^0.6.1",
+    "helmet": "^3.12.0",
     "intl-tel-input": "^12.1.3",
     "jasmine": "^2.8.0",
     "lodash": "^4.17.5",

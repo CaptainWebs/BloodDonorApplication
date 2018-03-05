@@ -20,7 +20,6 @@ var UserSchema = new mongoose.Schema({
   postcode: String,
   gender: String,
   histories: [{ type: mongoose.Schema.Types.ObjectId, ref: "History", date: Date }],
-  openFor: [String],
   donatedAmount: Number,
   receivedAmount: Number,
   lastDonationDate: Number,
@@ -40,6 +39,5 @@ UserSchema.plugin(passportMongoose, {
 // UserSchema.plugin(mongooseFieldEncryption, {fields: ['gender', 'lastName','firstName','[]',  'openFor',  'donatedAmount', 'receivedAmount', 'lastDonationDate', 'histories', 'dob', 'phoneNumber', 'email', ], secret: 'vusala'});
 
 UserSchema.plugin(friends({pathName: "myCustomPath"}));
-
 
 module.exports = mongoose.model("User", UserSchema);

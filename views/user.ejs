@@ -51,7 +51,7 @@
         <div class="row" style="padding:10px; background:#62A3BB;color:white;">
         <div class="col-md-8 col-md-offset-2">
            <h4 style="text-decoration:underline;"><i class="fas fa-exclamation" style="color:yellow;"></i> Dear user!</h4>
-           <h5>Please note that certain fields and information associated with <span style="text-decoration:underline;font-size:16px;font-style:italic;">@<%=currentUser.username%></span> is invisible because of you not being in the friends list. The best way to reach a Donor is to give him/her a direct call which is only activated for friends. In the meantime, you can send an email that briefly explains your request and make sure to include your username so they can accept your Friend Request.</h5>
+           <h5>Please note that certain fields and information associated with <span style="text-decoration:underline;font-size:16px;">@<%=currentUser.username%></span> is invisible because of you not being in the friends list. You can send an email that briefly explains your request.</h5>
                 
         </div>
         </div>
@@ -239,14 +239,6 @@
                     <% } %>
                      <h4 style="padding:8px;"><i class="fa fa-venus-mars redicon" aria-hidden="true"></i> Gender: <span style="font-weight:700;"> <%=genderType%></span></h4>
                      <h4 style="padding:8px;"><i class="fas fa-tint redicon"></i> Blood Type: <span style="font-weight:700;"> <%= currentUser.bloodType %></span></h4>
-                     <h4 style="padding:8px;"><i class="fas fa-medkit redicon"></i> Donation Types:</h4>
-                     
-                     <% currentUser.openFor.forEach(function(donationType){ %>
-                     
-                     <span style="background:#b02528;padding:5px; color:white;font-size:14px;margin:10px;"><%= donationType %></span>
-                     
-                     <%  }) %>
-                     
                      <% var time = currentUser.lastDonationDate;%>
                      <% var date = new Date(time);%>
 
@@ -289,7 +281,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-4" style="height:160px;padding:20px;">
+        <div class="col-md-4" style="height:160px;">
             
             <% if(isFriend){ %>
                 <h4><i class="fa fa-map-marker redicon" aria-hidden="true"></i> Location: <span style="font-weight:700;"><%=currentUser.city%>, <%=currentUser.postcode%>, <%=currentUser.country%></span></h4>
@@ -342,6 +334,15 @@
     </div>
     </div>
 </div>
+        <div class="row" style="padding:20px; background:#62A3BB;color:white;">
+        <div class="col-md-4 col-md-offset-4">
+                     <h5>If you need blood donation within the next <i class="far fa-clock"></i> 48 hours then click the button that will initiate our team to get in touch with donor.</h5>
+                     <h6>For more info, please visit <a href="" style="color:yellow;text-decoration:underline;">Urgent Need</a> page.</h6>
+                    <button class="btn btn-primary btn-email redbutton" style="display:block;background:#b02528;height:60px !important;">
+                       <i class="fas fa-heartbeat"></i>
+                   <a href="/urgent/<%=currentUser.username%>" style="color:white;text-decoration:none;">URGENT NEED</a></button>   
+        </div>
+        </div>
 <% include partials/footer%>
 
 

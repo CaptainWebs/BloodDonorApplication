@@ -48,7 +48,7 @@
         </div>
         <div class="col-md-6 fifty">
       
-                                       <% if(error && error.length > 0) { %>
+       <% if(error && error.length > 0) { %>
        <div class="alert alert-danger"><p><%=error %></p></div>
      <% } %>
      
@@ -172,25 +172,8 @@
                     <input type="password" class="form-control" name="password" id="exampleDropdownFormPassword1" placeholder="please enter a strong password" required>
                   </div>
                 </div>
-                
-                <div class="form-row row">
-                  <div class="form-group col-md-6">
-                    Please select the type of donations that you would like to make.
-                  </div>
-                  <div class="form-group col-md-6">
-                    <select class="selectpicker form-control" name="donationType" multiple style="color:black;" data-style="btn-danger" title="Type of donation" required>
 
-                      <option value="Whole Blood Donation">Whole Blood Donation</option>
-                      <option value="Platelet Apheresis">Platelet Apheresis</option>
-                      <option value="Plasma Apheresis">Plasma Apheresis</option>
-                      <option value="Power Red">Power Red</option>
-                      
 
-                    </select>
-
-                  </div>
-                </div>
-                
                 <!--<div class="form-group">-->
                 <!--  <label for="exampleDropdownFormPassword1">Repeat Password</label>-->
                 <!--  <input type="password" class="form-control" id="exampleDropdownFormPassword1" placeholder="Repeat Password">-->
@@ -205,6 +188,7 @@
     
 </div>
 
+
 <script type="text/javascript">
 
 function eligibility()
@@ -218,6 +202,8 @@ else
   document.getElementById('regsubmit').setAttribute('disabled','disabled');
   }
 }
+
+
 </script>
 
 

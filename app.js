@@ -24,7 +24,11 @@ var express             = require("express"),
     helmet = require('helmet'),
     anychart = require('anychart'),
     nev = require('email-verification')(mongoose),
-    randomHash = require('random-hash');
+    randomHash = require('random-hash'),
+    recaptcha = require('node-no-captcha');
+    
+    
+
     
    
 let mongooseFieldEncryption = require('mongoose-field-encryption').fieldEncryption;
@@ -49,6 +53,9 @@ app.use(methodOverride("_method"));
 
 app.use(flash());
 app.use(helmet.xssFilter());
+app.use(helmet.frameguard({ action: 'sameorigin' }));
+// Sets "X-Content-Type-Options: nosniff".
+app.use(helmet.noSniff());
 
 app.use(require("express-session")({
     secret: "I Love Vusala",
@@ -127,6 +134,7 @@ app.get("/register", function(req, res){
 // Logout route
 app.get("/logout", function(req, res) {
     req.logout();
+    req.flash('success', "You have logged out. In order to access your profile, please log in.");
     res.redirect("./");
 })
 
@@ -140,12 +148,13 @@ app.post("/register", function(req, res){
                 firstName: req.body.firstName, lastName: req.body.lastName,
                 phoneNumber: req.body.phoneNumber, bloodType: req.body.bloodType,
                 location: req.body.location, dob: req.body.dob, country: req.body.country,
-                city: req.body.city, address: req.body.address, postcode: req.body.postcode, gender: req.body.gender, openFor: req.body.donationType, donatedAmount: 0, receivedAmount: 0}),
+                city: req.body.city, address: req.body.address, postcode: req.body.postcode, gender: req.body.gender, donatedAmount: 0, receivedAmount: 0}),
                 req.body.password, function(err, user){
        
       if(err){
-          req.flash('error', err);
-          return res.render("register");
+          
+          req.flash('error', "You have logged out.");
+          res.redirect("register");
       }
       
       Hash.create({hash: hash, user:{id : user._id}}, function(err, hash){
@@ -156,11 +165,11 @@ app.post("/register", function(req, res){
              }
          });
       
-      client.messages.create({
-      body: 'Your account is registered',
-      to: '+447751572909',  // Text this number
-      from: '+447481362889 ' // From a valid Twilio number
-      });
+    //   client.messages.create({
+    //   body: 'Your account is registered',
+    //   to: '+447751572909',  // Text this number
+    //   from: '+447481362889 ' // From a valid Twilio number
+    //   });
     //  .then((message) => console.log(message.sid));
 
       passport.authenticate("local")(req, res, function(){
@@ -966,6 +975,51 @@ app.post('/reset/:token', function(req, res) {
 });
 
 // ****************************************************************************
+
+app.get("/urgent/:username", function(req, res) {
+     const output = `
+    <h3>Urgent Need from BlooDonor Application</h3>
+    <h4>Sender: @${req.user.username}</h4>
+    <h4>I want to contact @${req.params.username} urgently because I need blood donation within the next 48 hours.</h4>
+  `;
+  
+  let recipient = req.user.email;
+
+  // create reusable transporter object using the default SMTP transport
+  let transporter = nodemailer.createTransport({
+    host: 'smtp.gmail.com',
+    port: 587,
+    secure: false, // true for 465, false for other ports
+    auth: {
+        user: 'nurlanisazadah', // generated ethereal user
+        pass: 'NurlanVusale18'  // generated ethereal password
+    },
+    tls:{
+      rejectUnauthorized:false
+    }
+  });
+
+  // setup email data with unicode symbols
+  let mailOptions = {
+      from: '"BlooDonor Application" <recipient>', // sender address
+      to: 'nurlanisazadah@gmail.com, <recipient>', // list of receivers
+      subject: 'Urgent Need', // Subject line
+      text: 'BlooDonor Application', // plain text body
+      html: output // html body
+  };
+
+  // send mail with defined transport object
+  transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+          return console.log(error);
+      }
+      console.log('Message sent: %s', info.messageId);   
+      console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
+
+      req.flash("success", "We have received your request and our team member will contact you shortly to confirm the action then necessary step will be taken.");
+      res.redirect('/profile/' + req.user.username);
+  }); 
+})
 
 // middleware function to check if
 // the user is logged in or,
