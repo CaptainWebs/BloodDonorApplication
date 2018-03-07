@@ -1,167 +1,125 @@
 <% include partials/header%>
 <script type="text/javascript">
-  var geocoder;
-  var map;
-  var address ="<%=currentUser.city%>, <%=currentUser.postcode%>, <%=currentUser.country%>";
-  function initialize() {
-    geocoder = new google.maps.Geocoder();
-    var latlng = new google.maps.LatLng(-34.397, 150.644);
-    var myOptions = {
-      zoom: 16,
-      center: latlng,
-    mapTypeControl: true,
-    mapTypeControlOptions: {style: google.maps.MapTypeControlStyle.DROPDOWN_MENU},
-    navigationControl: true,
-      mapTypeId: google.maps.MapTypeId.ROADMAP,
-    };
-    map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
-    if (geocoder) {
-      geocoder.geocode( { 'address': address}, function(results, status) {
-        if (status == google.maps.GeocoderStatus.OK) {
-          if (status != google.maps.GeocoderStatus.ZERO_RESULTS) {
-          map.setCenter(results[0].geometry.location);
-
-            var infowindow = new google.maps.InfoWindow(
-                { content: '<b>'+address+'</b>',
-                  size: new google.maps.Size(150,50)
-                });
-
-            var marker = new google.maps.Marker({
-                position: results[0].geometry.location,
-                map: map, 
-                title:address
-            }); 
-            google.maps.event.addListener(marker, 'click', function() {
-                infowindow.open(map,marker);
-            });
-
-          } else {
-            alert("No results found");
-          }
-        } else {
-          alert("Geocode was not successful for the following reason: " + status);
-        }
-      });
-    }
-  }
+   var geocoder;
+   var map;
+   var address ="<%=currentUser.city%>, <%=currentUser.postcode%>, <%=currentUser.country%>";
+   function initialize() {
+     geocoder = new google.maps.Geocoder();
+     var latlng = new google.maps.LatLng(-34.397, 150.644);
+     var myOptions = {
+       zoom: 16,
+       center: latlng,
+     mapTypeControl: true,
+     mapTypeControlOptions: {style: google.maps.MapTypeControlStyle.DROPDOWN_MENU},
+     navigationControl: true,
+       mapTypeId: google.maps.MapTypeId.ROADMAP,
+     };
+     map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+     if (geocoder) {
+       geocoder.geocode( { 'address': address}, function(results, status) {
+         if (status == google.maps.GeocoderStatus.OK) {
+           if (status != google.maps.GeocoderStatus.ZERO_RESULTS) {
+           map.setCenter(results[0].geometry.location);
+   
+             var infowindow = new google.maps.InfoWindow(
+                 { content: '<b>'+address+'</b>',
+                   size: new google.maps.Size(150,50)
+                 });
+   
+             var marker = new google.maps.Marker({
+                 position: results[0].geometry.location,
+                 map: map, 
+                 title:address
+             }); 
+             google.maps.event.addListener(marker, 'click', function() {
+                 infowindow.open(map,marker);
+             });
+   
+           } else {
+             alert("No results found");
+           }
+         } else {
+           alert("Geocode was not successful for the following reason: " + status);
+         }
+       });
+     }
+   }
 </script>
 <% if(currentUser.active){ %>
-
-    <div class="container" style="margin-top:80px;width:100%;height:400px;">
-    <div class="row" style="padding:10px;margin-top:20px;">
-    
-        
-        <% var typeOfBlood; %>
-            <% if((currentUser.bloodType).slice(0,3) == "A+ "){%>
-            
-            <% typeOfBlood = "apos"; %>
-            
-            <% } else if((currentUser.bloodType).slice(0,3) == "B+ "){%>
-            
-            <% typeOfBlood = "bpos"; %>
-            
-            <% } else if((currentUser.bloodType).slice(0,3) == "AB+"){ %>
-    
-            <% typeOfBlood = "abpos"; %>
-            
-            <% } else if((currentUser.bloodType).slice(0,3) == "O+ "){ %>
-            
-            <% typeOfBlood = "opos"; %>
-            
-            <% }else if((currentUser.bloodType).slice(0,3) == "A- "){ %>
-            
-            <% typeOfBlood = "aneg"; %>
-        
-            <% }else if((currentUser.bloodType).slice(0,3) == "B- "){%>
-            
-            <% typeOfBlood = "bneg"; %>
-            
-            <% }else if((currentUser.bloodType).slice(0,3) == "O- "){%>
-            
-            <% typeOfBlood = "oneg"; %>
-            
-            <% }else{ %>
-            
-            <% typeOfBlood = "abneg"; %>
-            
-            <% } %>
-            
-            <% var genderType; %>
-            <% if(currentUser.gender == "male"){%>
-            
-            <% genderType = "manuser"; %>
-            
-            <% } else if(currentUser.gender == "female"){%>
-            
-            <% genderType = "womanuser"; %>
-            
-            <% } %>
-
-        <div class="col-md-10 col-md-offset-1 profile_tab">
-        <div class="col-md-2" style="margin-top:20px;">
-
+<div class="container" style="margin-top:80px;width:100%;height:400px;">
+   <div class="row" style="padding:10px;margin-top:20px;">
+      <% var typeOfBlood; %>
+      <% if((currentUser.bloodType).slice(0,3) == "A+ "){%>
+      <% typeOfBlood = "apos"; %>
+      <% } else if((currentUser.bloodType).slice(0,3) == "B+ "){%>
+      <% typeOfBlood = "bpos"; %>
+      <% } else if((currentUser.bloodType).slice(0,3) == "AB+"){ %>
+      <% typeOfBlood = "abpos"; %>
+      <% } else if((currentUser.bloodType).slice(0,3) == "O+ "){ %>
+      <% typeOfBlood = "opos"; %>
+      <% }else if((currentUser.bloodType).slice(0,3) == "A- "){ %>
+      <% typeOfBlood = "aneg"; %>
+      <% }else if((currentUser.bloodType).slice(0,3) == "B- "){%>
+      <% typeOfBlood = "bneg"; %>
+      <% }else if((currentUser.bloodType).slice(0,3) == "O- "){%>
+      <% typeOfBlood = "oneg"; %>
+      <% }else{ %>
+      <% typeOfBlood = "abneg"; %>
+      <% } %>
+      <% var genderType; %>
+      <% if(currentUser.gender == "male"){%>
+      <% genderType = "manuser"; %>
+      <% } else if(currentUser.gender == "female"){%>
+      <% genderType = "womanuser"; %>
+      <% } %>
+      <div class="col-md-10 col-md-offset-1 profile_tab">
+         <div class="col-md-2" style="margin-top:20px;">
             <!--User profile image (set to default image that can be replaced by uploading a new image)-->
             <image src="/images/<%=currentUser.gender%>.png" style="height:150px; width:150px; border-radius:20px;display:block;margin:0 auto;">
-             
-                
-
-             <h4 class="redicon" style="text-align:center;"><i class="fas fa-at redicon"></i> <%= currentUser.username%></h4>
-             Social media links: <a href="<%=currentUser.fbLink%>"><i class="fab fa-facebook"></i></a> <a href="<%=currentUser.twitterLink%>"><i class="fab fa-twitter-square"></i></a>
-
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" style="background:#4c6582;border:none;outline:none;margin: 0 auto;display:block;">Update <i class="fas fa-pencil-alt"></i></button>
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="exampleModalLabel">Update your social media links <i class="fab fa-facebook-square"></i> <i class="fab fa-twitter-square"></i></h4>
-      </div>
-      <div class="modal-body">
-        <form action="/update/<%=currentUser._id%>/edit?_method=PUT" method="POST">
-          <div class="form-group">
-            <label for="basic-url"><i class="fab fa-facebook-square"></i> Your Facebook URL</label>
-
-  <div class="input-group-prepend">
-    <span class="input-group-text" id="basic-addon3">example: https://www.facebook.com/n.isazadeh</span>
-  </div>
-  <input type="text" class="form-control" id="basic-url" name="update[fbLink]" value="<%=currentUser.fbLink%>" aria-describedby="basic-addon3">
-
-          </div>
-          <div class="form-group">
-            <label for="basic-url"><i class="fab fa-twitter-square"></i> Your Twitter URL</label>
-
-  <div class="input-group-prepend">
-    <span class="input-group-text" id="basic-addon3">example: https://twitter.com/nurlan_isazade</span>
-  </div>
-  <input type="text" class="form-control" id="basic-url" name="update[twitterLink]" value="<%=currentUser.twitterLink%>" aria-describedby="basic-addon3">
-
-          </div>
-                <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-primary">Update <i class="fas fa-pencil-alt"></i></button>
-      </div>
-        </form>
-      </div>
-
-    </div>
-  </div>
-</div>
-
+            <h4 class="redicon" style="text-align:center;"><i class="fas fa-at redicon"></i> <%= currentUser.username%></h4>
+            Social media links: <a href="<%=currentUser.fbLink%>"><i class="fab fa-facebook"></i></a> <a href="<%=currentUser.twitterLink%>"><i class="fab fa-twitter-square"></i></a>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" style="background:#4c6582;border:none;outline:none;margin: 0 auto;display:block;">Update <i class="fas fa-pencil-alt"></i></button>
+            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+               <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                     <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="exampleModalLabel">Update your social media links <i class="fab fa-facebook-square"></i> <i class="fab fa-twitter-square"></i></h4>
+                     </div>
+                     <div class="modal-body">
+                        <form action="/update/<%=currentUser._id%>/edit?_method=PUT" method="POST">
+                           <div class="form-group">
+                              <label for="basic-url"><i class="fab fa-facebook-square"></i> Your Facebook URL</label>
+                              <div class="input-group-prepend">
+                                 <span class="input-group-text" id="basic-addon3">example: https://www.facebook.com/n.isazadeh</span>
+                              </div>
+                              <input type="text" class="form-control" id="basic-url" name="update[fbLink]" value="<%=currentUser.fbLink%>" aria-describedby="basic-addon3">
+                           </div>
+                           <div class="form-group">
+                              <label for="basic-url"><i class="fab fa-twitter-square"></i> Your Twitter URL</label>
+                              <div class="input-group-prepend">
+                                 <span class="input-group-text" id="basic-addon3">example: https://twitter.com/nurlan_isazade</span>
+                              </div>
+                              <input type="text" class="form-control" id="basic-url" name="update[twitterLink]" value="<%=currentUser.twitterLink%>" aria-describedby="basic-addon3">
+                           </div>
+                           <div class="modal-footer">
+                              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                              <button type="submit" class="btn btn-primary">Update <i class="fas fa-pencil-alt"></i></button>
+                           </div>
+                        </form>
+                     </div>
+                  </div>
+               </div>
+            </div>
             <!--Buttons-->
             <!--Send request button-->
             <!--<button type="button" class="btn btn-primary profilebtn1 requestFriend"><i class="fa fa-plus" aria-hidden="true"></i> Send Request</button>-->
-            
-            
             <!--Friends buttton that allow to Unfriend while hovering over-->
             <!--<button type="button" class="btn btn-primary profilebtn1 friend"><i class="fa fa-check" aria-hidden="true"></i> Friend</button>-->
-            
             <!--Report user button-->
-  
             <!--<h4 style="text-align:center;">You are Friends <i class="fas fa-check greenicon"></i><br>-->
             <!--<span style="font-size:12px;color:gray;">since Date</span></h4>-->
-            
             <!--<% if(currentUser != logUser){ %>-->
-            
             <!--            <button type="submit" class="btn btn-primary" style="    outline:none !important;    -->
             <!--                                margin-top: 5px;-->
             <!--                                border:none;-->
@@ -169,7 +127,6 @@
             <!--                                height: 40px;-->
             <!--                                font-size: 14px;-->
             <!--                            background: #B22222;"><i class="fas fa-times"></i> Remove Friend</button>-->
-            
             <!--            <button type="submit" class="btn btn-primary greenbutton" style="outline:none !important;    -->
             <!--                                margin-top: 5px;-->
             <!--                                border:none;-->
@@ -177,363 +134,319 @@
             <!--                                height: 40px;-->
             <!--                                font-size: 14px;-->
             <!--                            background: #3742fa;"><i class="fas fa-plus"></i> Add Friend</button>-->
-            
             <!--<% } %>-->
-
             <hr>
-            
             <% var count=0; %>
             <% friends.forEach(function(friend){ %>
             <%console.log(count)%>
             <% count++; })%>
-            
             <h4><i class="fas fa-users redicon"></i> Friends(<%=count%>)</h4>
             <div class="row">
-                
-                <div class="container">
-                    <table class="table friend">
-    <tbody style="text-align:left !important;">
-         <%  friends.forEach(function(friend){ %>
-               <tr>  
-              <td class="col-xs-6"><a href="/profile/<%=friend.friend.username%>" style="color:white;"><i class="fas fa-user"></i>  <%=friend.friend.firstName%> <%=friend.friend.lastName%> (@<%=friend.friend.username%>)</a></td>
-                         </tr>
-               <%  }) %>
- 
-     
-    </tbody>
-  </table>
-     <form action="/requests/<%=currentUser.username%>" method="GET">
-             <button type="submit" class="" style="background:#DFE6E9;border:0;">Friend Requests <i class="fas fa-arrow-right redicon"></i></button>
-            </form>
-               <hr>
-                    
-                                <div class="row" style="background: #200122;  /* fallback for old browsers */
-                                    background: -webkit-linear-gradient(to right, #6f0000, #200122);  /* Chrome 10-25, Safari 5.1-6 */
-                                    background: linear-gradient(to right, #6f0000, #200122); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */color:white;padding:10px;width:auto; height:auto;border:1px solid #aaa69d; border-radius:5px;text-align:center;">
-
-                        Any Questions?
-                         <div class="form-group" style="width:100%;margin-top:5px;">
-                      <form action="/send/question/" method="POST">    
-                      <textarea class="form-control" style="font-size:12px;" rows="4" id="question" name="message" placeholder="please tell us more about your question"></textarea>
-                    </div>
-                    <button type="submit" class="btn btn-primary" style="outline:none !important;    
-                                            margin-top: 5px;
-                                            border:none;
-                                            width:100%;
-                                            height: 40px;
-                                            font-size: 14px;
-                                        background: #DFE6E9;color:#b02528;"><i class="fas fa-share-square redicon"></i> Send</button></form>
-                     
-                    </div>
-          
-                </div>
+               <div class="container">
+                  <table class="table friend">
+                     <tbody style="text-align:left !important;">
+                        <%  friends.forEach(function(friend){ %>
+                        <tr>
+                           <td class="col-xs-6"><a href="/profile/<%=friend.friend.username%>" style="color:white;"><i class="fas fa-user"></i>  <%=friend.friend.firstName%> <%=friend.friend.lastName%> (@<%=friend.friend.username%>)</a></td>
+                        </tr>
+                        <%  }) %>
+                     </tbody>
+                  </table>
+                  <form action="/requests/<%=currentUser.username%>" method="GET">
+                     <button type="submit" class="" style="background:#DFE6E9;border:0;">Friend Requests <span style="padding:2px;text-decoration:none !important;background:#b02528;border-radius:5px;color:white;"><%=requestSize%></span> <i class="fas fa-arrow-right redicon"></i></button>
+                  </form>
+                  <hr>
+                  <div class="row" style="background: #200122;  /* fallback for old browsers */
+                     background: -webkit-linear-gradient(to right, #6f0000, #200122);  /* Chrome 10-25, Safari 5.1-6 */
+                     background: linear-gradient(to right, #6f0000, #200122); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */color:white;padding:10px;width:auto; height:auto;border:1px solid #aaa69d; border-radius:5px;text-align:center;">
+                     Any Questions?
+                     <div class="form-group" style="width:100%;margin-top:5px;">
+                        <form action="/send/question/" method="POST">    
+                           <textarea class="form-control" style="font-size:12px;" rows="4" id="question" name="message" placeholder="please tell us more about your question"></textarea>
+                     </div>
+                     <button type="submit" class="btn btn-primary" style="outline:none !important;    
+                        margin-top: 5px;
+                        border:none;
+                        width:100%;
+                        height: 40px;
+                        font-size: 14px;
+                        background: #DFE6E9;color:#b02528;"><i class="fas fa-share-square redicon"></i> Send</button></form>
+                  </div>
+               </div>
             </div>
-         
-            
-
-            
             <!--<a href="/report/<%=currentUser.username%>"> -->
             <!--<button type="button" value="submit" class="btn btn-primary profilebtn1 reportUser"><i class="fa fa-flag-o" aria-hidden="true"></i> Report User</button></a>-->
-    
-            
-        </div>
-
-    
-        <%    var genderType;%>
-        <% if(currentUser.gender == "womanuser"){%>
-        
+         </div>
+         <%    var genderType;%>
+         <% if(currentUser.gender == "womanuser"){%>
          <%   genderType = "Female"; %>
-        
-        <% }else{ %>
-        
-        <%     genderType = "Male"; %>
-        
-       <% } %>       
-        
-        <div class="col-md-6">
-                                 <% if(error && error.length > 0) { %>
-       <div class="alert alert-danger"><p><i class="far fa-envelope"></i> <%=error %></p></div>
-     <% } %>
-     
-     <% if(success && success.length > 0) { %>
-       <div class="alert alert-success"><p><i class="far fa-envelope"></i> <%= success %></p></div>
-     <% } %> 
-     
-            <div class="row">
-                <div class="col-md-8 col-md-offset-2" style="background:white;border-radius:5px;">
-                    <h2 style="background: #200122;  /* fallback for old browsers */
-                                    background: -webkit-linear-gradient(to right, #6f0000, #200122);  /* Chrome 10-25, Safari 5.1-6 */
-                                    background: linear-gradient(to right, #6f0000, #200122); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */color:white;padding:10px;width:auto; height:auto;border:1px solid #aaa69d; border-radius:5px;text-align:center;"><%= currentUser.firstName.toUpperCase()%> <%= currentUser.lastName.toUpperCase()%></h2>
-                    
-        
-                     <h4 style="padding:8px;"><i class="fa fa-calendar redicon" aria-hidden="true"></i> Date of Birth: <span style="font-weight:700;"> <%= currentUser.dob.toDateString() %></span></h4>
-                     <h4 style="padding:8px;"><i class="fa fa-venus-mars redicon" aria-hidden="true"></i> Gender: <span style="font-weight:700;"> <%=genderType%></span></h4>
-                     <h4 style="padding:8px;"><i class="fas fa-tint redicon"></i> Blood Type: <span style="font-weight:700;"> <%= currentUser.bloodType %></span></h4>
-                     
-                     <% var time = currentUser.lastDonationDate;%>
-                     <% var date = new Date(time);%>
-
-                     <h4 style="padding:8px;"><i class="far fa-clock redicon"></i> Last Donation Date:
-                     <span>
-                         <% if(date.toDateString() == "Invalid Date"){ %>
-                         
-                         You have not added any history data.
-                         
-                         <% }else{ %>
-                         
-                         
-                         <%=date.toDateString()%></span></h4>
-                         <% } %>
-                     
-                     <!--Getting the last donation date from histories array-->
-                     
-                     <h4 style="padding-top:8px;"><i class="fas fa-exclamation-circle redicon"></i> Eligibility Check:
-                     <span style="font-weight:700;">
-        
-                          <% var today = new Date(); %>
-                          <% if(date.toDateString() == "Invalid Date"){ %>
-                          
-                           <%   time = 0; %>
-                              
-                          <% } %>
-                          <%if(genderType == "Female"){  %>
-                          
-                           <% if((time + 7257600000) <  today.getTime()){  %>
-                            
-                                <i class="fas fa-check greenicon"></i>
-                            
-                          <%  }else{  %>
-                            
-                                <i class="fas fa-times redicon"></i>
-                                <br><span style="font-size:12px; color:gray;">In order to make a next donation, you need to wait at least <strong>12 weeks</strong> after your last donation date.</span>
-                            
-                          <%  }  %>
-                          
-                        <%  }else{  %>
-                          
-                         <%   if((time + 9676800000) < today.getTime()){  %>
-                            
-                              <i class="fas fa-check greenicon"></i>
-                            
-                         <%   }else{  %>
-                            
-                              <i class="fas fa-times redicon"></i>
-                              <br><span style="font-size:12px; color:gray;">In order to make a next donation, you need to wait at least <strong>16 weeks</strong> after your last donation date.</span>
-                            
-                         <%   }  %>
-                          
-                         <% }  %>
-                         
-                     </span></h4>
-                     
-                     <hr>
-                     <h4 style="padding:10px;"><i class="far fa-star redicon"></i> Trophies</h4>
-                     <div class="row" style="padding:20px;">
-                         <div class="col-md-4">
-                             <image src="/images/trophy.png" style="height:50px; width:50px;display:block;margin:0 auto;">
-                         </div>
-                         
-                         <div class="col-md-4">
-                             <image src="/images/blood<%=typeOfBlood%>.png" style="height:50px; width:50px;display:block;margin: 0 auto;" alt="Blood B Positive">
-                         </div>
-                         <div class="col-md-4">
-                             <image src="/images/quality.png" style="height:50px; width:50px;display:block;margin:0 auto;">
-                         </div>
-                     </div>
-                </div>
-                
+         <% }else{ %>
+         <%     genderType = "Male"; %>
+         <% } %>       
+         <div class="col-md-6">
+            <% if(error && error.length > 0) { %>
+            <div class="alert alert-danger">
+               <p><i class="far fa-envelope"></i> <%=error %></p>
             </div>
-                     <div class="row" style="padding:20px;">
-                 <div class="col-md-8 col-md-offset-2">
-                     Please update your profile if there are any outdated information.
-                     <form action="/profile/<%=currentUser.username%>/edit" action="GET">
-                     <button type="submit" style="width:100%;padding:20px;border-radius:5px;background:#4b6584;color:white;"><i class="far fa-edit"></i> Edit Profile</button></form>
-                 </div>
-             </div>
-        </div>
-        <div class="col-md-4" style="height:160px;padding:20px;">
+            <% } %>
+            <% if(success && success.length > 0) { %>
+            <div class="alert alert-success">
+               <p><i class="far fa-envelope"></i> <%= success %></p>
+            </div>
+            <% } %> 
+            <div class="row">
+               <div class="col-md-8 col-md-offset-2" style="background:white;border-radius:5px;">
+                  <h2 style="background: #200122;  /* fallback for old browsers */
+                     background: -webkit-linear-gradient(to right, #6f0000, #200122);  /* Chrome 10-25, Safari 5.1-6 */
+                     background: linear-gradient(to right, #6f0000, #200122); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */color:white;padding:10px;width:auto; height:auto;border:1px solid #aaa69d; border-radius:5px;text-align:center;"><%= currentUser.firstName.toUpperCase()%> <%= currentUser.lastName.toUpperCase()%></h2>
+                  <h4 style="padding:8px;"><i class="fa fa-calendar redicon" aria-hidden="true"></i> Date of Birth: <span style="font-weight:700;"> <%= currentUser.dob.toDateString() %></span></h4>
+                  <h4 style="padding:8px;"><i class="fa fa-venus-mars redicon" aria-hidden="true"></i> Gender: <span style="font-weight:700;"> <%=genderType%></span></h4>
+                  <h4 style="padding:8px;"><i class="fas fa-tint redicon"></i> Blood Type: <span style="font-weight:700;"> <%= currentUser.bloodType %></span></h4>
+                  <% var time = currentUser.lastDonationDate;%>
+                  <% var date = new Date(time);%>
+                  <h4 style="padding:8px;"><i class="far fa-clock redicon"></i> Last Donation Date:
+                     <span>
+                     <% if(date.toDateString() == "Invalid Date"){ %>
+                     You have not added any history data.
+                     <% }else{ %>
+                     <%=date.toDateString()%></span>
+                  </h4>
+                  <% } %>
+                  <!--Getting the last donation date from histories array-->
+                  <h4 style="padding-top:8px;"><i class="fas fa-exclamation-circle redicon"></i> Eligibility Check:
+                     <span style="font-weight:700;">
+                     <% var today = new Date(); %>
+                     <% if(date.toDateString() == "Invalid Date"){ %>
+                     <%   time = 0; %>
+                     <% } %>
+                     <%if(genderType == "Female"){  %>
+                     <% if((time + 7257600000) <  today.getTime()){  %>
+                     <i class="fas fa-check greenicon"></i>
+                     <%  }else{  %>
+                     <i class="fas fa-times redicon"></i>
+                     <br><span style="font-size:12px; color:gray;">In order to make a next donation, you need to wait at least <strong>12 weeks</strong> after your last donation date.</span>
+                     <%  }  %>
+                     <%  }else{  %>
+                     <%   if((time + 9676800000) < today.getTime()){  %>
+                     <i class="fas fa-check greenicon"></i>
+                     <%   }else{  %>
+                     <i class="fas fa-times redicon"></i>
+                     <br><span style="font-size:12px; color:gray;">In order to make a next donation, you need to wait at least <strong>16 weeks</strong> after your last donation date.</span>
+                     <%   }  %>
+                     <% }  %>
+                     </span>
+                  </h4>
+                  <hr>
+                  <h4 style="padding:10px;"><i class="far fa-star redicon"></i> Trophies</h4>
+                  <div class="row" style="padding:20px;">
+                     <div class="col-md-4">
+                        <image src="/images/trophy.png" style="height:50px; width:50px;display:block;margin:0 auto;">
+                     </div>
+                     <div class="col-md-4">
+                        <image src="/images/blood<%=typeOfBlood%>.png" style="height:50px; width:50px;display:block;margin: 0 auto;" alt="Blood B Positive">
+                     </div>
+                     <div class="col-md-4">
+                        <image src="/images/quality.png" style="height:50px; width:50px;display:block;margin:0 auto;">
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="row" style="padding:20px;">
+               <div class="col-md-8 col-md-offset-2">
+                  Please update your profile if there are any outdated information.
+                  <form action="/profile/<%=currentUser.username%>/edit" action="GET">
+                     <button type="submit" style="width:100%;padding:20px;border-radius:5px;background:#4b6584;color:white;"><i class="far fa-edit"></i> Edit Profile</button>
+                  </form>
+               </div>
+            </div>
+         </div>
+         <div class="col-md-4" style="height:160px;padding:20px;">
             <h4><i class="fa fa-map-marker redicon" aria-hidden="true"></i> Your Address: <span style="font-weight:700;"><%=currentUser.city%>, <%=currentUser.postcode%>, <%=currentUser.country%></span></h4>
             <div id="map_canvas" style="width:100%; height:200px"></div>
             <div class="row">
-                <div class="col-md-6">
-                   <a href="/feedback">    
-                   <button class="btn btn-primary btn-email" style="display:block;background:#4c6582;">
-                       <i class="far fa-comment-alt"></i>
-                   Give Feedback</button></a>
-                </div>
-                
-                <div class="col-md-6">
-                   <button class="btn btn-primary btn-phone" style="background:#27ae60;">
-                       <i class="fa fa-phone" aria-hidden="true"></i>
-                   <a href="callTo:+447751572909" style="color:white;text-decoration:none;">Call Us</button></a>
-                </div>
-          
+               <div class="col-md-6">
+                  <a href="/feedback">    
+                  <button class="btn btn-primary btn-email" style="display:block;background:#4c6582;">
+                  <i class="far fa-star"></i>
+                  Give Feedback</button></a>
+               </div>
+               <div class="col-md-6">
+                  <button class="btn btn-primary btn-phone" style="background:#27ae60;">
+                  <i class="fa fa-phone" aria-hidden="true"></i>
+                  <a href="callTo:+447751572909" style="color:white;text-decoration:none;">Call Us</button></a>
+               </div>
             </div>
-            
-              <hr>
+            <hr>
             <div class="row" style="background: #200122;  /* fallback for old browsers */
-                                    background: -webkit-linear-gradient(to right, #6f0000, #200122);  /* Chrome 10-25, Safari 5.1-6 */
-                                    background: linear-gradient(to right, #6f0000, #200122); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-                                    padding:15px;border-radius:5px;color:white;margin-bottom:20px;
-                                    ">
-                    <h5><i class="fas fa-plus "></i> Donated amount of blood: <span style="font-size:24px;font-weight:bold;display:inline-block;float:right;"><%=currentUser.donatedAmount%> pt.</span> </h5>
-                    <hr>
-                    <h5><i class="fas fa-minus s"></i> Received amount of blood: <span style="font-size:24px;font-weight:bold;display:inline-block;float:right;"><%=currentUser.receivedAmount%> pt.</span></h5> 
-            </div>  
-            
-                <form action="/nearby" method="GET">
-                   <button type="submit" class="login" style="background:#232526 !important;width:100%;margin-top:10px;border-radius:10px;"><i class="far fa-hospital"></i> Find a nearby Hospital <i class="fas fa-arrow-right"></i></button>
-                </form>
-
-        </div>
-       </div>
-       
-      
-       <!--<form action="/addFriend/<%=currentUser._id%>" method="POST">-->
-       <!--    <input type="text" name="friendUsername" placeholder="username">-->
-       <!--    <button type="submit">Submit</button>-->
-       <!--</form>-->
-       
-    </div>
-    <div class="row" style="color:white;background: #200122;  /* fallback for old browsers */
-                                    background: -webkit-linear-gradient(to right, #6f0000, #200122);  /* Chrome 10-25, Safari 5.1-6 */
-                                    background: linear-gradient(to right, #6f0000, #200122);;margin-top:60px;">
+               background: -webkit-linear-gradient(to right, #6f0000, #200122);  /* Chrome 10-25, Safari 5.1-6 */
+               background: linear-gradient(to right, #6f0000, #200122); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+               padding:15px;border-radius:5px;color:white;margin-bottom:20px;
+               ">
+               <h5><i class="fas fa-plus "></i> Donated amount of blood: <span style="font-size:24px;font-weight:bold;display:inline-block;float:right;"><%=currentUser.donatedAmount%> pt.</span> </h5>
+               <hr>
+               <h5><i class="fas fa-minus s"></i> Received amount of blood: <span style="font-size:24px;font-weight:bold;display:inline-block;float:right;"><%=currentUser.receivedAmount%> pt.</span></h5>
+            </div>
+            <form action="/nearby" method="GET">
+               <button type="submit" class="login" style="background:#232526 !important;width:100%;margin-top:10px;border-radius:10px;"><i class="far fa-hospital"></i> Find a nearby Hospital <i class="fas fa-arrow-right"></i></button>
+            </form>
+         </div>
+      </div>
+      <!--<form action="/addFriend/<%=currentUser._id%>" method="POST">-->
+      <!--    <input type="text" name="friendUsername" placeholder="username">-->
+      <!--    <button type="submit">Submit</button>-->
+      <!--</form>-->
+   </div>
+   <div class="row" style="color:white;background: #200122;  /* fallback for old browsers */
+      background: -webkit-linear-gradient(to right, #6f0000, #200122);  /* Chrome 10-25, Safari 5.1-6 */
+      background: linear-gradient(to right, #6f0000, #200122);;margin-top:60px;padding-bottom:20px;">
       <div class="col-md-10 col-md-offset-1">
          <div class="row">
-
-             <div class="col-md-6 col-md-offset-3" style="text-align:center;background:white;color:#232526;padding:15px;border-bottom-left-radius:150px;border-bottom-right-radius:150px;">
-                 <div class="row" style="height:30px;width:100%;line-height:30px;text-align:center;font-size:24px;">
-        
-                   <i class="fas fa-history" style="color: #b13a3c"></i> History
-                 
-             </div> 
-           </div>
+            <div class="col-md-6 col-md-offset-3" style="text-align:center;background:white;color:#232526;padding:15px;border-bottom-left-radius:150px;border-bottom-right-radius:150px;">
+               <div class="row" style="height:30px;width:100%;line-height:30px;text-align:center;font-size:24px;">
+                  <i class="fas fa-history" style="color: #b13a3c"></i> History
+               </div>
+            </div>
          </div>
-         
          <div class="row">
             <!--History-->
-             <div class="col-md-8">
-                 
-                 <div class="row">
-                     <div class="col-md-6" style="background:white;margin-top:20px;margin-bottom:20px;border-radius:5px;">
-                         <!--Form for adding new entry-->
-                         <form action="/profile/<%=currentUser.username%>/history/add" method="POST">
-                
-                <h4 style="text-align:center;color:#232526;"><i class="fas fa-plus redicon"></i> I have</h4>  
-                <br>
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                     <select class="form-control" name="entry[type]"  id="donationType" style="color:black;margin:2px !important;border:0px;border-bottom:1px solid #232526;border-radius:0px !important;">
-                        <option value="donated blood to">donated blood to</option>
-                        <option value="received blood from">received blood from</option>
+            <div class="col-md-8">
+               <div class="row">
+                  <div class="col-md-6" style="background:white;margin-top:20px;margin-bottom:20px;border-radius:5px;">
+                     <!--Form for adding new entry-->
+                     <form action="/profile/<%=currentUser.username%>/history/add" method="POST">
+                        <h4 style="text-align:center;color:#232526;"><i class="fas fa-plus redicon"></i> I have</h4>
+                        <br>
+                        <div class="form-row">
+                           <div class="form-group col-md-6">
+                              <select class="form-control" name="entry[type]"  id="donationType" style="color:black;margin:2px !important;border:0px;border-bottom:1px solid #232526;border-radius:0px !important;">
+                                 <option value="donated blood to">donated blood to</option>
+                                 <option value="received blood from">received blood from</option>
+                              </select>
+                           </div>
+                           <div class="form-group col-md-6">
+                              <input name="entry[donationName]" class="form-control" style="margin:2px !important;text-align:center;background:white;border:0 !important;border-bottom:1px solid #232526 !important;border-radius:0 !important;" type="text" placeholder="Full Name">
+                           </div>
+                        </div>
+                        <div class="form-row">
+                           <div class="form-group col-md-6">
+                              <input type="date"  class="form-control" name="entry[date]" style="color:black;width:100%;background:white;border:0 !important;border-bottom:1px solid #232526 !important;border-radius:0 !important;" id="exampleInputDOB1" placeholder="MM/DD/YYYY">
+                           </div>
+                           <div class="form-group col-md-6">
+                              <input type="number" step="any" class="form-control" name="entry[amount]" style="color:black;width:100%;text-align:center;background:white;border:0 !important;border-bottom:1px solid #232526 !important;border-radius:0 !important;" placeholder="Amount">
+                           </div>
+                        </div>
+                        <input type="text"  class="form-control" name="entry[hospitalName]" style="color:black;width:100%;text-align:center;background:white;border:0 !important;border-bottom:1px solid #232526 !important;border-radius:0 !important;" id="exampleInputDOB1" placeholder="Address and Name of Hospital">
+                        <div class="form-group" style="margin-top:10px;">
+                           <textarea class="form-control" id="exampleFormControlTextarea1" name="entry[comment]" rows="3" style="background:white;border:0 !important;border-bottom:1px solid #232526 !important;border-radius:0 !important;" placeholder="More details about this donation"></textarea>
+                        </div>
+                        <button type="submit" class="login" style="background: #200122;  /* fallback for old browsers */
+                           background: -webkit-linear-gradient(to right, #6f0000, #200122);  /* Chrome 10-25, Safari 5.1-6 */
+                           background: linear-gradient(to right, #6f0000, #200122);width:100%;margin-top:10px;border-radius:10px;">Add Entry</button>
+                     </form>
+                     <!--End of form for adding new entry-->
+                  </div>
+                  <div class="col-md-4 col-md-offset-1" style="text-align:center;padding-top:30px">
+                     <h4><span style="color:white;font-size:16px;"><i class="fas fa-bolt"></i> Quick Access</h4>
+                     </form>
+                     <div class="row">
+                        <div class="col-md-12" style="background:white;padding:10px;color:#2e3436;border-top-left-radius:5px;border-top-right-radius:5px;">
+                           <p style="text-align:left;">History of past donations:</p>
+                           <form action="/profile/<%=currentUser.username%>/history" method="GET">
+                              <button type="submit" class="login" style="background:#232526 !important;width:100%;margin-top:10px;border-radius:10px;"><i class="fab fa-searchengin"></i> Look Up <i class="fas fa-arrow-right"></i></button>
+                           </form>
+                        </div>
+                     </div>
+                     <div class="row">
+                        <div class="col-md-12" style="background:white;padding:10px;color:#B13A3C;">
+                           <p style="text-align:left;"><i class="fas fa-calendar-plus"></i> List of appointments.</p>
+                           <form action="/usersearch/<%=currentUser.username%>" method="GET">
+                              <button type="submit" class="login" style="background: #200122;  /* fallback for old browsers */
+                                 background: -webkit-linear-gradient(to right, #6f0000, #200122);  /* Chrome 10-25, Safari 5.1-6 */
+                                 background: linear-gradient(to right, #6f0000, #200122);width:100%;margin-top:10px;border-radius:10px;">Find <i class="fas fa-arrow-right"></i></button>
+                           </form>
+                        </div>
+                     </div>
+                     <div class="row">
+                        <div class="col-md-12" style="background:white;padding:10px;color:black;border-bottom-left-radius:5px;border-bottom-right-radius:5px;">
+                           <p style="text-align:left;">Search for people that can donate their blood to You.</p>
+                           <form action="/usersearch/<%=currentUser.username%>" method="GET">
+                              <button type="submit" class="login" style="background:#232526 !important;width:100%;margin-top:10px;border-radius:10px;">Quick Search <i class="fas fa-arrow-right"></i></button>
+                           </form>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="col-md-4" style="padding:20px;">
+               <div class="row">
+                  <h4 style="text-align:center;"> <i class="fas fa-calendar-plus"></i> Appointment Reminder </h4>
+                  <div class="col-md-12">
+                     <div class="row" style="background:white;border-radius:5px; padding:5px;margin:10px;color:black:">
+                        <% if(appointment != null){ %>
                         
-                    </select> 
-                    </div>
-                    <div class="form-group col-md-6">
-                        <input name="entry[donationName]" class="form-control" style="margin:2px !important;text-align:center;background:white;border:0 !important;border-bottom:1px solid #232526 !important;border-radius:0 !important;" type="text" placeholder="Full Name">
-                    </div>
-                    
-                </div>
-        
-                    <div class="form-row">
-                        <div class="form-group col-md-6">
-                             <input type="date"  class="form-control" name="entry[date]" style="color:black;width:100%;background:white;border:0 !important;border-bottom:1px solid #232526 !important;border-radius:0 !important;" id="exampleInputDOB1" placeholder="MM/DD/YYYY">
-                        </div>
-                        <div class="form-group col-md-6">
-                            <input type="number" step="any" class="form-control" name="entry[amount]" style="color:black;width:100%;text-align:center;background:white;border:0 !important;border-bottom:1px solid #232526 !important;border-radius:0 !important;" placeholder="Amount">
-                        </div>
-                    </div>
-                   <input type="text"  class="form-control" name="entry[hospitalName]" style="color:black;width:100%;text-align:center;background:white;border:0 !important;border-bottom:1px solid #232526 !important;border-radius:0 !important;" id="exampleInputDOB1" placeholder="Address and Name of Hospital">
-                     <div class="form-group" style="margin-top:10px;">
-                        <textarea class="form-control" id="exampleFormControlTextarea1" name="entry[comment]" rows="3" style="background:white;border:0 !important;border-bottom:1px solid #232526 !important;border-radius:0 !important;" placeholder="More details about this donation"></textarea>
-                      </div>
-                  <button type="submit" class="login" style="background: #200122;  /* fallback for old browsers */
-                                    background: -webkit-linear-gradient(to right, #6f0000, #200122);  /* Chrome 10-25, Safari 5.1-6 */
-                                    background: linear-gradient(to right, #6f0000, #200122);width:100%;margin-top:10px;border-radius:10px;">Add Entry</button>
-                     
-                 </form> <!--End of form for adding new entry-->
-                     </div>
-                     
-                                          <div class="col-md-4 col-md-offset-1" style="text-align:center;padding-top:30px">
-                         <h4><span style="color:white;font-size:16px;">Quick Access</h4>
-                                      
-                 </form>
-                 
-                         <div class="row">
-                             <div class="col-md-12" style="background:white;padding:10px;color:#2e3436;border-top-left-radius:5px;border-top-right-radius:5px;">
-                                     <p style="text-align:left;">History of past donations:</p>
-                                     <form action="/profile/<%=currentUser.username%>/history" method="GET">
-                                     <button type="submit" class="login" style="background:#232526 !important;width:100%;margin-top:10px;border-radius:10px;"><i class="fab fa-searchengin"></i> Look Up <i class="fas fa-arrow-right"></i></button>
-                                     </form>
-                             </div>
-                         </div>
-                         <div class="row">
-                             <div class="col-md-12" style="background:white;padding:10px;color:#B13A3C;border-bottom-left-radius:5px;border-bottom-right-radius:5px;">
-                                     <p style="text-align:left;">Search for people that can donate their blood to You.</p>
-                                     <form action="/usersearch/<%=currentUser.username%>" method="GET">
-                                     <button type="submit" class="login" style="background: #200122;  /* fallback for old browsers */
-                                    background: -webkit-linear-gradient(to right, #6f0000, #200122);  /* Chrome 10-25, Safari 5.1-6 */
-                                    background: linear-gradient(to right, #6f0000, #200122);width:100%;margin-top:10px;border-radius:10px;">Quick Search <i class="fas fa-arrow-right"></i></button>
-                                     </form>
-                             </div>
-                         </div>
-
-                     </div>
-                     
-                 </div>
-                 
-             </div>
-             <!--End of history-->
-             
-             <!--Add new data-->
-             <div class="col-md-6" style="text-align:left;">
-                 <div class="row">
-               
-
-                           <div class="col-md-6">
-                         
-                     </div>
-                 </div>
-             </div>
-             <!--End of add new data-->
-         </div>
+                           <% var today = new Date(); %>
+                           <% var millis = today.getTime(); %>
+                           <% var difference = (appointment.date.getTime() - millis); %>
+                           <% var days = Math.floor(difference / (24*60*60*1000)); %>
+                        
+                                                   <h6 style="color:black; padding:10px;"><i class="fas fa-exclamation"></i> You have an appointment in <i class="far fa-clock"></i> <span style="font-size:14px;font-weight:bold;text-decoration:underline;color:#b02528;"><%=days%></span> days.</h6>
+                        <hr>
+                        <div class="col-md-12" style="color:black;padding:5px;"><i class="fas fa-user redicon"></i> <i class="far fa-user redicon"></i> You and <a href="/profile/<%=appointment.otherUsername%>">@<%=appointment.otherUsername%></a> </div>
+                        <div class="col-md-12" style="color:black;padding:5px;"><i class="far fa-hospital redicon"></i> Hospital: <%=appointment.hospitalName%></div>
+                        <div class="col-md-8" style="color:black;padding:5px;"><i class="far fa-calendar redicon"></i> Date: <%=appointment.date.toDateString()%></div>
+                        <div class="col-md-4" style="color:black;padding:5px;"><i class="far fa-clock redicon"></i> Time: <%=appointment.time%></div>
+                        <%  } %>
          
+                     </div>
+                     <div class="row" style="text-align:center;">
+                        <a href="/profile/<%=currentUser.username%>/appointments"><button class="btn" style="color:white;background:none;text-decoration:underline;font-size:12px;">View all <span style="padding:2px;text-decoration:none !important;background:#b02528;border-radius:5px;"><%=size%></span></button></a>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
       </div>
-    </div>
+      <!--End of history-->
+      <!--Add new data-->
+      <div class="col-md-6" style="text-align:left;">
+         <div class="row">
+            <div class="col-md-6">
+            </div>
+         </div>
+      </div>
+      <!--End of add new data-->
+   </div>
 </div>
-
+</div>
+</div>
 <%  }else{ %>
-
-    <div class="container" style="margin-top:80px;width:100%;height:400px;">
-    <div class="row" style="padding:10px;margin-top:20px;">
-        <div class="col-md-8 col-md-offset-2" style="margin-top:20px;padding:20px;border-radius:5px;background:#62a3bb;text-align:center;">
-                         <% if(error && error.length > 0) { %>
-       <div class="alert alert-danger"><p><%=error %></p></div>
-     <% } %>
-     
-     <% if(success && success.length > 0) { %>
-       <div class="alert alert-success"><p><%= success %></p></div>
-     <% } %> 
-            <h4 style="color:white;">Please verify your email by clicking on the activation link that will be sent from BloodDonor.</h4>
-            <form action="/verify/<%=currentUser._id%>" method="GET" style="margin-top:20px;">
+<div class="container" style="margin-top:80px;width:100%;height:400px;">
+   <div class="row" style="padding:10px;margin-top:20px;">
+      <div class="col-md-8 col-md-offset-2" style="margin-top:20px;padding:20px;border-radius:5px;background:#62a3bb;text-align:center;">
+         <% if(error && error.length > 0) { %>
+         <div class="alert alert-danger">
+            <p><%=error %></p>
+         </div>
+         <% } %>
+         <% if(success && success.length > 0) { %>
+         <div class="alert alert-success">
+            <p><%= success %></p>
+         </div>
+         <% } %> 
+         <h4 style="color:white;">Please verify your email by clicking on the activation link that will be sent from BloodDonor.</h4>
+         <form action="/verify/<%=currentUser._id%>" method="GET" style="margin-top:20px;">
             <button class="btn" type="submit"><i class="far fa-envelope-open"></i> Verify Email</button>
-            </form>
-        </div>
-    
-    </div>
-    <div class="row">
-          <div class="col-md-8 col-md-offset-2" style="margin-top:20px;padding:20px;text-align:center;">
-              Already verified? Please,
-           <form action="/profile/<%=currentUser.username%>" method="GET" style="margin-top:20px;">
+         </form>
+      </div>
+   </div>
+   <div class="row">
+      <div class="col-md-8 col-md-offset-2" style="margin-top:20px;padding:20px;text-align:center;">
+         Already verified? Please,
+         <form action="/profile/<%=currentUser.username%>" method="GET" style="margin-top:20px;">
             <button class="btn" type="submit" style="background:#62a3bb;color:white;"><i class="far fa-envelope-open"></i> Refresh</button>
-            </form>
-          </div>
-    </div>
-        
-    </div>
-
+         </form>
+      </div>
+   </div>
+</div>
 <% } %>
-
 <% include partials/footer%>
-
-

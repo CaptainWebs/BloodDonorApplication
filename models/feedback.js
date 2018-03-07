@@ -18,7 +18,7 @@ var FeedbackSchema = new mongoose.Schema({
   search: String,
   layout: String,
   overall: String,
-  rating: Number,
+  rating: {type: Number, index: true},
   review: String
   
 });

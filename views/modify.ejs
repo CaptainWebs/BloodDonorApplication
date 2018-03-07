@@ -1,0 +1,39 @@
+<% include partials/header%>
+<div class="container" style="width:100%;">
+   <div class="row redbutton" style="padding-top:100px;padding-bottom:20px;background: #200122;  /* fallback for old browsers */
+      background: -webkit-linear-gradient(to right, #6f0000, #200122);  /* Chrome 10-25, Safari 5.1-6 */
+      background: linear-gradient(to right, #6f0000, #200122);color:white;">
+      <div class="col-md-8 col-md-offset-2">
+         <h2 style="text-align:center;"><i class="far fa-edit"></i> Modify Appointment</h2>
+      </div>
+   </div>
+</div>
+<% var monthPadding=''; %>
+<% var dayPadding=''; %>
+<% if((appointment.date.getUTCMonth()+1) < 10){monthPadding='0'} %>
+<% if((appointment.date.getUTCDate()) < 10){dayPadding='0'} %>
+<% date = appointment.date.getUTCFullYear() + '-'+ monthPadding + (appointment.date.getUTCMonth()+1) + '-'+ dayPadding + appointment.date.getUTCDate(); %>
+<div class="row" style="padding:20px; background:#62A3BB;color:white;">
+   <div class="col-md-6 col-md-offset-3" style="text-align:center;">
+      <h5><i class="fas fa-info" style="color:yellow;"></i> These are the appointment details that @<%=appointment.otherUsername%> has sent to you. Please modify according to your availability and click 'Modify'. The appointment will be confirmed if the other part also confirms these modifications.</h5>
+      <hr>
+      <form action="/appointment/<%=appointment.random%>/modify/<%=appointment.otherUsername%>" method="POST">
+         <div class="form-row row">
+            <div class="form-group col-md-4">
+               <label for="exampleDropdownFormEmail1">Name of Hospital</label>
+               <input type="text" class="form-control" name="hospitalName" id="exampleDropdownFormEmail1" placeholder="enter name of hospital" style="height:40px;" required value="<%=appointment.hospitalName%>">
+            </div>
+            <div class="form-group col-md-4">
+               <label>Appointment Date</label>
+               <input type="date" name="date" class="form-control" id="exampleInputDOB1" placeholder="Appointment Date" required style="height:40px;" value="<%=date%>">
+            </div>
+            <div class="form-group col-md-4">
+               <label for="exampleDropdownFormEmail1"><i class="far fa-clock"></i> Time</label>
+               <input type="time" class="form-control" name="time" id="exampleDropdownFormEmail1" placeholder="enter time of appointment" value="<%=appointment.time%>" style="height:40px;" required>
+            </div>
+         </div>
+         <button class="btn btn-primary" type="submit" style="background:#dfe6e9;border:2px solid #b02528;border-radius:5px;outline:none;padding:10px;color:#b02528;"> <i class="far fa-calendar-check"></i> Modify</button>
+      </form>
+   </div>
+</div>
+<% include partials/footer%>

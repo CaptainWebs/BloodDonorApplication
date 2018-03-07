@@ -1,348 +1,310 @@
 <% include partials/header%>
 <script type="text/javascript">
-  var geocoder;
-  var map;
-  var address ="<%=currentUser.city%>, <%=currentUser.postcode%>, <%=currentUser.country%>";
-  function initialize() {
-    geocoder = new google.maps.Geocoder();
-    var latlng = new google.maps.LatLng(-34.397, 150.644);
-    var myOptions = {
-      zoom: 16,
-      center: latlng,
-    mapTypeControl: true,
-    mapTypeControlOptions: {style: google.maps.MapTypeControlStyle.DROPDOWN_MENU},
-    navigationControl: true,
-      mapTypeId: google.maps.MapTypeId.ROADMAP,
-    };
-    map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
-    if (geocoder) {
-      geocoder.geocode( { 'address': address}, function(results, status) {
-        if (status == google.maps.GeocoderStatus.OK) {
-          if (status != google.maps.GeocoderStatus.ZERO_RESULTS) {
-          map.setCenter(results[0].geometry.location);
-
-            var infowindow = new google.maps.InfoWindow(
-                { content: '<b>'+address+'</b>',
-                  size: new google.maps.Size(150,50)
-                });
-
-            var marker = new google.maps.Marker({
-                position: results[0].geometry.location,
-                map: map, 
-                title:address
-            }); 
-            google.maps.event.addListener(marker, 'click', function() {
-                infowindow.open(map,marker);
-            });
-
-          } else {
-            alert("No results found");
-          }
-        } else {
-          alert("Geocode was not successful for the following reason: " + status);
-        }
-      });
-    }
-  }
+   var geocoder;
+   var map;
+   var address ="<%=currentUser.city%>, <%=currentUser.postcode%>, <%=currentUser.country%>";
+   function initialize() {
+     geocoder = new google.maps.Geocoder();
+     var latlng = new google.maps.LatLng(-34.397, 150.644);
+     var myOptions = {
+       zoom: 16,
+       center: latlng,
+     mapTypeControl: true,
+     mapTypeControlOptions: {style: google.maps.MapTypeControlStyle.DROPDOWN_MENU},
+     navigationControl: true,
+       mapTypeId: google.maps.MapTypeId.ROADMAP,
+     };
+     map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+     if (geocoder) {
+       geocoder.geocode( { 'address': address}, function(results, status) {
+         if (status == google.maps.GeocoderStatus.OK) {
+           if (status != google.maps.GeocoderStatus.ZERO_RESULTS) {
+           map.setCenter(results[0].geometry.location);
+   
+             var infowindow = new google.maps.InfoWindow(
+                 { content: '<b>'+address+'</b>',
+                   size: new google.maps.Size(150,50)
+                 });
+   
+             var marker = new google.maps.Marker({
+                 position: results[0].geometry.location,
+                 map: map, 
+                 title:address
+             }); 
+             google.maps.event.addListener(marker, 'click', function() {
+                 infowindow.open(map,marker);
+             });
+   
+           } else {
+             alert("No results found");
+           }
+         } else {
+           alert("Geocode was not successful for the following reason: " + status);
+         }
+       });
+     }
+   }
 </script>
 <div class="container" style="margin-top:100px;width:100%;height:550px;">
-    <% if(!isFriend){ %>
-    
-        <div class="row" style="padding:10px; background:#62A3BB;color:white;">
-        <div class="col-md-8 col-md-offset-2">
-           <h4 style="text-decoration:underline;"><i class="fas fa-exclamation" style="color:yellow;"></i> Dear user!</h4>
-           <h5>Please note that certain fields and information associated with <span style="text-decoration:underline;font-size:16px;">@<%=currentUser.username%></span> is invisible because of you not being in the friends list. You can send an email that briefly explains your request.</h5>
-                
-        </div>
-        </div>
-        
+   <% if(!isFriend){ %>
+   <div class="row" style="padding:10px; background:#62A3BB;color:white;">
+      <div class="col-md-8 col-md-offset-2">
+         <h4 style="text-decoration:underline;"><i class="fas fa-exclamation" style="color:yellow;"></i> Dear user!</h4>
+         <h5>Please note that certain fields and information associated with <span style="text-decoration:underline;font-size:16px;">@<%=currentUser.username%></span> is invisible because of you not being in the friends list. You can send an email that briefly explains your request.</h5>
+      </div>
+   </div>
    <%  } %>
-
-    <div class="row" style="padding:10px;margin-top:20px;">
-        
-        <% var typeOfBlood; %>
-            <% if((currentUser.bloodType).slice(0,3) == "A+ "){%>
-            
-            <% typeOfBlood = "apos"; %>
-            
-            <% } else if((currentUser.bloodType).slice(0,3) == "B+ "){%>
-            
-            <% typeOfBlood = "bpos"; %>
-            
-            <% } else if((currentUser.bloodType).slice(0,3) == "AB+"){ %>
-    
-            <% typeOfBlood = "abpos"; %>
-            
-            <% } else if((currentUser.bloodType).slice(0,3) == "O+ "){ %>
-            
-            <% typeOfBlood = "opos"; %>
-            
-            <% }else if((currentUser.bloodType).slice(0,3) == "A- "){ %>
-            
-            <% typeOfBlood = "aneg"; %>
-        
-            <% }else if((currentUser.bloodType).slice(0,3) == "B- "){%>
-            
-            <% typeOfBlood = "bneg"; %>
-            
-            <% }else if((currentUser.bloodType).slice(0,3) == "O- "){%>
-            
-            <% typeOfBlood = "oneg"; %>
-            
-            <% }else{ %>
-            
-            <% typeOfBlood = "abneg"; %>
-            
-            <% } %>
-            
-            <% var genderType; %>
-            <% if(currentUser.gender == "male"){%>
-            
-            <% genderType = "manuser"; %>
-            
-            <% } else if(currentUser.gender == "female"){%>
-            
-            <% genderType = "womanuser"; %>
-            
-            <% } %>
-
-        <div class="col-md-10 col-md-offset-1 profile_tab">
-        <div class="col-md-2" style="margin-top:20px;">
-
+   <div class="row" style="padding:10px;margin-top:20px;">
+      <% var typeOfBlood; %>
+      <% if((currentUser.bloodType).slice(0,3) == "A+ "){%>
+      <% typeOfBlood = "apos"; %>
+      <% } else if((currentUser.bloodType).slice(0,3) == "B+ "){%>
+      <% typeOfBlood = "bpos"; %>
+      <% } else if((currentUser.bloodType).slice(0,3) == "AB+"){ %>
+      <% typeOfBlood = "abpos"; %>
+      <% } else if((currentUser.bloodType).slice(0,3) == "O+ "){ %>
+      <% typeOfBlood = "opos"; %>
+      <% }else if((currentUser.bloodType).slice(0,3) == "A- "){ %>
+      <% typeOfBlood = "aneg"; %>
+      <% }else if((currentUser.bloodType).slice(0,3) == "B- "){%>
+      <% typeOfBlood = "bneg"; %>
+      <% }else if((currentUser.bloodType).slice(0,3) == "O- "){%>
+      <% typeOfBlood = "oneg"; %>
+      <% }else{ %>
+      <% typeOfBlood = "abneg"; %>
+      <% } %>
+      <% var genderType; %>
+      <% if(currentUser.gender == "male"){%>
+      <% genderType = "manuser"; %>
+      <% } else if(currentUser.gender == "female"){%>
+      <% genderType = "womanuser"; %>
+      <% } %>
+      <div class="col-md-10 col-md-offset-1 profile_tab">
+         <div class="col-md-2" style="margin-top:20px;">
             <!--User profile image (set to default image that can be replaced by uploading a new image)-->
             <image src="/images/<%=currentUser.gender%>.png" style="height:150px; width:150px; border-radius:20px;display:block;margin:0 auto;">
-             
-                
             <!--Username-->
             <form action="/report/<%=currentUser.username%>" method="GET">
-             <button type="submit" class="" style="background:#DFE6E9;border:0;"><i class="fa fa-flag redicon"></i> Report</button>
-             <span class="redicon">@<%= currentUser.username%></span>
+               <button type="submit" class="" style="background:#DFE6E9;border:0;"><i class="fa fa-flag redicon"></i> Report</button>
+               <span class="redicon">@<%= currentUser.username%></span>
             </form>
-            
             <!--Buttons-->
             <!--Send request button-->
             <!--<button type="button" class="btn btn-primary profilebtn1 requestFriend"><i class="fa fa-plus" aria-hidden="true"></i> Send Request</button>-->
-            
-            
             <!--Friends buttton that allow to Unfriend while hovering over-->
             <!--<button type="button" class="btn btn-primary profilebtn1 friend"><i class="fa fa-check" aria-hidden="true"></i> Friend</button>-->
-            
             <!--Report user button-->
             <% if(isFriend){ %>
-                Social media links: <a href="<%=currentUser.fbLink%>"><i class="fab fa-facebook"></i></a> <a href="<%=currentUser.twitterLink%>"><i class="fab fa-twitter-square"></i></a>
-                <hr>
-                <h4 style="text-align:center;">You are Friends <i class="fas fa-check greenicon"></i></h4>
-                <form action="/removeFriend/<%=currentUser.username%>" method="POST">
-                <button type="submit" class="btn btn-primary" style="    outline:none !important;    
-                                            margin-top: 5px;
-                                            border:none;
-                                            width:100%;
-                                            height: 40px;
-                                            font-size: 14px;
-                                        background: #B22222;"><i class="fas fa-times"></i> Remove Friend</button></form>
-            
+            Social media links: <a href="<%=currentUser.fbLink%>"><i class="fab fa-facebook"></i></a> <a href="<%=currentUser.twitterLink%>"><i class="fab fa-twitter-square"></i></a>
+            <hr>
+            <h4 style="text-align:center;">You are Friends <i class="fas fa-check greenicon"></i></h4>
+            <form action="/removeFriend/<%=currentUser.username%>" method="POST">
+               <button type="submit" class="btn btn-primary" style="    outline:none !important;    
+                  margin-top: 5px;
+                  border:none;
+                  width:100%;
+                  height: 40px;
+                  font-size: 14px;
+                  background: #B22222;"><i class="fas fa-times"></i> Remove Friend</button>
+            </form>
             <% } else if(requestReceived){ %>
-            
-                <form action="/addFriend/<%=currentUser._id%>" method="POST">
-                            <button type="submit" class="btn btn-primary" style="outline:none !important;    
-                                                                margin-top: 5px;
-                                                                border:none;
-                                                                width:100%;
-                                                                font-size: 14px;
-                                                                height: 40px;
-                                                            background: #27ae60;"><i class="far fa-check-circle"></i> Accept Request</button></form>
-            
-            <% }else if(requestSent){ %>
-            
-            
             <form action="/addFriend/<%=currentUser._id%>" method="POST">
-                            <button type="submit" class="btn btn-primary" style="outline:none !important;    
-                                                                border:none;
-                                                                width:100%;
-                                                                font-size: 14px;
-                                                                height: 40px;
-                                                                font-size: 14px;
-                                                            background: #60a3bc;"><i class="fas fa-share-square"></i> Request Sent</button></form>
-            
-            
+               <button type="submit" class="btn btn-primary" style="outline:none !important;    
+                  margin-top: 5px;
+                  border:none;
+                  width:100%;
+                  font-size: 14px;
+                  height: 40px;
+                  background: #27ae60;"><i class="far fa-check-circle"></i> Accept Request</button>
+            </form>
+            <% }else if(requestSent){ %>
+            <form action="/addFriend/<%=currentUser._id%>" method="POST">
+               <button type="submit" class="btn btn-primary" style="outline:none !important;    
+                  border:none;
+                  width:100%;
+                  font-size: 14px;
+                  height: 40px;
+                  font-size: 14px;
+                  background: #60a3bc;"><i class="fas fa-share-square"></i> Request Sent</button>
+            </form>
             <% } else{ %>
-            
-  
-                            <form action="/addFriend/<%=currentUser._id%>" method="POST">
-                            <button type="submit" class="btn btn-primary" style="outline:none !important;    
-                                                                border:none;
-                                                                width:100%;
-                                                                font-size: 14px;
-                                                                height: 40px;
-                                                                font-size: 14px;
-                                                            background: #27ae60;"><i class="fas fa-plus"></i> Send Request</button></form>
-        
-                            
-            
-            
+            <form action="/addFriend/<%=currentUser._id%>" method="POST">
+               <button type="submit" class="btn btn-primary" style="outline:none !important;    
+                  border:none;
+                  width:100%;
+                  font-size: 14px;
+                  height: 40px;
+                  font-size: 14px;
+                  background: #27ae60;"><i class="fas fa-plus"></i> Send Request</button>
+            </form>
             <% } %>
-
-            
             <% var count=0; %>
             <% friends.forEach(function(friend){ %>
             <%console.log(count)%>
             <% count++; })%>
-            
             <% if(isFriend){ %>
             <h4><i class="fas fa-users redicon"></i> Friends(<%=count%>)</h4>
             <div class="row">
-                
-                
-                <div class="container">
-                    <table class="table friend">
-    <tbody style="text-align:left !important;">
-         <%  friends.forEach(function(friend){ %>
-               <tr>  
-              <td class="col-xs-6"><a href="/profile/<%=friend.friend.username%>" style="color:white;"><i class="fas fa-user"></i> <%=friend.friend.firstName%> <%=friend.friend.lastName%> (@<%=friend.friend.username%>)</a></td>
-                         </tr>
-               <%  }) %>
- 
-     
-    </tbody>
-  </table>
-                </div>
+               <div class="container">
+                  <table class="table friend">
+                     <tbody style="text-align:left !important;">
+                        <%  friends.forEach(function(friend){ %>
+                        <tr>
+                           <td class="col-xs-6"><a href="/profile/<%=friend.friend.username%>" style="color:white;"><i class="fas fa-user"></i> <%=friend.friend.firstName%> <%=friend.friend.lastName%> (@<%=friend.friend.username%>)</a></td>
+                        </tr>
+                        <%  }) %>
+                     </tbody>
+                  </table>
+               </div>
             </div>
             <% } %>
             <!--<a href="/report/<%=currentUser.username%>"> -->
             <!--<button type="button" value="submit" class="btn btn-primary profilebtn1 reportUser"><i class="fa fa-flag-o" aria-hidden="true"></i> Report User</button></a>-->
-    
-            
-        </div>
-
-    
-        <%    var genderType;%>
-        <% if(currentUser.gender == "womanuser"){%>
-        
+         </div>
+         <%    var genderType;%>
+         <% if(currentUser.gender == "womanuser"){%>
          <%   genderType = "Female"; %>
-        
-        <% }else{ %>
-        
-        <%     genderType = "Male"; %>
-        
-       <% } %>       
-        
-        <div class="col-md-6">
+         <% }else{ %>
+         <%     genderType = "Male"; %>
+         <% } %>       
+         <div class="col-md-6">
             <div class="row">
-                <div class="col-md-8 col-md-offset-2" style="background:white;border-radius:5px;">
-                    <h2 style="background: #200122;  /* fallback for old browsers */
-                                    background: -webkit-linear-gradient(to right, #6f0000, #200122);  /* Chrome 10-25, Safari 5.1-6 */
-                                    background: linear-gradient(to right, #6f0000, #200122); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */color:white;padding:10px;width:auto; height:auto;border:1px solid #aaa69d; border-radius:5px;text-align:center;"><%= currentUser.firstName.toUpperCase()%> <%= currentUser.lastName.toUpperCase()%></h2>
-                    
-                    <% if(isFriend){ %>
-                                         <h4 style="padding:8px;"><i class="fa fa-calendar redicon" aria-hidden="true"></i> Date of Birth: <span style="font-weight:700;"> <%= currentUser.dob.toDateString() %></span></h4>
-
-                    <% } %>
-                     <h4 style="padding:8px;"><i class="fa fa-venus-mars redicon" aria-hidden="true"></i> Gender: <span style="font-weight:700;"> <%=genderType%></span></h4>
-                     <h4 style="padding:8px;"><i class="fas fa-tint redicon"></i> Blood Type: <span style="font-weight:700;"> <%= currentUser.bloodType %></span></h4>
-                     <% var time = currentUser.lastDonationDate;%>
-                     <% var date = new Date(time);%>
-
-                     
-                     <!--Getting the last donation date from histories array-->
-                     
-                     <h4 style="padding:8px;"><i class="fas fa-exclamation-circle redicon"></i> Eligibility Check:
+               <div class="col-md-8 col-md-offset-2" style="background:white;border-radius:5px;">
+                  <h2 style="background: #200122;  /* fallback for old browsers */
+                     background: -webkit-linear-gradient(to right, #6f0000, #200122);  /* Chrome 10-25, Safari 5.1-6 */
+                     background: linear-gradient(to right, #6f0000, #200122); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */color:white;padding:10px;width:auto; height:auto;border:1px solid #aaa69d; border-radius:5px;text-align:center;"><%= currentUser.firstName.toUpperCase()%> <%= currentUser.lastName.toUpperCase()%></h2>
+                  <% if(isFriend){ %>
+                  <h4 style="padding:8px;"><i class="fa fa-calendar redicon" aria-hidden="true"></i> Date of Birth: <span style="font-weight:700;"> <%= currentUser.dob.toDateString() %></span></h4>
+                  <% } %>
+                  <h4 style="padding:8px;"><i class="fa fa-venus-mars redicon" aria-hidden="true"></i> Gender: <span style="font-weight:700;"> <%=genderType%></span></h4>
+                  <h4 style="padding:8px;"><i class="fas fa-tint redicon"></i> Blood Type: <span style="font-weight:700;"> <%= currentUser.bloodType %></span></h4>
+                  <% var time = currentUser.lastDonationDate;%>
+                  <% var date = new Date(time);%>
+                  <!--Getting the last donation date from histories array-->
+                  <h4 style="padding:8px;"><i class="fas fa-exclamation-circle redicon"></i> Eligibility Check:
                      <span style="font-weight:700;">
-        
-                          <% var today = new Date(); %>
-                          <%if(genderType == "Female"){  %>
-                          
-                           <% if((time + 7257600000) <  today.getTime()){  %>
-                            
-                                <i class="fas fa-check greenicon"></i>
-                            
-                          <%  }else{  %>
-                            
-                                <i class="fas fa-times redicon"></i>
-                            
-                          <%  }  %>
-                          
-                        <%  }else{  %>
-                          
-                         <%   if((time + 9676800000) < today.getTime()){  %>
-                            
-                              <i class="fas fa-check greenicon"></i>
-                            
-                         <%   }else{  %>
-                            
-                              <i class="fas fa-times redicon"></i>
-                            
-                         <%   }  %>
-                          
-                         <% }  %>
-                         
-                     </span></h4>
-                     
-                    
-                </div>
+                     <% var today = new Date(); %>
+                     <%if(genderType == "Female"){  %>
+                     <% if((time + 7257600000) <  today.getTime()){  %>
+                     <i class="fas fa-check greenicon"></i>
+                     <%  }else{  %>
+                     <i class="fas fa-times redicon"></i>
+                     <%  }  %>
+                     <%  }else{  %>
+                     <%   if((time + 9676800000) < today.getTime()){  %>
+                     <i class="fas fa-check greenicon"></i>
+                     <%   }else{  %>
+                     <i class="fas fa-times redicon"></i>
+                     <%   }  %>
+                     <% }  %>
+                     </span>
+                  </h4>
+               </div>
             </div>
-        </div>
-        <div class="col-md-4" style="height:160px;">
-            
+         </div>
+         <div class="col-md-4" style="height:160px;">
             <% if(isFriend){ %>
-                <h4><i class="fa fa-map-marker redicon" aria-hidden="true"></i> Location: <span style="font-weight:700;"><%=currentUser.city%>, <%=currentUser.postcode%>, <%=currentUser.country%></span></h4>
-                <div id="map_canvas" style="width:100%; height:200px"></div>
-             <% }else{ %>
-                <h4><i class="fa fa-map-marker redicon" aria-hidden="true"></i> Location: <span style="font-weight:700;"><%=currentUser.city%>, <%=currentUser.country%></span></h4>
-                <div style="width:100%;height:200px;background:url('/images/donorlocation.png');background-size:100% 200px;color:white;padding:20px;text-align:right;font-size:16px;text-decoration:underline;"><i class="fas fa-exclamation-triangle"></i> Full address details of the donor<br>is only visible<br>to the Friends of donor.</div>
-            
+            <h4><i class="fa fa-map-marker redicon" aria-hidden="true"></i> Location: <span style="font-weight:700;"><%=currentUser.city%>, <%=currentUser.postcode%>, <%=currentUser.country%></span></h4>
+            <div id="map_canvas" style="width:100%; height:200px"></div>
+            <% }else{ %>
+            <h4><i class="fa fa-map-marker redicon" aria-hidden="true"></i> Location: <span style="font-weight:700;"><%=currentUser.city%>, <%=currentUser.country%></span></h4>
+            <div style="width:100%;height:200px;background:url('/images/donorlocation.png');background-size:100% 200px;color:white;padding:20px;text-align:right;font-size:16px;text-decoration:underline;"><i class="fas fa-exclamation-triangle"></i> Full address details of the donor<br>is only visible<br>to the Friends of donor.</div>
             <% } %>
-            
             <div class="row">
-
-                <% if(isFriend){ %>
-                
-                 <div class="col-md-6">
-                   <button class="btn btn-primary btn-email" style="display:block;">
-                       <i class="fa fa-envelope" aria-hidden="true"></i>
-                   <a href="mailto:<%=currentUser.email%>" style="color:white;text-decoration:none;"> Send Email</a></button>   
-                </div>
-                
-                <div class="col-md-6">
-                   <button class="btn btn-primary btn-phone" style="background:#27ae60;">
-                       <i class="fa fa-phone" aria-hidden="true"></i>
-                   <a href="callTo:<%=currentUser.phoneNumber%>" style="color:white;text-decoration:none;">Call Phone</button></a>
-                </div>
-                
-                <% }else{ %>
-                
-                 <div class="col-md-10 col-md-offset-1">
-                   <button class="btn btn-primary btn-email" style="display:block;">
-                       <i class="fa fa-envelope" aria-hidden="true"></i>
-                   <a href="mailto:<%=currentUser.email%>" style="color:white;text-decoration:none;"> Send Email</a></button>   
-                </div>
-                
-                <% } %>
-                
+               <% if(isFriend){ %>
+               <div class="col-md-6">
+                  <button class="btn btn-primary btn-email" style="display:block;">
+                  <i class="fa fa-envelope" aria-hidden="true"></i>
+                  <a href="mailto:<%=currentUser.email%>" style="color:white;text-decoration:none;"> Send Email</a></button>   
+               </div>
+               <div class="col-md-6">
+                  <button class="btn btn-primary btn-phone" style="background:#27ae60;">
+                  <i class="fa fa-phone" aria-hidden="true"></i>
+                  <a href="callTo:<%=currentUser.phoneNumber%>" style="color:white;text-decoration:none;">Call Phone</button></a>
+               </div>
+               <% }else{ %>
+               <div class="col-md-10 col-md-offset-1">
+                  <button class="btn btn-primary btn-email" style="display:block;">
+                  <i class="fa fa-envelope" aria-hidden="true"></i>
+                  <a href="mailto:<%=currentUser.email%>" style="color:white;text-decoration:none;"> Send Email</a></button>   
+               </div>
+               <% } %>
             </div>
-            
-              <hr>
-
-        </div>
-       </div>
-       
-      
-       <!--<form action="/addFriend/<%=currentUser._id%>" method="POST">-->
-       <!--    <input type="text" name="friendUsername" placeholder="username">-->
-       <!--    <button type="submit">Submit</button>-->
-       <!--</form>-->
-       
-    </div>
-    </div>
+            <hr>
+         </div>
+      </div>
+      <!--<form action="/addFriend/<%=currentUser._id%>" method="POST">-->
+      <!--    <input type="text" name="friendUsername" placeholder="username">-->
+      <!--    <button type="submit">Submit</button>-->
+      <!--</form>-->
+   </div>
 </div>
-        <div class="row" style="padding:20px; background:#62A3BB;color:white;">
-        <div class="col-md-4 col-md-offset-4">
-                     <h5>If you need blood donation within the next <i class="far fa-clock"></i> 48 hours then click the button that will initiate our team to get in touch with donor.</h5>
-                     <h6>For more info, please visit <a href="" style="color:yellow;text-decoration:underline;">Urgent Need</a> page.</h6>
-                    <button class="btn btn-primary btn-email redbutton" style="display:block;background:#b02528;height:60px !important;">
-                       <i class="fas fa-heartbeat"></i>
-                   <a href="/urgent/<%=currentUser.username%>" style="color:white;text-decoration:none;">URGENT NEED</a></button>   
-        </div>
-        </div>
+</div>
+
+<% if(isFriend){ %>
+<% if(shared != null || (typeof shared != undefined)){ %>
+<% var monthPadding=''; %>
+<% var dayPadding=''; %>
+<% if((shared.date.getUTCMonth()+1) < 10){monthPadding='0'} %>
+<% if((shared.date.getUTCDate()) < 10){dayPadding='0'} %>
+<% date = shared.date.getUTCFullYear() + '-'+ monthPadding + (shared.date.getUTCMonth()+1) + '-'+ dayPadding + shared.date.getUTCDate(); %>
+<div class="row" style="padding:20px; background:#62A3BB;color:white;">
+   <div class="col-md-6 col-md-offset-3" style="text-align:center;">
+      <h4><i class="far fa-calendar-alt" style="color:yellow;"></i> You both have scheduled an appointment.<i class="far fa-info-circle"></i></h4>
+      <hr> 
+           <form action="" method="">
+            <div class="form-row row">
+               <div class="form-group col-md-4">
+                  <label for="exampleDropdownFormEmail1">Name of Hospital</label>
+                  <input type="text" class="form-control" name="hospitalName" id="exampleDropdownFormEmail1" placeholder="enter name of hospital" style="height:40px;" required value="<%=shared.hospitalName%>">
+               </div>
+               <div class="form-group col-md-4">
+                  <label>Appointment Date</label>
+                  <input type="date" name="date" class="form-control" id="exampleInputDOB1" placeholder="Appointment Date" required style="height:40px;" value="<%=date%>">
+               </div>
+               <div class="form-group col-md-4">
+                  <label for="exampleDropdownFormEmail1"><i class="far fa-clock"></i> Time</label>
+                  <input type="time" class="form-control" name="time" id="exampleDropdownFormEmail1" placeholder="enter time of appointment" value="<%=shared.time%>" style="height:40px;" required>
+               </div>
+            </div>
+         </form>
+    </div> 
+</div>
+
+<% }else{ %>
+<div class="row" style="padding:20px; background:#62A3BB;color:white;">
+   <div class="col-md-6 col-md-offset-3" style="text-align:center;">
+      <h4><i class="far fa-calendar-alt" style="color:yellow;"></i> Appointment Request <i class="far fa-info-circle"></i></h4>
+      <hr>
+      <form action="/appointment/<%=currentUser.username%>" method="POST">
+         <div class="form-row row">
+            <div class="form-group col-md-4">
+               <label for="exampleDropdownFormEmail1">Name of Hospital</label>
+               <input type="text" class="form-control" name="hospitalName" id="exampleDropdownFormEmail1" placeholder="enter name of hospital" style="height:40px;" required>
+            </div>
+            <div class="form-group col-md-4">
+               <label>Appointment Date</label>
+               <input type="date" name="date" class="form-control" id="exampleInputDOB1" placeholder="Appointment Date" required style="height:40px;">
+            </div>
+            <div class="form-group col-md-4">
+               <label for="exampleDropdownFormEmail1"><i class="far fa-clock"></i> Time</label>
+               <input type="time" class="form-control" name="time" id="exampleDropdownFormEmail1" placeholder="enter name of hospital" style="height:40px;" required>
+            </div>
+         </div>
+         <button class="btn btn-primary" type="submit" style="background:#dfe6e9;border:2px solid #b02528;border-radius:5px;outline:none;padding:10px;color:#b02528;"> <i class="far fa-calendar-check"></i> Send to @<%=currentUser.username%></button>
+      </form>
+   </div>
+</div>
+<% } %>
+<% }else{ %>
+<div class="row" style="padding:20px; background:#62A3BB;color:white;">
+   <div class="col-md-4 col-md-offset-4">
+      <h5>If you need blood donation within the next <i class="far fa-clock"></i> 48 hours then click the button that will initiate our team to get in touch with donor.</h5>
+      <h6>For more info, please visit <a href="" style="color:yellow;text-decoration:underline;">Urgent Need</a> page.</h6>
+      <button class="btn btn-primary btn-email redbutton" style="display:block;background:#b02528;height:60px !important;">
+      <i class="fas fa-heartbeat"></i>
+      <a href="/urgent/<%=currentUser.username%>" style="color:white;text-decoration:none;">URGENT NEED</a></button>   
+   </div>
+</div>
+<% } %>
 <% include partials/footer%>
-
-

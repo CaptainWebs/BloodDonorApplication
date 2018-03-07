@@ -10,7 +10,7 @@ var UserSchema = new mongoose.Schema({
   firstName: String,
   lastName: String,
   bloodType: String,
-  username: String,
+  username: {type: String, index: true},
   password: String,
   location: String,
   dob: Date,
@@ -20,6 +20,17 @@ var UserSchema = new mongoose.Schema({
   postcode: String,
   gender: String,
   histories: [{ type: mongoose.Schema.Types.ObjectId, ref: "History", date: Date }],
+  
+  appointments:[
+    {
+      status: String,
+      otherUsername: String,
+      hospitalName: String,
+      date: Date,
+      time: String,
+      random: Number,
+    }],
+    
   donatedAmount: Number,
   receivedAmount: Number,
   lastDonationDate: Number,
@@ -36,7 +47,7 @@ UserSchema.plugin(passportMongoose, {
   selectFields: 'email username password phoneNumber firstName lastName bloodType location dob address city country postcode gender [] openFor[] donatedAmount receivedAmount'
 });
 
-// UserSchema.plugin(mongooseFieldEncryption, {fields: ['gender', 'lastName','firstName','[]',  'openFor',  'donatedAmount', 'receivedAmount', 'lastDonationDate', 'histories', 'dob', 'phoneNumber', 'email', ], secret: 'vusala'});
+// UserSchema.plugin(mongooseFieldEncryption, {fields: ['gender', 'lastName','firstName', 'donatedAmount', 'receivedAmount', 'lastDonationDate', 'histories', 'dob', 'phoneNumber', 'email', ], secret: 'vusala'});
 
 UserSchema.plugin(friends({pathName: "myCustomPath"}));
 
