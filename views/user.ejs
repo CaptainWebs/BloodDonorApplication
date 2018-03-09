@@ -242,7 +242,7 @@
 </div>
 
 <% if(isFriend){ %>
-<% if(shared != null || (typeof shared != undefined)){ %>
+<% if(shared != null && (typeof shared != undefined)){ %>
 <% var monthPadding=''; %>
 <% var dayPadding=''; %>
 <% if((shared.date.getUTCMonth()+1) < 10){monthPadding='0'} %>

@@ -15,14 +15,36 @@
              </div>
            </div>
            <div>
-            <div class="col-md-3 hm-info">
-             
-           </div>
-            <div class="col-md-3 hm-info2">
+            <div class="col-md-3 hm-info" style="color:white;text-align:center;">
+            <h5>We need more donors with blood group of:</h5>
+            <div class="row" style="margin-top:10px;margin-bottom:20px;padding:15px;background:#b02528;">
+            <% for(var i=0; i < bankSize.length; i++){ %>
             
+             <% if(bankSize[i]){ %>
+             <% var group = groups[i]; %>
+             <div class="col-md-3" style="padding:4px;">
+                <image src="/images/<%=group%>.png" style="height:50px; width:50px;display:block;margin: 0 auto;" alt="Blood B Positive">
+              </div>
+             <% } %>
+            
+           <% } %>
+           </div>
+            
+            <a href="/register"><button class="btn" style="background:#b02528;bottom:10px;displ;color:white;width:100%;height:40px;"><i class="far fa-plus-square"></i> Register Now</button></a>
+            <span style="font-size:10px;color:#dfe6e9;">registering an account help you to save lives of the others who need blood.</span>
             </div>
             <div class="col-md-3 hm-info2">
+            <h5 style="color:white;text-align:center;margin-top:45px;">Find a nearby hospital to donate your blood.</h5>
+            <div class="row" style="margin:10px;padding:10px;">
+              <image src="/images/hospital.png" style="height:100px; width:auto;display:block;margin: 0 auto;" alt="Blood B Positive">
+                <a href="/register"><button class="btn" style="background:#b02528;margin-top:20px;color:white;width:100%;height:40px;"><i class="fas fa-search"></i> Find Hospital</button></a>
+            </div>
             
+            </div>
+            <div class="col-md-3 hm-info">
+            <h5 style="color:black;text-align:center;margin-top:45px;background:#DFE6E9;padding:5px;border-radius:10px;">Blood Quote</h5>
+            
+            <h2 style="font-family:'Nothing You Could Do';color:white;padding:10px;">"<%=quote%>"</h2>
             </div>
             <div class="col-md-3">
                    <div class="row">

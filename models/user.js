@@ -1,7 +1,6 @@
 var mongoose = require("mongoose");
 var passportMongoose = require("passport-local-mongoose");
 var friends = require("mongoose-friends");
-// let mongooseFieldEncryption = require('mongoose-field-encryption').fieldEncryption;
 
 var UserSchema = new mongoose.Schema({
 
@@ -47,7 +46,6 @@ UserSchema.plugin(passportMongoose, {
   selectFields: 'email username password phoneNumber firstName lastName bloodType location dob address city country postcode gender [] openFor[] donatedAmount receivedAmount'
 });
 
-// UserSchema.plugin(mongooseFieldEncryption, {fields: ['gender', 'lastName','firstName', 'donatedAmount', 'receivedAmount', 'lastDonationDate', 'histories', 'dob', 'phoneNumber', 'email', ], secret: 'vusala'});
 
 UserSchema.plugin(friends({pathName: "myCustomPath"}));
 

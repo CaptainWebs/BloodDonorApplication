@@ -40,23 +40,23 @@ const env = process.env.NODE_ENV || 'development';
 const logDir = 'log';
 // Create the log directory if it does not exist
 if (!fs.existsSync(logDir)) {
-  fs.mkdirSync(logDir);
+    fs.mkdirSync(logDir);
 }
 const tsFormat = () => (new Date()).toLocaleTimeString();
-const logger = new (winston.Logger)({
-  transports: [
-    // colorize the output to the console
-    new (winston.transports.Console)({
-      timestamp: tsFormat,
-      colorize: true,
-      level: 'info'
-    }),
-    new (winston.transports.File)({
-      filename: `${logDir}/results.log`,
-      timestamp: tsFormat,
-      level: env === 'development' ? 'debug' : 'info'
-    })
-  ]
+const logger = new(winston.Logger)({
+    transports: [
+        // colorize the output to the console
+        new(winston.transports.Console)({
+            timestamp: tsFormat,
+            colorize: true,
+            level: 'info'
+        }),
+        new(winston.transports.File)({
+            filename: `${logDir}/results.log`,
+            timestamp: tsFormat,
+            level: env === 'development' ? 'debug' : 'info'
+        })
+    ]
 });
 
 // ---------------- end of logger --------------------
@@ -122,18 +122,119 @@ passport.deserializeUser(User.deserializeUser());
 //             ROUTES
 // ---------------------------------  
 
-app.get('/cluster', (req, res) => {
-  res.send('Hello Word');
-});
 
 // ---------------    
 // Index route
 // ---------------
 
 app.get("/", function(req, res) {
-    console.log(req.user);
+
     logger.info("Homepage has been requested");
-    res.render("index");
+    User.find({
+        bloodType: "A+ (A Rhd positive)"
+    }, function(err, APositiveDonors) {
+        if (err) {
+            console.log(err);
+        } else {
+            User.find({
+                bloodType: "A- (A Rhd negative)"
+            }, function(err, ANegativeDonors) {
+                if (err) {
+                    console.log(err);
+                } else {
+
+                    User.find({
+                        bloodType: "O+ (O Rhd positive)"
+                    }, function(err, OPositiveDonors) {
+                        if (err) {
+                            console.log(err);
+                        } else {
+
+                            User.find({
+                                bloodType: "O- (O Rhd negative)"
+                            }, function(err, ONegativeDonors) {
+                                if (err) {
+                                    console.log(err);
+                                } else {
+                                    User.find({
+                                        bloodType: "AB+ (AB Rhd positive)"
+                                    }, function(err, ABPositiveDonors) {
+                                        if (err) {
+                                            console.log(err);
+                                        } else {
+                                            User.find({
+                                                bloodType: "AB- (AB Rhd negative)"
+                                            }, function(err, ABNegativeDonors) {
+                                                if (err) {
+                                                    console.log(err);
+                                                } else {
+                                                    User.find({
+                                                        bloodType: "B+ (B Rhd positive)"
+                                                    }, function(err, BPostiveDonors) {
+                                                        if (err) {
+                                                            console.log(err);
+                                                        } else {
+                                                            User.find({
+                                                                bloodType: "B- (B Rhd negative)"
+                                                            }, function(err, BNegativeDonors) {
+                                                                if (err) {
+                                                                    console.log(err);
+                                                                } else {
+                                                                        
+                                                                    var bankSize = [];
+                                                                    var bloodGroups = ["bloodapos", "bloodaneg", "bloodbpos", 
+                                                                    "bloodbneg", "bloodopos", "bloodoneg", "bloodabpos", "bloodabneg"];
+                                                                    for(var i=0; i < 8; i++){
+                                                                        bankSize.push(false);
+                                                                    }
+                                                                
+                                                                    if(APositiveDonors.length < 5 ){
+                                                                        bankSize[0] = true;}
+                                                                    if(ANegativeDonors.length < 5){
+                                                                        bankSize[1] = true;}
+                                                                    if(BPostiveDonors.length < 5){
+                                                                        bankSize[2] = true;}
+                                                                    if(BNegativeDonors.length < 10){
+                                                                        bankSize[3] = true;}
+                                                                    if(OPositiveDonors.length < 10){
+                                                                        bankSize[4] = true;}
+                                                                    if(ONegativeDonors.length < 20){
+                                                                        bankSize[5] = true;}
+                                                                    if(ABNegativeDonors.length < 2){
+                                                                        bankSize[6] = true;}
+                                                                    if(ABPositiveDonors.length < 2){
+                                                                        bankSize[7] = true;
+                                                                    }
+            
+                                                                    var array = fs.readFileSync('quotes.txt').toString().split("\n");
+                                                                    var quote = array[Math.floor(Math.random() * array.length)];
+                                                                    console.log(quote);
+
+                                                                    res.render("index", {
+                                                                        bankSize: bankSize,
+                                                                        groups: bloodGroups,
+                                                                        quote: quote
+                                                                    });
+
+                                                                }
+                                                            })
+                                                        }
+                                                    })
+                                                }
+                                            })
+                                        }
+                                    })
+                                }
+                            })
+
+                        }
+                    })
+
+                }
+            });
+        }
+    })
+
 
 });
 
@@ -213,39 +314,42 @@ app.post("/register", function(req, res) {
                 logger.error("Error while user creation: " + err);
                 req.flash('error', "There was a problem with registration. Please try again.");
                 res.redirect("register");
+            } else {
+
+                // Creating Hash that will be used
+                // for email verification
+                Hash.create({
+                    hash: hash,
+                    user: {
+                        id: user._id
+                    }
+                }, function(err, hash) {
+                    if (err) {
+                        logger.error("Error while hash code creation: " + err);
+                        console.log(err);
+                    } else {
+                        console.log(hash);
+                    }
+                });
+
+                // Sending a confirmation message to user
+                // after they have successfully created an account
+
+                //   client.messages.create({
+                //   body: 'Your account is registered',
+                //   to: '+447751572909',  // Text this number
+                //   from: '+447481362889 ' // From a valid Twilio number
+                //   });
+                //  .then((message) => console.log(message.sid));
+
+                passport.authenticate("local")(req, res, function() {
+                    logger.info(user.username + " is authenticated and redirected to the profile page.");
+                    res.redirect("/profile/" + user.username);
+
+
+                });
+
             }
-
-            // Creating Hash that will be used
-            // for email verification
-            Hash.create({
-                hash: hash,
-                user: {
-                    id: user._id
-                }
-            }, function(err, hash) {
-                if (err) {
-                    logger.error("Error while hash code creation: " + err);
-                    console.log(err);
-                } else {
-                    console.log(hash);
-                }
-            });
-
-            // Sending a confirmation message to user
-            // after they have successfully created an account
-            
-            //   client.messages.create({
-            //   body: 'Your account is registered',
-            //   to: '+447751572909',  // Text this number
-            //   from: '+447481362889 ' // From a valid Twilio number
-            //   });
-            //  .then((message) => console.log(message.sid));
-
-            passport.authenticate("local")(req, res, function() {
-                logger.info(user.username + " is authenticated and redirected to the profile page.");
-                res.redirect("/profile/" + user.username);
-
-            });
 
         });
 
@@ -610,7 +714,7 @@ app.post("/removeFriend/:username", function(req, res) {
             logger.error("User with the associated username could not be found. " + err);
             console.log(err);
         } else {
-            
+
             logger.info("Friend removal process is started.");
             User.removeFriend(req.user, user, function(err, result) {
                 if (err) {
@@ -720,35 +824,47 @@ app.get("/profile/:username", isLoggedIn, function(req, res) {
                                         }
                                     }
                                 }
-                                
-                                if(isFriend){
-                                   var sharedAppointments = [];
-                                   user.appointments.forEach(function(appointment) {
-                                       if(appointment.otherUsername == req.user.username){
-                                           if(appointment.status == 'Accepted'){
-                                               sharedAppointments.push(appointment);
-                                           }
-                                       }
-                                   })
-                                   
-                                    var today = new Date();
-                                    var milli = today.getTime();
-                                    var minTime = sharedAppointments[sharedAppointments.length - 1].date.getTime();
-                                    sharedAppointments.forEach(function(appointment){
-                                        if((appointment.date.getTime() < minTime) && (appointment.date.getTime() >= milli)){
-                                            minTime = appointment.date.getTime();
+
+                                if (isFriend) {
+                                    var sharedAppointments = [];
+                                    user.appointments.forEach(function(appointment) {
+                                        if (appointment.otherUsername == req.user.username) {
+                                            if (appointment.status == 'Accepted') {
+                                                sharedAppointments.push(appointment);
+                                            }
                                         }
                                     })
-                                    
+
+                                    if (typeof sharedAppointments != undefined && sharedAppointments != [] && sharedAppointments != null &&
+                                        sharedAppointments.length != 0) {
+
+                                        var today = new Date();
+                                        var milli = today.getTime();
+                                        var minTime = sharedAppointments[sharedAppointments.length - 1].date.getTime();
+                                        sharedAppointments.forEach(function(appointment) {
+                                            if ((appointment.date.getTime() < minTime) && (appointment.date.getTime() >= milli)) {
+                                                minTime = appointment.date.getTime();
+                                            }
+                                        })
+
+                                    }
+
+
+
                                     var upcomingSharedAppointments = [];
                                     sharedAppointments.forEach(function(appointment) {
-                                        if(appointment.date.getTime() == minTime){
+                                        if (appointment.date.getTime() == minTime) {
                                             upcomingSharedAppointments.push(appointment);
                                         }
                                     })
-                                   
-                                    var shared = upcomingSharedAppointments[upcomingSharedAppointments.length - 1];
-                                   
+                                    var shared = null;
+
+                                    if (typeof upcomingSharedAppointments != undefined && upcomingSharedAppointments != [] && upcomingSharedAppointments != null &&
+                                        upcomingSharedAppointments.length != 0) {
+                                        shared = upcomingSharedAppointments[upcomingSharedAppointments.length - 1];
+                                    }
+
+
                                 }
                                 res.render("user", {
                                     currentUser: user,
@@ -776,32 +892,32 @@ app.get("/profile/:username", isLoggedIn, function(req, res) {
                     } else {
 
                         var acceptedAppointments = [];
-                        user.appointments.forEach(function(appointment){
-                            if(appointment.status == 'Accepted'){
+                        user.appointments.forEach(function(appointment) {
+                            if (appointment.status == 'Accepted') {
                                 acceptedAppointments.push(appointment);
                             }
                         })
 
                         var today = new Date();
                         var milli = today.getTime();
-                        if(typeof acceptedAppointments != undefined && acceptedAppointments != [] && acceptedAppointments != null 
-                        && acceptedAppointments.length != 0){
-  
-                              var minTime = acceptedAppointments[acceptedAppointments.length - 1].date.getTime();
-                              acceptedAppointments.forEach(function(appointment){
-                            if((appointment.date.getTime() < minTime) && (appointment.date.getTime() >= milli)){
-                                minTime = appointment.date.getTime();
-                            }
-                        })
-                        
-                              var upcomingAppointments = [];
-                              acceptedAppointments.forEach(function(appointment) {
-                              if(appointment.date.getTime() == minTime){
-                                upcomingAppointments.push(appointment);
-                              }
-                        })
+                        if (typeof acceptedAppointments != undefined && acceptedAppointments != [] && acceptedAppointments != null &&
+                            acceptedAppointments.length != 0) {
+
+                            var minTime = acceptedAppointments[acceptedAppointments.length - 1].date.getTime();
+                            acceptedAppointments.forEach(function(appointment) {
+                                if ((appointment.date.getTime() < minTime) && (appointment.date.getTime() >= milli)) {
+                                    minTime = appointment.date.getTime();
+                                }
+                            })
+
+                            var upcomingAppointments = [];
+                            acceptedAppointments.forEach(function(appointment) {
+                                if (appointment.date.getTime() == minTime) {
+                                    upcomingAppointments.push(appointment);
+                                }
+                            })
                         }
-                
+
                         var pendingList = [];
                         var receivedList = [];
                         var processingList = [];
@@ -812,67 +928,73 @@ app.get("/profile/:username", isLoggedIn, function(req, res) {
                                 pendingList.push(appointment);
                             } else if (appointment.status == 'Received') {
                                 receivedList.push(appointment);
-                            }else if(appointment.status == 'Processing'){
+                            } else if (appointment.status == 'Processing') {
                                 processingList.push(appointment);
-                            }else if(appointment.status == 'Modified'){
+                            } else if (appointment.status == 'Modified') {
                                 modifiedList.push(appointment);
                             }
                         });
-                        
-                        size = pendingList.length + receivedList.length
-                        + processingList.length + modifiedList.length;
+
+                        size = pendingList.length + receivedList.length +
+                            processingList.length + modifiedList.length;
                         var requestSize = 0;
-                            User.findOne({
-                                    username: req.params.username
-                                }, function(err, user) {
+                        User.findOne({
+                            username: req.params.username
+                        }, function(err, user) {
+                            if (err) {
+                                console.log(err);
+                            } else {
+                                var sent;
+                                var received;
+                                User.getFriends(user, {
+                                    "myCustomPath.status": Status.Pending
+                                }, function(err, friendList) {
                                     if (err) {
                                         console.log(err);
                                     } else {
-                                        var sent;
-                                        var received;
+
+                                        //  res.render("friendrequests", {friends: friendList});
                                         User.getFriends(user, {
-                                            "myCustomPath.status": Status.Pending
-                                        }, function(err, friendList) {
+                                            "myCustomPath.status": Status.Requested
+                                        }, function(err, friendList2) {
                                             if (err) {
                                                 console.log(err);
                                             } else {
-                            
-                                                //  res.render("friendrequests", {friends: friendList});
-                                                User.getFriends(user, {
-                                                    "myCustomPath.status": Status.Requested
-                                                }, function(err, friendList2) {
-                                                    if (err) {
-                                                        console.log(err);
-                                                    } else {
-                            
-                                                        if (typeof friendList == "undefined" || friendList == null) {
-                                                            friendList = [];
-                                                        }
-                                                        if (typeof friendList2 == "undefined" || friendList2 == null) {
-                                                            friendList2 = [];
-                                                        }
-                                                        
-                                                        requestSize = friendList.length
-                                                        + friendList2.length;                            
-                                                    }
-                                                })
+
+                                                if (typeof friendList == "undefined" || friendList == null) {
+                                                    friendList = [];
+                                                }
+                                                if (typeof friendList2 == "undefined" || friendList2 == null) {
+                                                    friendList2 = [];
+                                                }
+
+                                                requestSize = friendList.length +
+                                                    friendList2.length;
+
+                                                var appointment = null;
+                                                if (typeof upcomingAppointments != undefined && upcomingAppointments != [] && upcomingAppointments != null &&
+                                                    upcomingAppointments.length != 0) {
+                                                    appointment = upcomingAppointments[upcomingAppointments.length - 1];
+                                                }
+
+                                                console.log(requestSize, "requestSize");
+
+                                                res.render("profile", {
+                                                    currentUser: user,
+                                                    friends: friends,
+                                                    appointment: appointment,
+                                                    size: size,
+                                                    requestSize: requestSize
+                                                });
+
                                             }
-                                        });
+                                        })
                                     }
-                                })
-                        
-                        var appointment = null;
-                        if(typeof upcomingAppointments != undefined && upcomingAppointments != [] && upcomingAppointments != null 
-                        && upcomingAppointments.length != 0){
-                            appointment = upcomingAppointments[upcomingAppointments.length - 1];
-                        }
-                        res.render("profile", {
-                            currentUser: user,
-                            friends: friends,
-                            appointment: appointment,
-                            size: size,
-                            requestSize : requestSize
-                        });
+                                });
+                            }
+                        })
+
+
                     }
                 });
 
@@ -1421,36 +1543,48 @@ app.post("/appointment/:username", function(req, res) {
         if (err) {
             console.log(err);
         } else {
-            user.appointments.push({
-                date: req.body.date,
-                hospitalName: req.body.hospitalName,
-                time: req.body.time,
-                status: 'Pending',
-                otherUsername: req.params.username,
-                random: random
-            });
-            senderUsername = user.username;
-            user.save();
-            User.findOne({
-                username: req.params.username
-            }, function(err, user) {
-                if (err) {
-                    console.log(err);
-                } else {
-                    user.appointments.push({
-                        date: req.body.date,
-                        hospitalName: req.body.hospitalName,
-                        time: req.body.time,
-                        status: 'Received',
-                        otherUsername: senderUsername,
-                        random: random,
-                    });
-                    user.save();
-                    req.flash("success", "You appointment details have been to sent to @" + user.username + ". You will be notified when they confirm or modify your appointment details.")
-                    res.redirect("/profile/" + req.user.username);
 
-                }
-            })
+            // check if the entered appointment date is less than current date
+            // send an error message and redirect to user's profile page
+            var today = new Date();
+            var appointmentDate = new Date(req.body.date);
+            if (appointmentDate.getTime() < today.getTime()) {
+                req.flash("error", "Appointment date is invalid. Please enter a valid future date.")
+                res.redirect("/profile/" + req.user.username);
+            } else {
+
+                user.appointments.push({
+                    date: req.body.date,
+                    hospitalName: req.body.hospitalName,
+                    time: req.body.time,
+                    status: 'Pending',
+                    otherUsername: req.params.username,
+                    random: random
+                });
+                senderUsername = user.username;
+                user.save();
+                User.findOne({
+                    username: req.params.username
+                }, function(err, user) {
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        user.appointments.push({
+                            date: req.body.date,
+                            hospitalName: req.body.hospitalName,
+                            time: req.body.time,
+                            status: 'Received',
+                            otherUsername: senderUsername,
+                            random: random,
+                        });
+                        user.save();
+                        req.flash("success", "You appointment details have been to sent to @" + user.username + ". You will be notified when they confirm or modify your appointment details.")
+                        res.redirect("/profile/" + req.user.username);
+
+                    }
+                })
+
+            }
         }
     })
 })
@@ -1472,9 +1606,9 @@ app.get("/profile/:username/appointments", function(req, res) {
                     pendingList.push(appointment);
                 } else if (appointment.status == 'Received') {
                     receivedList.push(appointment);
-                }else if(appointment.status == 'Processing'){
+                } else if (appointment.status == 'Processing') {
                     processingList.push(appointment);
-                }else if(appointment.status == 'Modified'){
+                } else if (appointment.status == 'Modified') {
                     modifiedList.push(appointment);
                 }
             });
@@ -1543,24 +1677,24 @@ app.get("/appointment/:random/confirm/:username", function(req, res) {
             console.log(err);
         } else {
             var index = 0;
-            
+
             user.appointments.forEach(function(appointment) {
                 if (appointment.random == req.params.random) {
                     appointment.status = 'Accepted';
-      
+
                 }
             })
             user.save();
-            
+
             User.findOne({
                 username: req.params.username
             }, function(err, user) {
                 if (err) {
                     console.log(err);
                 } else {
-                    
+
                     user.appointments.forEach(function(appointment) {
-                        if ( appointment.random == req.params.random) {
+                        if (appointment.random == req.params.random) {
                             appointment.status = 'Accepted';
                         }
                     })
@@ -1576,43 +1710,51 @@ app.get("/appointment/:random/confirm/:username", function(req, res) {
 })
 
 app.get("/appointment/:random/modify", function(req, res) {
-    User.findOne({username: req.user.username}, function(err, user) {
-        if(err){
+    User.findOne({
+        username: req.user.username
+    }, function(err, user) {
+        if (err) {
             console.log(err);
-        }else{
+        } else {
             var foundAppointment;
-            user.appointments.forEach(function(appointment){
-                if(appointment.random == req.params.random){
+            user.appointments.forEach(function(appointment) {
+                if (appointment.random == req.params.random) {
                     foundAppointment = appointment;
                 }
             })
-            
-            res.render("modify", {appointment: foundAppointment});
+
+            res.render("modify", {
+                appointment: foundAppointment
+            });
         }
     })
 })
 
 app.post("/appointment/:random/modify/:otherUsername", function(req, res) {
-    User.findOne({username: req.user.username}, function(err, user) {
-        if(err){
+    User.findOne({
+        username: req.user.username
+    }, function(err, user) {
+        if (err) {
             console.log(err);
-        }else{
-            user.appointments.forEach(function(appointment){
-                if(appointment.random == req.params.random){
+        } else {
+            user.appointments.forEach(function(appointment) {
+                if (appointment.random == req.params.random) {
                     appointment.status = "Modified";
                     appointment.hospitalName = req.body.hospitalName;
                     appointment.date = req.body.date;
                     appointment.time = req.body.time;
                 }
             })
-            
+
             user.save();
-            User.findOne({username: req.params.otherUsername}, function(err, user) {
-                if(err){
+            User.findOne({
+                username: req.params.otherUsername
+            }, function(err, user) {
+                if (err) {
                     console.log(err);
-                }else{
-                    user.appointments.forEach(function(appointment){
-                        if(appointment.random == req.params.random){
+                } else {
+                    user.appointments.forEach(function(appointment) {
+                        if (appointment.random == req.params.random) {
                             appointment.status = "Processing";
                             appointment.hospitalName = req.body.hospitalName;
                             appointment.date = req.body.date;
@@ -1623,7 +1765,7 @@ app.post("/appointment/:random/modify/:otherUsername", function(req, res) {
                     res.redirect("/profile/" + req.user.username);
                 }
             })
-            
+
         }
     })
 })
@@ -1640,7 +1782,14 @@ function isLoggedIn(req, res, next) {
     res.redirect("/login");
 }
 
-
+// read a random line from file
+function getRandomLine(filename){
+  fs.readFile(filename, function(err, data){
+    if(err) throw err;
+    var lines = data.split('\n');
+    return lines[Math.floor(Math.random()*lines.length)];
+ })
+}
 
 // setup of necessary ports for the server
 app.listen(process.env.PORT, process.env.IP, function() {
