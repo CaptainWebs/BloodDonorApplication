@@ -1,67 +1,24 @@
 <% include partials/header%>
-<div class="container" style="width:100%;">
-   <div class="row redbutton" style="padding-top:100px;padding-bottom:20px;background: #200122;  /* fallback for old browsers */
-      background: -webkit-linear-gradient(to right, #6f0000, #200122);  /* Chrome 10-25, Safari 5.1-6 */
-      background: linear-gradient(to right, #6f0000, #200122);color:white;">
-      <div class="col-md-8 col-md-offset-2">
-         <h2 style="text-align:center;"><i class="fas fa-users"></i> Friend Requests</h2>
-      </div>
-   </div>
-</div>
-<div class="row">
-   <!--Sent Requests-->
-   <div class="col-md-6" style="background:white;height:auto;min-height: 70%;">
-      <div class="row" style="padding-top:20px;">
-         <div class="col-md-10 col-md-offset-1">
-            <h4 style="text-decoration:underline;">Sent Requests <i class="fas fa-arrow-right redicon"></i></h4>
-            <%friends2.forEach(function(friend){ %>
-            <hr>
-            <div class="row" style="margin-bottom:0px;">
-               <div class="col-md-6 col-md-offset-1">
-                  <span style="font-size:12px;">Date Sent: <%=friend.added.toDateString()%></span><br>
-                  <h4>
-                     <% if(friend.friend.gender == "manuser"){ %>
-                     <i class="fas fa-male redicon"></i>
-                     <% }else{ %>
-                     <i class="fas fa-female redicon"></i>
-                     <% } %>
-                     Name:     <%=friend.friend.firstName%> <%=friend.friend.lastName%><br>
-                     <span style="font-size:14px;padding-top:5px;">Username: <%=friend.friend.username%></span>
-                  </h4>
-               </div>
-               <div class="col-md-4">
-                  <a href="/profile/<%=friend.friend.username%>" style="color:white;">
-                  <button type="submit" class="btn btn-primary" style="    outline:none !important;    
-                     margin-top: 5px;
-                     border:none;
-                     width:100%;
-                     height: 40px;
-                     font-size: 14px;
-                     background:#232526;"><i class="fas fa-eye"></i> View Profile</button></a>
-                  <!--<button type="submit" class="btn btn-primary" style="outline:none !important;    -->
-                  <!--                                margin-top: 5px;-->
-                  <!--                                border:none;-->
-                  <!--                                width:100%;-->
-                  <!--                                height: 40px;-->
-                  <!--                                font-size: 14px;-->
-                  <!--                            background: #b13a3c;"><i class="fas fa-times"></i> Cancel Request</button>-->
-               </div>
+    <div class="container" style="width:100%;">
+        <div class="row gradientbg" style="padding-top:100px;padding-bottom:20px;color:white;">
+            <div class="col-md-8 col-md-offset-2">
+                <h2 style="text-align:center;"><image src="/images/add-contact.png" style="height:50px; width:auto;display:inline-block;margin: 0 auto;" alt="Blood B Positive"> Friend Requests</h2>
             </div>
-            <% }) %>
-         </div>
-      </div>
-   </div>
-   <!--Received Requests-->
-   <div class="col-md-6" style="height:auto;min-height: 70%;">
-      <div class="row">
-         <div class="col-md-10 col-md-offset-1" style="padding-top:20px;">
-            <h4 style="text-decoration:underline;">Received Requests <i class="fas fa-arrow-right redicon"></i></h4>
-            <%friends.forEach(function(friend){ %>
-            <hr>
-            <div class="row" style="margin-bottom:0px;">
-               <div class="col-md-6 col-md-offset-1">
-                  <span style="font-size:12px;">Date Received: <%=friend.added.toDateString()%></span><br>
-                  <h4>
+        </div>
+    </div>
+    <div class="row">
+        <!--Sent Requests-->
+        <div class="col-md-6" style="background:white;height:auto;min-height: 70%;">
+            <div class="row" style="padding-top:20px;">
+                <div class="col-md-10 col-md-offset-1">
+                    <h4 style="text-decoration:underline;">Sent Requests <i class="fas fa-arrow-right redicon"></i></h4>
+                    <%friends2.forEach(function(friend){ %>
+                        <hr>
+                        <div class="row" style="margin-bottom:0px;">
+                            <div class="col-md-6 col-md-offset-1">
+                                <span style="font-size:12px;">Date Sent: <%=friend.added.toDateString()%></span>
+                                <br>
+                                <h4>
                      <% if(friend.friend.gender == "manuser"){ %>
                      <i class="fas fa-male redicon"></i>
                      <% }else{ %>
@@ -70,40 +27,70 @@
                      Name:     <%=friend.friend.firstName%> <%=friend.friend.lastName%><br>
                      <span style="font-size:14px;padding-top:5px;">Username: <%=friend.friend.username%></span>
                   </h4>
-               </div>
-               <div class="col-md-4">
-                  <a href="/profile/<%=friend.friend.username%>" style="color:white;">
-                  <button type="submit" class="btn btn-primary" style="    outline:none !important;    
+                            </div>
+                            <div class="col-md-4">
+                                <a href="/profile/<%=friend.friend.username%>" style="color:white;">
+                                    <button type="submit" class="btn btn-primary" style="    outline:none !important;    
                      margin-top: 5px;
                      border:none;
                      width:100%;
                      height: 40px;
                      font-size: 14px;
-                     background:#232526;"><i class="fas fa-eye"></i> View Profile</button></a>
-                  <!--<form action="/cancelRequest/<%=currentUser.username%>" method="POST" style="display:inline;">-->
-                  <!--<input type="text" name="friendID" value="<%=friend.friend._id%>" style="display:none;">      -->
-                  <!--<button type="submit" class="btn btn-primary" style="outline:none !important;    -->
-                  <!--                                margin-top: 5px;-->
-                  <!--                                border:none;-->
-                  <!--                                width:48%;-->
-                  <!--                                height: 40px;-->
-                  <!--                                font-size: 14px;-->
-                  <!--                            background: #b13a3c;display:inline-block;"><i class="fas fa-times"></i> Cancel</button></form>-->
-                  <form action="/addFriend/<%=friend.friend._id%>" method="POST">
-                     <input type="text" name="friendUsername" value="<%=friend.friend.username%>" style="display:none;">    
-                     <button type="submit" class="btn btn-primary" style="outline:none !important;    
+                     background:#232526;"><i class="fas fa-eye"></i> View Profile</button>
+                                </a>
+                            </div>
+                        </div>
+                        <% }) %>
+                </div>
+            </div>
+        </div>
+        <!--Received Requests-->
+        <div class="col-md-6" style="height:auto;min-height: 70%;">
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1" style="padding-top:20px;">
+                    <h4 style="text-decoration:underline;"><i class="fas fa-arrow-right redicon"></i> Received Requests</h4>
+                    <%friends.forEach(function(friend){ %>
+                        <hr>
+                        <div class="row" style="margin-bottom:0px;">
+                            <div class="col-md-6 col-md-offset-1">
+                                <span style="font-size:12px;">Date Received: <%=friend.added.toDateString()%></span>
+                                <br>
+                                <h4>
+                     <% if(friend.friend.gender == "manuser"){ %>
+                     <i class="fas fa-male redicon"></i>
+                     <% }else{ %>
+                     <i class="fas fa-female redicon"></i>
+                     <% } %>
+                     Name:     <%=friend.friend.firstName%> <%=friend.friend.lastName%><br>
+                     <span style="font-size:14px;padding-top:5px;">Username: <%=friend.friend.username%></span>
+                  </h4>
+                            </div>
+                            <div class="col-md-4">
+                                <a href="/profile/<%=friend.friend.username%>" style="color:white;">
+                                    <button type="submit" class="btn btn-primary" style="    outline:none !important;    
+                     margin-top: 5px;
+                     border:none;
+                     width:100%;
+                     height: 40px;
+                     font-size: 14px;
+                     background:#232526;"><i class="fas fa-eye"></i> View Profile</button>
+                                </a>
+
+                                <form action="/addFriend/<%=friend.friend._id%>" method="POST">
+                                    <input type="text" name="friendUsername" value="<%=friend.friend.username%>" style="display:none;">
+                                    <button type="submit" class="btn btn-primary" style="outline:none !important;    
                         margin-top: 5px;
                         border:none;
                         width:100%;
                         height: 40px;
                         font-size: 14px;
                         background: #6ab04c;display:inline-block;"><i class="fas fa-check"></i> Accept</button>
-                  </form>
-               </div>
+                                </form>
+                            </div>
+                        </div>
+                        <% }) %>
+                </div>
             </div>
-            <% }) %>
-         </div>
-      </div>
-   </div>
-</div>
-<% include partials/footer%>
+        </div>
+    </div>
+    <% include partials/footer%>

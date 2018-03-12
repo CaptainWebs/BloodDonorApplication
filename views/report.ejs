@@ -1,39 +1,36 @@
 <% include partials/header%>
-<div class="row" style="padding-top:80px;background:#B02428;color:white;">
-    <div class="col-md-10 col-md-offset-1">
-        <h2>Report User</h2>
+    <div class="row gradientbg" style="padding-top:100px;padding-bottom:30px;color:white;">
+        <div class="col-md-10 col-md-offset-1">
+            <h2><i class="fas fa-flag"></i> Report User</h2>
+        </div>
     </div>
-  </div>
 
-<% reportUser.forEach(function(user){%>
+    <% reportUser.forEach(function(user){%>
 
-<div class="row" style="margin-top:50px;">
-    <div class="col-md-8 col-md-offset-2">
-        <div class="row">
-            <div class="col-md-4">
-                <h3 style="font-weight:bold;">User Details:</h3>
-            </div>
-             <div class="col-md-4">
-                <h3><i class="fa fa-user-circle redicon"></i> <%=user.firstName%> <%=user.lastName%></h3>
-            </div>
-             <div class="col-md-4">
-                <h3><span style="color:#B02428;">@</span><%=user.username%></h3>
+        <div class="row" style="margin-top:50px;">
+            <div class="col-md-8 col-md-offset-2">
+                <div class="row">
+                    <div class="col-md-4">
+                        <h3 style="font-weight:bold;">User Details:</h3>
+                    </div>
+                    <div class="col-md-4">
+                        <h3><i class="fa fa-user-circle redicon"></i> <%=user.firstName%> <%=user.lastName%></h3>
+                    </div>
+                    <div class="col-md-4">
+                        <h3><span style="color:#B02428;">@</span><%=user.username%></h3>
+                    </div>
+                </div>
+                <hr>
+                <form action="/report/<%=user.username%>" method="POST">
+                    <div class="form-group">
+                        <label for="exampleTextarea">Please tell us why you want to report <span style="font-weight:bold;font-size:18px;color:#AE262D;">@<%= user.username%></span>:</label>
+                        <textarea class="form-control" id="exampleTextarea" rows="6" name="message"></textarea>
+                    </div>
+                    <input type="submit" class="gradientbg" style="color:white;height:40px;font-size:20px;" value="Report">
+                </form>
             </div>
         </div>
-        <hr>
-        <form action="/report/<%=user.username%>" method="POST">
-          <div class="form-group">
-          <label for="exampleTextarea">Please tell us why you want to report <span style="font-weight:bold;font-size:18px;color:#AE262D;">@<%= user.username%></span>:</label>
-          <textarea class="form-control" id="exampleTextarea" rows="6" name="message"></textarea>
-          </div>
-          <input type="submit" value="Report">
-        </form>
-       </div>
-</div>
 
-<% })%>
-
-
-
+        <% })%>
 
 <% include partials/footer%>

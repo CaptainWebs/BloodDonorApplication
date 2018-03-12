@@ -1,85 +1,87 @@
 <html>
-    <head>
-        <title>Blood Donor Application</title>
-        
-        <!-- General meta tags about the content of the website -->
-         <meta charset="UTF-8">
-         <meta name="description" content="">
-         <meta name="keywords" content="blood, blood donor, blood banks, medicine, hospitals">
-         <meta name="author" content="Nurlan Isazade, CaptainWebs">
-         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-         <link rel="shortcut icon" type="image/png" href="/images/bloodofav.png"/>
-         
-        <!-- Latest compiled and minified CSS -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> 
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.7.5/css/bootstrap-select.min.css">
-        
-        <!-- Custom css style links-->
-        <link rel="stylesheet" type="text/css" href="/stylesheet/main.css">
-        
-        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-        <link rel="stylesheet" href="../stylesheet/geodatasource-countryflag.css">
 
-        <!-- Google Fonts-->
-        <link href="https://fonts.googleapis.com/css?family=PT+Sans" rel="stylesheet">
-        <link href="https://fonts.googleapis.com/css?family=Acme" rel="stylesheet">
-        <link href="https://fonts.googleapis.com/css?family=Cantata+One" rel="stylesheet">
-        <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
-        <script src="https://use.fontawesome.com/2671327e7c.js"></script>
-        <script src='https://www.google.com/recaptcha/api.js'></script>
-<link href="https://fonts.googleapis.com/css?family=Nothing+You+Could+Do" rel="stylesheet">        
-        <script async defer
-  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB8U1nGP8TC0X3EV2xSEHmyML2T4FOI-g0&callback=initMap">
-</script>
+<head>
+    <title>Blood Donor Application</title>
 
-    
-    </head>
-    <body onload="initialize()">
-        <div class="container">
+    <!-- General meta tags about the content of the website -->
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta name="keywords" content="blood, blood donor, blood banks, medicine, hospitals">
+    <meta name="author" content="Nurlan Isazade, CaptainWebs">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" type="image/png" href="/images/bloodofav.png" />
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.7.5/css/bootstrap-select.min.css">
+
+    <!-- Custom css style links-->
+    <link rel="stylesheet" type="text/css" href="/stylesheet/main.css">
+
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="../stylesheet/geodatasource-countryflag.css">
+
+    <!-- Google Fonts-->
+    <link href="https://fonts.googleapis.com/css?family=PT+Sans" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Acme" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Cantata+One" rel="stylesheet">
+    <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
+    <script src="https://use.fontawesome.com/2671327e7c.js"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB8U1nGP8TC0X3EV2xSEHmyML2T4FOI-g0&callback=initMap">
+    </script>
+
+</head>
+
+<body onload="initialize()">
+    <div class="container">
         <!-- Navigation bar-->
         <nav class="navbar navbar-inverse navbar-fixed-top">
-  <div class="container">
-    <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="#">
-        <i class="fa fa-heartbeat" aria-hidden="true"></i>
-      </a>
-    </div>
+            <div class="container">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">
+                        <i class="fa fa-heartbeat" aria-hidden="true"></i>
+                    </a>
+                </div>
 
-    <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav">
-        <li class="active"><a href="./">Home <span class="sr-only">(current)</span></a></li>
-        <li><a href="#">About Us <span class="sr-only">(current)</span></a></li>
-        <li><a href="#">Donation Process <span class="sr-only">(current)</span></a></li>
-        <li><a href="#">Help <span class="sr-only">(current)</span> <i class="fa fa-info-circle redicon" aria-hidden="true"></i></a></li>
-      </ul>
-      <form class="navbar-form navbar-right" action="/search">
-        <a href="/search"><button class="btn btn-danger btn-search"><i class="fa fa-search" aria-hidden="true"></i> Search</button></a>
-      </form>
-      <ul class="nav navbar-nav navbar-right">
-        <% if(!logUser){%>
-        <li><a href="../login">Log in</a></li>
-        <li><a href="../register">Register</a></li>
-        <% }else{ %>
-      
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span><i class="fas fa-user redicon"></i></span> <%=logUser.username%><span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><a href="/profile/<%=logUser.username%>" class="profiledrop"><span><i class="fas fa-user redicon"></i> </span>  View Profile</a></li>
-            <li role="separator" class="divider" class="profiledrop"></li>
-            <li><a href="/logout" class="profiledrop"><span><i class="fas fa-sign-out-alt redicon"></i></span>  Log out</a></li>
-        <% } %>    
-          </ul>
-        </li>
-      </ul>
-    </div><!-- /.navbar-collapse -->
-  </div><!-- /.container-fluid -->
-</nav>
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                        <li class="active"><a href="./">Home <span class="sr-only">(current)</span></a></li>
+                        <li><a href="#">About Us <span class="sr-only">(current)</span></a></li>
+                        <li><a href="#">Donation Process <span class="sr-only">(current)</span></a></li>
+                        <li><a href="#">Help <span class="sr-only">(current)</span> <i class="fa fa-info-circle redicon" aria-hidden="true"></i></a></li>
+                    </ul>
+                    <form class="navbar-form navbar-right" action="/search">
+                        <a href="/search">
+                            <button class="btn btn-danger btn-search"><i class="fa fa-search" aria-hidden="true"></i> Search</button>
+                        </a>
+                    </form>
+                    <ul class="nav navbar-nav navbar-right">
+                        <% if(!logUser){%>
+                            <li><a href="../login">Log in</a></li>
+                            <li><a href="../register">Register</a></li>
+                            <% }else{ %>
+
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span><i class="fas fa-user redicon"></i></span> <%=logUser.username%><span class="caret"></span></a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="/profile/<%=logUser.username%>" class="profiledrop"><span><i class="fas fa-user redicon"></i> </span>  View Profile</a></li>
+                                        <li role="separator" class="divider" class="profiledrop"></li>
+                                        <li><a href="/logout" class="profiledrop"><span><i class="fas fa-sign-out-alt redicon"></i></span>  Log out</a></li>
+                                        <% } %>
+                                    </ul>
+                                </li>
+                    </ul>
+                </div>
+                <!-- /.navbar-collapse -->
+            </div>
+            <!-- /.container-fluid -->
+        </nav>
         <!-- End of navigation bar -->

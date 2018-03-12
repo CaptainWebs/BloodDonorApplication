@@ -1,14 +1,14 @@
 <% include partials/header%>
-<link href="/stylesheet/style.css" rel="stylesheet" type="text/css" media="all" />
-<div class="container">
-    <div class="row">
-        <div class="col-md-10 col-md-offset-1">
-            
-            <div class="content">
-	<div class="main">
-	    <h4 style="text-align:center;color:#2e3436;">Please feedback the main features of BlooDDonor through evaluation of your own experience.<br> We appreciate your time and value your feedback!<h4>
+    <link href="/stylesheet/style.css" rel="stylesheet" type="text/css" media="all" />
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1">
+
+                <div class="content">
+                    <div class="main">
+                        <h4 style="text-align:center;color:#2e3436;">Please feedback the main features of BlooDDonor through evaluation of your own experience.<br> We appreciate your time and value your feedback!<h4>
 		<form action="/feedback/add" method="POST">
-		
+
 		<div class="form-row" style="padding:40px;">
 		    		<h5>Creating a Profile</h5>
 			<div class="radio-btns">
@@ -64,8 +64,6 @@
 		</div>
 		<hr>
 
-
-		
 	        		    <div class="form-row row">
 		        <div class="form-group col-md-4 col-md-offset-1">
 		            <h5>Want to rate us?</h5>
@@ -87,16 +85,14 @@
 				<textarea onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Type here';}" required="" name="feedback[review]">Type here</textarea>
 			</div>
 			</div>
-	
+
 				<input type="submit" value="Send Feedback">
 		</form>
 	</div>
 </div>
-            
-            
+
         </div>
     </div>
 </div>
-
 
 <% include partials/footer%>

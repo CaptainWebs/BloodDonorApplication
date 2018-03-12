@@ -1,35 +1,39 @@
 <% include partials/header%>
- 
-<div class="container" id="logincontainer">
-    <div class="row">
-         
-        <div class="col-md-5 col-centered-login">
-             <% if(error && error.length > 0) { %>
-       <div class="alert alert-danger"><p><%=error %></p></div>
-     <% } %>
-     
-     <% if(success && success.length > 0) { %>
-       <div class="alert alert-success"><p><%= success %></p></div>
-     <% } %>    
-         <div class="row" style="background:#2d3436;width:100%;margin:0;margin-bottom:20px;text-align:center;padding:5px;">
-             <div class="col-md-10 col-md-offset-1">
-                  <h2 style="color:white;">Reset Password</h2>
-                  
-             </div>
-         </div>
-         <h6 style="color:gray;">Please enter the email address associated with your account. We will send a link to email that you can use to reset your password.</h6>
-                <form class="px-4 py-3" action="/forgot" method="POST">
-                 <div class="form-group">
-                  <input type="email" class="form-control" name="email" id="exampleDropdownFormEmail1" placeholder="please enter your email">
-                </div>  
-                <!--<div class="form-group">-->
-                <!--  <label for="exampleDropdownFormEmail1">Email address</label>-->
-                <!--  <input type="email" class="form-control" id="exampleDropdownFormEmail1" placeholder="email@example.com">-->
-                <!--</div>-->
-                <button type="submit" class="login">Send Link</button>
-              </form>
-        </div>
 
-  </div>
-</div>
-<% include partials/footer%>
+    <div class="container" id="logincontainer">
+        <div class="row">
+
+            <div class="col-md-5 col-centered-login">
+                <% if(error && error.length > 0) { %>
+                    <div class="alert alert-danger">
+                        <p>
+                            <%=error %>
+                        </p>
+                    </div>
+                    <% } %>
+
+                        <% if(success && success.length > 0) { %>
+                            <div class="alert alert-success">
+                                <p>
+                                    <%= success %>
+                                </p>
+                            </div>
+                            <% } %>
+                                <div class="row" style="background:#2d3436;width:100%;margin:0;margin-bottom:20px;text-align:center;padding:5px;">
+                                    <div class="col-md-10 col-md-offset-1">
+                                        <h2 style="color:white;">Reset Password</h2>
+
+                                    </div>
+                                </div>
+                                <h6 style="color:gray;">Please enter the email address associated with your account. We will send a link to your email that can be used to reset your password.</h6>
+                                <form class="px-4 py-3" action="/forgot" method="POST">
+                                    <div class="form-group">
+                                        <input type="email" class="form-control" name="email" id="exampleDropdownFormEmail1" placeholder="please enter your email">
+                                    </div>
+                                    <button type="submit" class="login gradientbg"><i class="fas fa-link"></i> Send Link</button>
+                                </form>
+            </div>
+
+        </div>
+    </div>
+    <% include partials/footer%>

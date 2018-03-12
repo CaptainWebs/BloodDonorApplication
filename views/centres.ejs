@@ -1,0 +1,67 @@
+<% include partials/header%>
+<div class="container">
+   <div class="row" style="margin-top:80px;height:75%;">
+      <div class="col-md-10 col-md-offset-1">
+         <div class="row">
+            <div class="col-md-4" style="margin-top:20px;">
+               <div class="row gradientbg" style="text-align:center;color:white;font-size:20px;padding:20px;"><i class="fas fa-tint"></i> Blood Donor Centre</div>
+               <h5 style="text-align:center;"><i class="fas fa-info-circle"></i> You can search for blood donor centers by entering the city name. Please note that an appoinment with the centre has to be made beforehand.</h5>
+               <div class="form-row">
+                  <form action="/centre" method="POST">
+                     <div class="form-row">
+                        <input type="text" name="city" style="text-align:center;" required placeholder="Where would you like to donate?" class="form-control">
+                     </div>
+                     <div class="form-row">
+                        <button class="gradientbg" style="width:100%;height:40px;color:white;border:0;margin-top:20px;border-radius:5px;" type="submit"><i class="fas fa-search"></i> Find Centre </button>
+                     </div>
+                  </form>
+               </div>
+            </div>
+            <div class="col-md-6 col-md-offset-1">
+               <% if(empty){ %>
+               <div class="row" style="margin-top:60px;margin-bottom:20px;text-align:center">
+                  <h4 style="text-align:center;"><i class="far fa-frown redicon"></i> We are sorry.<br> No blood centres have been found according your search query. Please try again by correctly entering the name of the city.</h4>
+                  <hr>
+                  <h5>You can also look for nearby hospitals</h5>
+                  <a href="/nearby"><button class="btn" style="background:#b02528;margin-top:10px;color:white;width:50%;height:40px;"><i class="fas fa-search"></i> Find Hospital</button></a>
+               </div>
+               <% } %>
+               <% if(centres != null){ %>
+               <%  centres.forEach(function(centre){ %>
+               <div class="row gradientbg" style="margin-top:20px;margin-bottom:20px;border-radius:5px;color:white;">
+                  <div class="col-md-2" style="color:white;padding:30px;font-size:30px;text-align:center;">
+                     <%=centre.city.charAt(0)%>    
+                  </div>
+                  <div class="col-md-10">
+                     <div class="row">
+                        <div class="col-md-4">
+                           <h5><i class="fas fa-map-marker redicon"></i> City: <%=centre.city%></h5>
+                        </div>
+                        <div class="col-md-4">
+                           <h5><i class="fas fa-thumbtack redicon"></i> Address: <%=centre.address%></h5>
+                        </div>
+                        <div class="col-md-4">
+                           <h5><i class="fas fa-home redicon"></i> Postcode: <%=centre.postcode%></h5>
+                        </div>
+                     </div>
+                     <div class="row">
+                        <div class="col-md-4">
+                           <h5><i class="fas fa-phone-volume redicon"></i> Phone: <%=centre.phone%></h5>
+                        </div>
+                        <div class="col-md-4">
+                           <h5><i class="fas fa-fax redicon"></i> Fax: <%=centre.fax%></h5>
+                        </div>
+                        <div class="col-md-4">
+                           <a href="https://maps.google.com/?q=<%=centre.address%>, <%=centre.postcode%>" target="_blank"><button style="width:100%;background:#DFE6E9;height:40px;color:#200122;border:0;border-radius:5px;" type="submit"><i class="fas fa-map"></i> Open Map </button></a>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <%  }) %>
+               <%  }%>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+<% include partials/footer%>

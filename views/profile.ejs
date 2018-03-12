@@ -286,9 +286,13 @@
                <hr>
                <h5><i class="fas fa-minus s"></i> Received amount of blood: <span style="font-size:24px;font-weight:bold;display:inline-block;float:right;"><%=currentUser.receivedAmount%> pt.</span></h5>
             </div>
+            
+            <a href="/centre"><button class="btn" style="background:#b02528;margin-top:10px;color:white;width:100%;height:40px;border-radius:5px;"><i class="fas fa-tint"></i> Find Blood Centre <i class="fas fa-arrow-right"></i></button></a>
+            
             <form action="/nearby" method="GET">
-               <button type="submit" class="login" style="background:#232526 !important;width:100%;margin-top:10px;border-radius:10px;"><i class="far fa-hospital"></i> Find a nearby Hospital <i class="fas fa-arrow-right"></i></button>
+               <button type="submit" class="login" style="background:#232526 !important;width:100%;margin-top:10px;border-radius:5px;"><i class="far fa-hospital"></i> Find a nearby Hospital <i class="fas fa-arrow-right"></i></button>
             </form>
+            
          </div>
       </div>
       <!--<form action="/addFriend/<%=currentUser._id%>" method="POST">-->
@@ -443,7 +447,7 @@
       <div class="col-md-8 col-md-offset-2" style="margin-top:20px;padding:20px;text-align:center;">
          Already verified? Please,
          <form action="/profile/<%=currentUser.username%>" method="GET" style="margin-top:20px;">
-            <button class="btn" type="submit" style="background:#62a3bb;color:white;"><i class="far fa-envelope-open"></i> Refresh</button>
+            <button class="btn" type="submit" style="background:#62a3bb;color:white;"> Refresh</button>
          </form>
       </div>
    </div>

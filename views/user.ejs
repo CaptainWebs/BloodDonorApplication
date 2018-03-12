@@ -184,6 +184,9 @@
                   <h4 style="padding:8px;"><i class="fas fa-exclamation-circle redicon"></i> Eligibility Check:
                      <span style="font-weight:700;">
                      <% var today = new Date(); %>
+                     <% if(date.toDateString() == "Invalid Date"){ %>
+                     <%   time = 0; %>
+                     <% } %>
                      <%if(genderType == "Female"){  %>
                      <% if((time + 7257600000) <  today.getTime()){  %>
                      <i class="fas fa-check greenicon"></i>
@@ -240,7 +243,6 @@
    </div>
 </div>
 </div>
-
 <% if(isFriend){ %>
 <% if(shared != null && (typeof shared != undefined)){ %>
 <% var monthPadding=''; %>
@@ -248,33 +250,32 @@
 <% if((shared.date.getUTCMonth()+1) < 10){monthPadding='0'} %>
 <% if((shared.date.getUTCDate()) < 10){dayPadding='0'} %>
 <% date = shared.date.getUTCFullYear() + '-'+ monthPadding + (shared.date.getUTCMonth()+1) + '-'+ dayPadding + shared.date.getUTCDate(); %>
-<div class="row" style="padding:20px; background:#62A3BB;color:white;">
+<div class="row" style="padding:20px; background:#0984e3;color:white;">
    <div class="col-md-6 col-md-offset-3" style="text-align:center;">
       <h4><i class="far fa-calendar-alt" style="color:yellow;"></i> You both have scheduled an appointment.<i class="far fa-info-circle"></i></h4>
-      <hr> 
-           <form action="" method="">
-            <div class="form-row row">
-               <div class="form-group col-md-4">
-                  <label for="exampleDropdownFormEmail1">Name of Hospital</label>
-                  <input type="text" class="form-control" name="hospitalName" id="exampleDropdownFormEmail1" placeholder="enter name of hospital" style="height:40px;" required value="<%=shared.hospitalName%>">
-               </div>
-               <div class="form-group col-md-4">
-                  <label>Appointment Date</label>
-                  <input type="date" name="date" class="form-control" id="exampleInputDOB1" placeholder="Appointment Date" required style="height:40px;" value="<%=date%>">
-               </div>
-               <div class="form-group col-md-4">
-                  <label for="exampleDropdownFormEmail1"><i class="far fa-clock"></i> Time</label>
-                  <input type="time" class="form-control" name="time" id="exampleDropdownFormEmail1" placeholder="enter time of appointment" value="<%=shared.time%>" style="height:40px;" required>
-               </div>
+      <hr>
+      <form action="" method="">
+         <div class="form-row row">
+            <div class="form-group col-md-4">
+               <label for="exampleDropdownFormEmail1">Name of Hospital</label>
+               <input type="text" class="form-control" name="hospitalName" id="exampleDropdownFormEmail1" placeholder="enter name of hospital" style="height:40px;" required value="<%=shared.hospitalName%>">
             </div>
-         </form>
-    </div> 
+            <div class="form-group col-md-4">
+               <label>Appointment Date</label>
+               <input type="date" name="date" class="form-control" id="exampleInputDOB1" placeholder="Appointment Date" required style="height:40px;" value="<%=date%>">
+            </div>
+            <div class="form-group col-md-4">
+               <label for="exampleDropdownFormEmail1"><i class="far fa-clock"></i> Time</label>
+               <input type="time" class="form-control" name="time" id="exampleDropdownFormEmail1" placeholder="enter time of appointment" value="<%=shared.time%>" style="height:40px;" required>
+            </div>
+         </div>
+      </form>
+   </div>
 </div>
-
 <% }else{ %>
-<div class="row" style="padding:20px; background:#62A3BB;color:white;">
+<div class="row" style="padding:20px; background:#0984e3;color:white;">
    <div class="col-md-6 col-md-offset-3" style="text-align:center;">
-      <h4><i class="far fa-calendar-alt" style="color:yellow;"></i> Appointment Request <i class="far fa-info-circle"></i></h4>
+      <h3><i class="far fa-calendar-alt" style="color:yellow;"></i> Appointment Request <i class="far fa-info-circle"></i></h3>
       <hr>
       <form action="/appointment/<%=currentUser.username%>" method="POST">
          <div class="form-row row">
@@ -291,13 +292,23 @@
                <input type="time" class="form-control" name="time" id="exampleDropdownFormEmail1" placeholder="enter name of hospital" style="height:40px;" required>
             </div>
          </div>
-         <button class="btn btn-primary" type="submit" style="background:#dfe6e9;border:2px solid #b02528;border-radius:5px;outline:none;padding:10px;color:#b02528;"> <i class="far fa-calendar-check"></i> Send to @<%=currentUser.username%></button>
+         <button class="btn btn-primary gradientbg" type="submit" style="border-radius:5px;outline:none;padding:10px;color:white;"> <i class="far fa-calendar-check"></i> Send to @<%=currentUser.username%></button>
       </form>
+      <hr>
+      <div class="row">
+         <h5 style="color:#dfe6e9;">You can use below links to find Hospitals and Blood Donor Centres in your city. Please note that this appointment is only between you and your friend, time and date of the appointment has to be checked with selected hospital. </h5>
+         <div class="col-md-6">
+            <a href="/centre" target="_blank"><button class="btn" style="background:#b02528;margin-top:20px;color:white;width:100%;height:40px;"><i class="fas fa-tint"></i> Find Blood Centre</button></a>
+         </div>
+         <div class="col-md-6">
+            <a href="/nearby" target="_blank"><button class="btn" style="background:#2e3436;margin-top:20px;color:white;width:100%;height:40px;"><i class="fas fa-hospital"></i> Find Hospital</button></a>
+         </div>
+      </div>
    </div>
 </div>
 <% } %>
 <% }else{ %>
-<div class="row" style="padding:20px; background:#62A3BB;color:white;">
+<div class="row" style="padding:20px; background:#0984e3;color:white;">
    <div class="col-md-4 col-md-offset-4">
       <h5>If you need blood donation within the next <i class="far fa-clock"></i> 48 hours then click the button that will initiate our team to get in touch with donor.</h5>
       <h6>For more info, please visit <a href="" style="color:yellow;text-decoration:underline;">Urgent Need</a> page.</h6>
